@@ -29,7 +29,7 @@ library(data.table)
 library(thematic)
 
 knitr::opts_chunk$set(dev="ragg_png", fig.height=3, fig.width=5, dpi=220, 
-  include=TRUE, warning=FALSE, echo=FALSE)
+  base.url="2021-s34d/", include=TRUE, warning=FALSE, echo=FALSE)
 
 # Default theme for plots
 thematic_on("transparent", "#2f2f29", c("#237c9a", "#7bb0c2"),

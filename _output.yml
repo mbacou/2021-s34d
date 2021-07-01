@@ -11,6 +11,6 @@ bookdown::gitbook:
       collapse: section
       scroll_highlight: yes
       before: |
-        <li><a href="../">Feed the Future S34D</a></li>
+        <li><a href="/2021-s34d/">Feed the Future S34D</a></li>
     toolbar:
       position: fixed
