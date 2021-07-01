@@ -7,4 +7,4 @@ cd "$(dirname "$(realpath "$0")")";
 rm -R ./_main.*
 rm -R ./_bookdown_files
 
-Rscript -e "bookdown::render_book('./R/', output_dir='./docs');"
+Rscript -e "bookdown::render_book('./R/', output_dir='../docs');"

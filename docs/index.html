@@ -192,13 +192,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
 <span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thematic)</span>
 <span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">dev=</span><span class="st">&quot;ragg_png&quot;</span>, <span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, </span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, </span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.path=</span><span class="st">&quot;fig/&quot;</span>, <span class="at">include=</span><span class="cn">TRUE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span>
 <span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for plots</span></span>
 <span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">thematic_on</span>(<span class="st">&quot;transparent&quot;</span>, <span class="st">&quot;#2f2f29&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;#237c9a&quot;</span>, <span class="st">&quot;#7bb0c2&quot;</span>),</span>
 <span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font_spec</span>(<span class="fu">c</span>(<span class="st">&quot;Roboto Condensed&quot;</span>, <span class="st">&quot;Roboto&quot;</span>)),</span>
-<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> <span class="fu">c</span>(<span class="st">&quot;#237c9a&quot;</span>, <span class="st">&quot;#b35000&quot;</span>, <span class="st">&quot;#99C24D&quot;</span>, <span class="st">&quot;#88527F&quot;</span>, <span class="st">&quot;#7bb0c2&quot;</span>))</span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> <span class="fu">alpha</span>(<span class="fu">c</span>(<span class="st">&quot;#237c9a&quot;</span>, <span class="st">&quot;#b35000&quot;</span>, <span class="st">&quot;#99C24D&quot;</span>, <span class="st">&quot;#88527F&quot;</span>, <span class="st">&quot;#7bb0c2&quot;</span>), .<span class="dv">8</span>))</span>
 <span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>theme_def <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
 <span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="st">&quot;Roboto Condensed&quot;</span>,</span>
@@ -256,7 +256,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mbacou/2021-s34d/blob/main/index.Rmd",
+"link": "https://github.com/mbacou/2021-s34d/blob/main/R/index.Rmd",
 "text": "Edit"
 },
 "history": {

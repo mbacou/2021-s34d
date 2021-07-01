@@ -1,4 +1,6 @@
 bookdown::gitbook:
+  dev: svglite
+  df_print: kable
   css: ./www/book.css
   split_by: rmd
   split_bib: yes

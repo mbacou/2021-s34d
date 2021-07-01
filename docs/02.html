@@ -176,11 +176,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ethiopia" class="section level1">
 <h1>Ethiopia</h1>
 <p>testing</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="02.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load(&quot;../tmp/data_eth.RData&quot;)</span></span>
-<span id="cb14-2"><a href="02.html#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="02.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg, <span class="at">label =</span> <span class="fu">rownames</span>(mtcars), <span class="at">color =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="02.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-10-1.png" width="1100" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="02.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#load(&quot;../tmp/data_eth.RData&quot;)</span></span>
+<span id="cb16-2"><a href="02.html#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="02.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(wt, mpg, <span class="at">label =</span> <span class="fu">rownames</span>(mtcars), <span class="at">color =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="02.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<pre><code>## Error : The fig.showtext code chunk option must be TRUE</code></pre>
+<p><img src="fig/unnamed-chunk-10-1.svg" width="1100" /></p>
 <p>testing</p>
 
 </div>
@@ -222,7 +223,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/mbacou/2021-s34d/blob/main/02.Rmd",
+"link": "https://github.com/mbacou/2021-s34d/blob/main/R/02.Rmd",
 "text": "Edit"
 },
 "history": {

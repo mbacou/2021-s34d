@@ -28,13 +28,13 @@ library(terra)
 library(data.table)
 library(thematic)
 
-knitr::opts_chunk$set(dev="ragg_png", fig.height=3, fig.width=5, dpi=220, 
+knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220, 
   fig.path="fig/", include=TRUE, warning=FALSE, message=FALSE)
 
 # Default theme for plots
 thematic_on("transparent", "#2f2f29", c("#237c9a", "#7bb0c2"),
   font_spec(c("Roboto Condensed", "Roboto")),
-  qualitative = c("#237c9a", "#b35000", "#99C24D", "#88527F", "#7bb0c2"))
+  qualitative = alpha(c("#237c9a", "#b35000", "#99C24D", "#88527F", "#7bb0c2"), .8))
 
 theme_def <- function(
   base_font = "Roboto Condensed",
