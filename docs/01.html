@@ -155,7 +155,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#profit-margins"><i class="fa fa-check"></i>Profit Margins</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Ethiopia</a></li>
+<li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Niger</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html"><i class="fa fa-check"></i>Guatemala</a></li>
+<li class="chapter" data-level="" data-path="04.html"><a href="04.html"><i class="fa fa-check"></i>Uganda</a></li>
+<li class="chapter" data-level="" data-path="05.html"><a href="05.html"><i class="fa fa-check"></i>Zambia</a></li>
 </ul>
 
       </nav>
@@ -890,20 +893,18 @@ TRUE
 <span id="cb11-7"><a href="01.html#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin per Ha (PPP$)&quot;</span>,</span>
 <span id="cb11-8"><a href="01.html#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
 <span id="cb11-9"><a href="01.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
-<pre><code>## Error : The fig.showtext code chunk option must be TRUE</code></pre>
-<p><img src="fig/unnamed-chunk-9-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="01.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span>sales_ha_ppp<span class="sc">-</span>costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="01.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb13-3"><a href="01.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="01.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a href="01.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
-<span id="cb13-6"><a href="01.html#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin per Ha (PPP$)&quot;</span>,</span>
-<span id="cb13-7"><a href="01.html#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
-<span id="cb13-8"><a href="01.html#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
-<pre><code>## Error : The fig.showtext code chunk option must be TRUE</code></pre>
-<p><img src="fig/unnamed-chunk-9-2.svg" width="1100" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="01.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i)</span>
-<span id="cb15-2"><a href="01.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;../tmp/data_vnm.RData&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-9-1.png" width="1100" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="01.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span>sales_ha_ppp<span class="sc">-</span>costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="01.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="01.html#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="01.html#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="01.html#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
+<span id="cb12-6"><a href="01.html#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin per Ha (PPP$)&quot;</span>,</span>
+<span id="cb12-7"><a href="01.html#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
+<span id="cb12-8"><a href="01.html#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-9-2.png" width="1100" /></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="01.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i)</span>
+<span id="cb13-2"><a href="01.html#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;../tmp/data_vnm.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

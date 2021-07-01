@@ -1,5 +1,5 @@
 bookdown::gitbook:
-  dev: svglite
+  dev: ragg_png
   df_print: kable
   css: ./www/book.css
   split_by: rmd

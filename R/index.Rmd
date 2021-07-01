@@ -29,7 +29,8 @@ library(data.table)
 library(thematic)
 
 knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220, 
-  fig.path="fig/", include=TRUE, warning=FALSE, message=FALSE)
+  fig.path="fig/", include=TRUE, 
+  error=FALSE, warning=FALSE, message=FALSE)
 
 # Default theme for plots
 thematic_on("transparent", "#2f2f29", c("#237c9a", "#7bb0c2"),
