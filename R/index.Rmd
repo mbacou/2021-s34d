@@ -49,7 +49,8 @@ theme_def <- function(
     legend.box.background = element_rect(fill=base_fill, color=NA),
     text = element_text(family=base_font, lineheight=.8),
     plot.subtitle = element_text(color="#237c9a", size=base_size*.9),
-    strip.text = element_text(face="bold", hjust=0, size=base_size*.9)
+    strip.text = element_text(face="bold", hjust=0, size=base_size*.9),
+    axis.text = element_text(size=base_size*.8)
   ) + theme(...)
 
 # Default theme for tables

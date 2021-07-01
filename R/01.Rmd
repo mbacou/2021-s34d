@@ -64,6 +64,9 @@ Below we append some of the information that was recorded at the group level.
 
 ```{r}
 
+kbl(group) %>%
+  kable_def()
+
 # Merge
 hh[group, on=.(group=Group), `:=`(
   group_year = `Established`,
@@ -84,6 +87,8 @@ Using **community GPS coordinates** we also suggest to enrich this dataset with 
 
 - Agroecological zone
 - Travel time to nearest market
+- Distance to nearest seed center / company
+- Size of nearest seed center / company
 - Population density
 - Last season total rainfall
 - Last season heat stress days (if any)
@@ -176,17 +181,18 @@ Note that in the current survey we are missing **farm sizes** (or planted acreag
 
 ```{r}
 
-tmp <- hh[, .N, by=.(adm1_nm, group, ssd_formal, gender)]
-
 library(ggalluvial)
-ggplot(tmp, aes(axis1=adm1_nm, axis2=gender, axis3=ssd_formal, y=N)) +
+ggplot(
+  hh[, .N, by=.(adm1_nm, group, ssd_formal, gender)],
+  aes(axis1=adm1_nm, axis2=gender, axis3=ssd_formal, y=N)) +
+  geom_alluvium(aes(fill=group), width=1/4) +
+  geom_stratum(width=1/4) +
+  geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
   scale_x_discrete(limits=c("Province", "Gender", "Seed Distribution"), expand=c(.2, .05)) +
-  geom_alluvium(aes(fill=group)) +
-  geom_stratum() +
-  geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90) +
-  theme_def() +
-  ggtitle("Vietnam Survey Respondents",
-          "Stratified by demographics and group membership")
+  labs(y=NULL, fill="Seed Group",
+    title = "Vietnam Survey Respondents",
+    sub = "Stratified by demographics and group membership") +
+  theme_def(axis.text=element_text(face="bold"))
 
 
 ```
