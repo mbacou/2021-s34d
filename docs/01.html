@@ -618,7 +618,7 @@ TRUE
 </tr>
 <tr>
 <td style="text-align:left;">
-ssd_formal
+ssd
 </td>
 <td style="text-align:left;">
 Farmer participates in formal seed system distribution
@@ -841,7 +841,7 @@ TRUE
 </table>
 <p>Recode variable names.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="01.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(hh, lbl<span class="sc">$</span>label, lbl<span class="sc">$</span>code, <span class="at">skip_absent=</span>T)</span></code></pre></div>
-<p>Additional recodes for categorical variables. Note that we create a categorical variable <code>ssd_formal</code> to indicate whether a farmer currently engages in formal seed system distribution.</p>
+<p>Additional recodes for categorical variables. Note that we create a categorical variable <code>ssd</code> to indicate whether a farmer currently engages in formal seed system distribution.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="01.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(hh, adm1_nm, group, gender)</span>
 <span id="cb5-2"><a href="01.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="01.html#cb5-3" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
@@ -850,13 +850,13 @@ TRUE
 <span id="cb5-6"><a href="01.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm1_nm =</span> <span class="fu">factor</span>(adm1_nm),</span>
 <span id="cb5-7"><a href="01.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels=</span>hh[, <span class="fu">unique</span>(group)]),</span>
 <span id="cb5-8"><a href="01.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">Nam=</span><span class="st">&quot;Male&quot;</span>, Nữ<span class="ot">=</span><span class="st">&quot;Female&quot;</span>)),</span>
-<span id="cb5-9"><a href="01.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssd_formal =</span> <span class="fu">factor</span>(cert_lcu <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Informal&quot;</span>, <span class="st">&quot;Formal&quot;</span>))</span>
+<span id="cb5-9"><a href="01.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssd =</span> <span class="fu">factor</span>(cert_lcu <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Informal&quot;</span>, <span class="st">&quot;Formal&quot;</span>))</span>
 <span id="cb5-10"><a href="01.html#cb5-10" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
 </div>
 <div id="data-enrichment" class="section level2">
 <h2>Data Enrichment</h2>
 <p>Below we append some of the information that was recorded at the group level.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="01.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(group) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="01.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(group, <span class="at">align=</span><span class="st">&quot;lccccccc&quot;</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="01.html#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_def</span>()</span></code></pre></div>
 <table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <thead>
@@ -864,25 +864,25 @@ TRUE
 <th style="text-align:left;">
 Group
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 Established
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 Members
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Soil
 </th>
-<th style="text-align:right;">
+<th style="text-align:center;">
 Seasons
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Irrigation
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Market access
 </th>
-<th style="text-align:left;">
+<th style="text-align:center;">
 Transboundary trade
 </th>
 </tr>
@@ -892,25 +892,25 @@ Transboundary trade
 <td style="text-align:left;">
 Ta Ben
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2001
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 30
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 loamy
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.0
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 good
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Vicinity to local market, good road to infrastructure
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 No
 </td>
 </tr>
@@ -918,25 +918,25 @@ No
 <td style="text-align:left;">
 Trung Hiep
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2003
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 8
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 sandy-silty
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2.5
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 good
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Vicinity to local market, good road to infrastructure
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 No
 </td>
 </tr>
@@ -944,25 +944,25 @@ No
 <td style="text-align:left;">
 Vinh Trach
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2004
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 15
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 clay
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 3.0
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 good
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Vicinity to local market, good road to infrastructure
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Yes
 </td>
 </tr>
@@ -970,25 +970,25 @@ Yes
 <td style="text-align:left;">
 Binh My
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2004
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 8
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 clay
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 3.0
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 good
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Vicinity to local market, good road to infrastructure
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Yes
 </td>
 </tr>
@@ -996,25 +996,25 @@ Yes
 <td style="text-align:left;">
 Vinh Qui
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 2002
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 40
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 clay
 </td>
-<td style="text-align:right;">
+<td style="text-align:center;">
 3.0
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 good
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Vicinity to local market, good road to infrastructure
 </td>
-<td style="text-align:left;">
+<td style="text-align:center;">
 Yes
 </td>
 </tr>
@@ -1065,8 +1065,8 @@ Yes
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="01.html#cb10-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(sales_ha_lcu <span class="sc">-</span> (sales_kg_lcu <span class="sc">*</span> sales_ha_kg))]</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       0       0       0       0       0       0</code></pre>
-<p>Further we construct gross margin per ha <code>margin_ha_lcu</code>, total sales <code>sales_ha_sh</code> and profit margin <code>margin_ha_sh</code> as shares of total costs per hectare, and <code>costs_ha_ppp</code>, <code>sales_ha_ppp</code> and <code>margin_ha_ppp</code> in PPP terms to allow for comparisons across groups and countries.</p>
-<p>We also construct a measure of <strong>total factor productivity</strong> <code>tfp</code> as production over total costs per ha. Strictly speaking it is only “partial factor productivity” here because we don’t include the rental cost of land, land preparation costs, and the costs of animal and mechanical implements.</p>
+<p>Further we construct gross margin per ha <code>margin_ha_lcu</code>, total sales <code>sales_ha_sh</code> and profit margin <code>margin_ha_sh</code> per unit of (variable) input costs, and <code>costs_ha_ppp</code>, <code>sales_ha_ppp</code> and <code>margin_ha_ppp</code> in PPP terms to allow for comparisons across groups and countries.</p>
+<p>We also construct a measure of <strong>total factor productivity</strong> <code>tfp</code> as output per unit of input costs. Strictly speaking it is only “partial factor productivity” here because we don’t include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="01.html#cb12-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
 <span id="cb12-2"><a href="01.html#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_lcu =</span> sales_ha_lcu <span class="sc">-</span> costs_ha_lcu</span>
 <span id="cb12-3"><a href="01.html#cb12-3" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
@@ -1098,26 +1098,49 @@ Yes
 <span id="cb13-17"><a href="01.html#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">share =</span> lcu<span class="sc">/</span><span class="fu">sum</span>(lcu, <span class="at">na.rm=</span>T),</span>
 <span id="cb13-18"><a href="01.html#cb13-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">ppp =</span> lcu<span class="sc">/</span>xrate</span>
 <span id="cb13-19"><a href="01.html#cb13-19" aria-hidden="true" tabindex="-1"></a>), by<span class="ot">=</span>hhid]</span></code></pre></div>
-<p>Note that in the current survey we are missing <strong>farm sizes</strong> (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential <strong>scale effects</strong> on <strong>efficiency</strong> and <strong>profitability</strong>. We can however study whether larger groups might have a positive effect on profits.</p>
+<p>Note that in the current survey we are missing <strong>farm sizes</strong> (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential <strong>scale effects</strong> on a farmer’s <strong>efficiency</strong> and <strong>profitability</strong>. We can however study whether larger groups might have positive effects.</p>
 </div>
 </div>
 <div id="descriptive-statistics" class="section level2">
 <h2>Descriptive Statistics</h2>
 <div id="respondent-characteristics" class="section level3">
 <h3>Respondent Characteristics</h3>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="01.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalluvial)</span>
-<span id="cb14-2"><a href="01.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb14-3"><a href="01.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, ssd_formal, gender)],</span>
-<span id="cb14-4"><a href="01.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>adm1_nm, <span class="at">axis2=</span>gender, <span class="at">axis3=</span>ssd_formal, <span class="at">y=</span>N)) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="01.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb14-6"><a href="01.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="01.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="01.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Province&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Seed Distribution&quot;</span>), <span class="at">expand=</span><span class="fu">c</span>(.<span class="dv">2</span>, .<span class="dv">05</span>)) <span class="sc">+</span></span>
-<span id="cb14-9"><a href="01.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Group&quot;</span>,</span>
-<span id="cb14-10"><a href="01.html#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Vietnam Survey Respondents&quot;</span>,</span>
-<span id="cb14-11"><a href="01.html#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">sub =</span> <span class="st">&quot;Stratified by demographics and group membership&quot;</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="01.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-10-1.png" width="1100" /></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="01.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contingency table</span></span>
+<span id="cb14-2"><a href="01.html#cb14-2" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> hh[, .(<span class="at">Group=</span>group, <span class="at">Gender=</span>gender, <span class="st">`</span><span class="at">Seed System</span><span class="st">`</span><span class="ot">=</span>ssd)]</span>
+<span id="cb14-3"><a href="01.html#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tbl)</span></code></pre></div>
+<pre><code>##         Group       Gender     Seed System
+##  Binh My   : 7   Male  :48   Informal:56  
+##  Vinh Qui  :10   Female:12   Formal  : 4  
+##  Vinh Trach:18                            
+##  Ta Ben    :13                            
+##  Trung Hiep:12</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="01.html#cb16-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>group<span class="sc">+</span>gender<span class="sc">+</span>ssd, hh)</span>
+<span id="cb16-2"><a href="01.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span> <span class="sc">*</span> <span class="fu">ftable</span>(<span class="fu">prop.table</span>(tbl))</span></code></pre></div>
+<pre><code>##                   ssd  Informal    Formal
+## group      gender                        
+## Binh My    Male       10.000000  1.666667
+##            Female      0.000000  0.000000
+## Vinh Qui   Male       16.666667  0.000000
+##            Female      0.000000  0.000000
+## Vinh Trach Male       25.000000  3.333333
+##            Female      1.666667  0.000000
+## Ta Ben     Male       16.666667  0.000000
+##            Female      5.000000  0.000000
+## Trung Hiep Male        6.666667  0.000000
+##            Female     11.666667  1.666667</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="01.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalluvial)</span>
+<span id="cb18-2"><a href="01.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb18-3"><a href="01.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, ssd, gender)],</span>
+<span id="cb18-4"><a href="01.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>adm1_nm, <span class="at">axis2=</span>gender, <span class="at">axis3=</span>ssd, <span class="at">y=</span>N)) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="01.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="01.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="01.html#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
+<span id="cb18-8"><a href="01.html#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Province&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Seed Distribution&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="01.html#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Group&quot;</span>,</span>
+<span id="cb18-10"><a href="01.html#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Survey Respondents (Vietnam)&quot;</span>,</span>
+<span id="cb18-11"><a href="01.html#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stratified by demographics and group membership (N = 60)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb18-12"><a href="01.html#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-11-1.png" width="1100" /></p>
 </div>
 <div id="seed-production-costs" class="section level3">
 <h3>Seed Production Costs</h3>
@@ -1128,27 +1151,27 @@ Yes
 </div>
 <div id="profitability" class="section level3">
 <h3>Profitability</h3>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="01.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hh), <span class="at">color=</span>group)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="01.html#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>costs_ha_ppp, <span class="at">ymax=</span>sales_ha_ppp), <span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="01.html#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>costs_ha_ppp)) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="01.html#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>sales_ha_ppp), <span class="at">shape=</span><span class="dv">18</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="01.html#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="01.html#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
-<span id="cb15-7"><a href="01.html#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ per Hectare)&quot;</span>,</span>
-<span id="cb15-8"><a href="01.html#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
-<span id="cb15-9"><a href="01.html#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-11-1.png" width="1100" /></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="01.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span>sales_ha_ppp<span class="sc">-</span>costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb16-2"><a href="01.html#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb16-3"><a href="01.html#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb16-4"><a href="01.html#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-5"><a href="01.html#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
-<span id="cb16-6"><a href="01.html#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ per Hectare)&quot;</span>,</span>
-<span id="cb16-7"><a href="01.html#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="01.html#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-11-2.png" width="1100" /></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="01.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i)</span>
-<span id="cb17-2"><a href="01.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;../tmp/data_vnm.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="01.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hh), <span class="at">color=</span>group)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="01.html#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>costs_ha_ppp, <span class="at">ymax=</span>sales_ha_ppp), <span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="01.html#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>costs_ha_ppp)) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="01.html#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>sales_ha_ppp), <span class="at">shape=</span><span class="dv">18</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="01.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="01.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
+<span id="cb19-7"><a href="01.html#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ per Hectare)&quot;</span>,</span>
+<span id="cb19-8"><a href="01.html#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="01.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-12-1.png" width="1100" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="01.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span>sales_ha_ppp<span class="sc">-</span>costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="01.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="01.html#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="01.html#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="st">&quot;group&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="01.html#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, </span>
+<span id="cb20-6"><a href="01.html#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ per Hectare)&quot;</span>,</span>
+<span id="cb20-7"><a href="01.html#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-8"><a href="01.html#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-12-2.png" width="1100" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="01.html#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i)</span>
+<span id="cb21-2"><a href="01.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save.image</span>(<span class="st">&quot;../tmp/data_vnm.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>

@@ -40,7 +40,7 @@ setnames(hh, lbl$label, lbl$code, skip_absent=T)
 
 ```
 
-Additional recodes for categorical variables. Note that we create a categorical variable `ssd_formal` to indicate whether a farmer currently engages in formal seed system distribution.
+Additional recodes for categorical variables. Note that we create a categorical variable `ssd` to indicate whether a farmer currently engages in formal seed system distribution.
 
 ```{r}
 
@@ -52,7 +52,7 @@ hh[, `:=`(
   adm1_nm = factor(adm1_nm),
   group = factor(group, levels=hh[, unique(group)]),
   gender = factor(gender, labels=c(Nam="Male", Nữ="Female")),
-  ssd_formal = factor(cert_lcu > 0, labels=c("Informal", "Formal"))
+  ssd = factor(cert_lcu > 0, labels=c("Informal", "Formal"))
 )]
 
 ```
@@ -64,7 +64,7 @@ Below we append some of the information that was recorded at the group level.
 
 ```{r}
 
-kbl(group) %>%
+kbl(group, align="lccccccc") %>%
   kable_def()
 
 # Merge
@@ -126,9 +126,9 @@ hh[, summary(sales_ha_lcu - (sales_kg_lcu * sales_ha_kg))]
 
 ```
 
-Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` as shares of total costs per hectare, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
+Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` per unit of (variable) input costs, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
 
-We also construct a measure of **total factor productivity** `tfp` as production over total costs per ha. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, and the costs of animal and mechanical implements.
+We also construct a measure of **total factor productivity** `tfp` as output per unit of input costs. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.
 
 ```{r}
 
@@ -172,7 +172,7 @@ hh_prod_cost[, `:=`(
 
 ```
 
-Note that in the current survey we are missing **farm sizes** (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential **scale effects** on **efficiency** and **profitability**. We can however study whether larger groups might have a positive effect on profits.
+Note that in the current survey we are missing **farm sizes** (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential **scale effects** on a farmer's **efficiency** and **profitability**. We can however study whether larger groups might have positive effects.
 
 
 ## Descriptive Statistics
@@ -181,27 +181,37 @@ Note that in the current survey we are missing **farm sizes** (or planted acreag
 
 ```{r}
 
+# Contingency table
+tbl <- hh[, .(Group=group, Gender=gender, `Seed System`=ssd)]
+summary(tbl)
+
+tbl <- xtabs(~group+gender+ssd, hh)
+100 * ftable(prop.table(tbl))
+
+```
+
+
+```{r}
+
 library(ggalluvial)
 ggplot(
-  hh[, .N, by=.(adm1_nm, group, ssd_formal, gender)],
-  aes(axis1=adm1_nm, axis2=gender, axis3=ssd_formal, y=N)) +
+  hh[, .N, by=.(adm1_nm, group, ssd, gender)],
+  aes(axis1=adm1_nm, axis2=gender, axis3=ssd, y=N)) +
   geom_alluvium(aes(fill=group), width=1/4) +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
-  scale_x_discrete(limits=c("Province", "Gender", "Seed Distribution"), expand=c(.2, .05)) +
+  scale_x_discrete(limits=c("Province", "Gender", "Seed Distribution")) +
   labs(y=NULL, fill="Seed Group",
-    title = "Vietnam Survey Respondents",
-    sub = "Stratified by demographics and group membership") +
+    title = "Survey Respondents (Vietnam)",
+    subtitle = "Stratified by demographics and group membership (N = 60)") +
   theme_def(axis.text=element_text(face="bold"))
 
 
 ```
 
-
-
 ### Seed Production Costs
 
-We first look at the general distribution of production costs and sales receipts across farmer groups.
+We first look at the general breakdown and distribution of input costs within and across farmer groups.
 
 
 ### Efficiency
