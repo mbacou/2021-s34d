@@ -6,7 +6,7 @@ bookdown::gitbook:
   config:
     download: []
     edit:
-      link: https://github.com/mbacou/2021-s34d/%s
+      link: https://github.com/mbacou/2021-s34d/blob/main/%s
     toc:
       collapse: section
       scroll_highlight: yes
