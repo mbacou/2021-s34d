@@ -1,0 +1,15 @@
+# Ethiopia
+
+testing
+
+
+```{r}
+
+#load("../tmp/data_eth.RData")
+
+ggplot(mtcars, aes(wt, mpg, label = rownames(mtcars), color = factor(cyl))) +
+  geom_point()
+
+```
+
+testing

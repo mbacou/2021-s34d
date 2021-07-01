@@ -1,0 +1,16 @@
+bookdown::gitbook:
+  css: ./www/book.css
+  split_by: rmd
+  split_bib: yes
+  number_sections: no
+  config:
+    download: []
+    edit:
+      link: https://github.com/mbacou/2021-s34d/%s
+    toc:
+      collapse: section
+      scroll_highlight: yes
+      before: |
+        <li><a href="../">Feed the Future S34D</a></li>
+    toolbar:
+      position: fixed

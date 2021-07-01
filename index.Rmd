@@ -1,0 +1,57 @@
+---
+title: Supporting Seed Systems for Development
+author: BACOU, Melanie
+date: Last updated on `r Sys.Date()` -- CODES AND NOTES
+description: Analysis for S34D field surveys.
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+bibliography: biblio.bib
+---
+
+# Objectives
+
+This notebook summarizes results from the 2020 S34D field surveys. 
+
+The objective of this activity is to understand the operational efficiency and associated business economics of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce **certified seeds** as well as **high-quality informal seeds** that go through internal seed quality assurance mechanisms. We have chosen several countries that are in different stages of agricultural transformation, and with varying seed system maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide future interventions for development partners, and inform policy making.
+
+The analysis is split by country, with a cross-country evaluation once all field results have been compiled.
+
+
+```{r setup}
+
+library(lubridate)
+library(kableExtra)
+library(viridisLite)
+library(scales)
+library(ggplot2)
+library(terra)
+library(data.table)
+library(thematic)
+
+knitr::opts_chunk$set(dev="ragg_png", fig.height=3, fig.width=5, dpi=220, 
+  include=TRUE, warning=FALSE, echo=FALSE)
+
+# Default theme for plots
+thematic_on("transparent", "#2f2f29", c("#237c9a", "#7bb0c2"),
+  font_spec(c("Roboto Condensed", "Roboto")),
+  qualitative = c("#237c9a", "#b35000", "#99C24D", "#88527F", "#7bb0c2"))
+
+theme_mb <- function(
+  base_font = "Roboto Condensed",
+  base_size = 8, 
+  base_fill = "transparent", ...) theme_minimal(base_size) +
+  theme(
+    panel.background = element_rect(fill=base_fill, color=NA),
+    plot.background = element_rect(fill=base_fill, color=NA),
+    legend.box.background = element_rect(fill=base_fill, color=NA),
+    text = element_text(family=base_font, color="#2f2f29", lineheight=.8),
+    plot.subtitle = element_text(color="#237c9a", size=base_size*.9),
+    strip.text = element_text(face="bold", hjust=0, size=base_size*.9)
+  ) + theme(...)
+
+# Default theme for tables
+kable_mb <- function(...) kable_styling(
+  bootstrap_options=c("condensed", "responsive", "hover"), font_size=14, ...)
+
+```
+

@@ -1,0 +1,9 @@
+new_session: no
+delete_merged_file: yes
+language:
+  label:
+    fig:    "Fig. "
+    tab:    "Tab. "
+    eq:     "Eq. "
+    ex:     "Ex. "
+    remark: "Remark. "
