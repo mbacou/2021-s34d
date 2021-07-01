@@ -1114,20 +1114,21 @@ Yes
 ##  Vinh Trach:18                            
 ##  Ta Ben    :13                            
 ##  Trung Hiep:12</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="01.html#cb16-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>group<span class="sc">+</span>gender<span class="sc">+</span>ssd, hh)</span>
-<span id="cb16-2"><a href="01.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="dv">100</span> <span class="sc">*</span> <span class="fu">ftable</span>(<span class="fu">prop.table</span>(tbl))</span></code></pre></div>
-<pre><code>##                   ssd  Informal    Formal
-## group      gender                        
-## Binh My    Male       10.000000  1.666667
-##            Female      0.000000  0.000000
-## Vinh Qui   Male       16.666667  0.000000
-##            Female      0.000000  0.000000
-## Vinh Trach Male       25.000000  3.333333
-##            Female      1.666667  0.000000
-## Ta Ben     Male       16.666667  0.000000
-##            Female      5.000000  0.000000
-## Trung Hiep Male        6.666667  0.000000
-##            Female     11.666667  1.666667</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="01.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentages</span></span>
+<span id="cb16-2"><a href="01.html#cb16-2" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> <span class="fu">xtabs</span>(<span class="sc">~</span>group<span class="sc">+</span>gender<span class="sc">+</span>ssd, hh)</span>
+<span id="cb16-3"><a href="01.html#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ftable</span>(<span class="fu">format</span>(<span class="dv">100</span> <span class="sc">*</span> <span class="fu">prop.table</span>(tbl), <span class="at">digits=</span><span class="dv">2</span>))</span></code></pre></div>
+<pre><code>##                   ssd Informal Formal
+## group      gender                    
+## Binh My    Male           10.0    1.7
+##            Female          0.0    0.0
+## Vinh Qui   Male           16.7    0.0
+##            Female          0.0    0.0
+## Vinh Trach Male           25.0    3.3
+##            Female          1.7    0.0
+## Ta Ben     Male           16.7    0.0
+##            Female          5.0    0.0
+## Trung Hiep Male            6.7    0.0
+##            Female         11.7    1.7</code></pre>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="01.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalluvial)</span>
 <span id="cb18-2"><a href="01.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb18-3"><a href="01.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, ssd, gender)],</span>
@@ -1144,7 +1145,7 @@ Yes
 </div>
 <div id="seed-production-costs" class="section level3">
 <h3>Seed Production Costs</h3>
-<p>We first look at the general distribution of production costs and sales receipts across farmer groups.</p>
+<p>We first look at the general breakdown and distribution of input costs within and across farmer groups.</p>
 </div>
 <div id="efficiency" class="section level3">
 <h3>Efficiency</h3>

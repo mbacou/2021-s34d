@@ -185,8 +185,9 @@ Note that in the current survey we are missing **farm sizes** (or planted acreag
 tbl <- hh[, .(Group=group, Gender=gender, `Seed System`=ssd)]
 summary(tbl)
 
+# Percentages
 tbl <- xtabs(~group+gender+ssd, hh)
-100 * ftable(prop.table(tbl))
+ftable(format(100 * prop.table(tbl), digits=2))
 
 ```
 
