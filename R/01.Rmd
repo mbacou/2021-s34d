@@ -29,7 +29,6 @@ There are 21 variables and 60 observations in this set. A detailed codebook is s
 
 ```{r}
 kable(align="llccc", caption="Survey Codebook", lbl) %>%
-  row_spec(ncol(hh), hline_after=T) %>%
   kable_def()
 ```
 
@@ -41,7 +40,7 @@ setnames(hh, lbl$label, lbl$code, skip_absent=T)
 
 ```
 
-Additional recodes of categorical variables.
+Additional recodes for categorical variables.
 
 ```{r}
 
@@ -64,11 +63,11 @@ Below we append some of the information that was recorded at the group level.
 
 # Merge
 hh[group, on=.(group=Group), `:=`(
-  group_year = Established,
-  group_size = Members,
-  soil_type = Soil,
-  seasons = Seasons,
-  irrigated = Irrigation,
+  group_year = `Established`,
+  group_size = `Members`,
+  soil_type = `Soil`,
+  seasons = `Seasons`,
+  irrigated = `Irrigation`,
   market_access = `Market access`,
   ttrade = `Transboundary trade`
 )]
@@ -78,7 +77,7 @@ hh[group, on=.(group=Group), `:=`(
 
 ### Spatial Covariates
 
-Using the **community GPS coordinates** we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:
+Using **community GPS coordinates** we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:
 
 - Agroecological zone
 - Travel time to nearest market
@@ -111,17 +110,30 @@ hh[, summary(costs_ha_lcu_imp - costs_ha_lcu)]
 
 There is no discrepancy between the 2 quantities, so we can assume that total costs are constructed per the formula above. No error was found.
 
-Further we construct total sales `sales_ha_sh` and profit margin `margin_ha_sh` as percentages of total costs per hectare, and in PPP terms `sales_ha_ppp` and `margin_ha_ppp` to allow for cross country comparisons.
+We also check that farmer-reported sales and profit margins are consistent.
+
+```{r}
+
+hh[, summary(sales_ha_lcu - (sales_kg_lcu * sales_ha_kg))]
+
+```
+
+Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` as percentages of total costs per hectare, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
+
+We also construct a measure of **total factor productivity** `tfp` as production over total costs per ha. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, and the costs of animal and mechanical implements.
 
 ```{r}
 
 hh[, `:=`(
+  margin_ha_lcu = sales_ha_lcu - costs_ha_lcu
+)][, `:=`(
   sales_ha_sh = sales_ha_lcu / costs_ha_lcu,
   margin_ha_sh = margin_ha_lcu / costs_ha_lcu,
   costs_ha_ppp = costs_ha_lcu / xrate,
   sales_ha_ppp = sales_ha_lcu / xrate,
-  margin_ha_ppp = margin_ha_lcu / xrate,
-  tfp = sales_ha_lcu / costs_ha_lcu
+  margin_ha_ppp = margin_ha_lcu / xrate
+)][, `:=`(
+  tfp = yield_ha_kg / costs_ha_ppp
 )]
 
 ```
@@ -152,7 +164,7 @@ hh_prod_cost[, `:=`(
 
 ```
 
-Note that in the current survey we are missing **farm sizes** (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential scale effects. We can however measure **partial factor productivity** as the ratio of total agricultural output to total production input (it is only partial here because the rental cost of land, land preparation costs, irrigation costs, and farm implements are missing). Furthermore we can measure a farmer's technical efficiency along the current production frontier.
+Note that in the current survey we are missing **farm sizes** (or planted acreage), so we can not directly study the effect of farm size on the per-unit costs of production and yields, or look at potential **scale effects** on **efficiency** and **profitability**. We can however study whether larger groups might have a positive effect on profits.
 
 
 ## Descriptive Statistics
@@ -175,7 +187,7 @@ ggplot(hh, aes(x=1:nrow(hh), color=group)) +
   geom_point(aes(y=sales_ha_ppp), shape=18, size=2) +
   scale_y_continuous(labels=comma) +
   labs(x=NULL, y=NULL, 
-    title="Profit Margin per Ha (PPP$)",
+    title="Profit Margin (PPP$ per Hectare)",
     subtitle="Each bar is a respondent") +
   theme_def(legend.position="right")
 
@@ -184,7 +196,7 @@ ggplot(hh, aes(x=sales_ha_ppp-costs_ha_ppp, fill=group)) +
   scale_x_continuous(labels=comma) +
   facet_wrap("group") +
   labs(x=NULL, y=NULL, 
-    title="Profit Margin per Ha (PPP$)",
+    title="Profit Margin (PPP$ per Hectare)",
     subtitle="Each bar is a respondent") +
   theme_def()
 
@@ -203,3 +215,4 @@ rm(tmp, x, y, i)
 save.image("../tmp/data_vnm.RData")
 
 ```
+

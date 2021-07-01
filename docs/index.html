@@ -184,8 +184,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="objectives" class="section level1">
 <h1>Objectives</h1>
 <p>This notebook summarizes results from the 2020 S34D field surveys.</p>
-<p>The objective of this activity is to understand the operational efficiency and associated business economics of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce <strong>certified seeds</strong> as well as <strong>high-quality informal seeds</strong> that go through internal seed quality assurance mechanisms. We have chosen several countries that are in different stages of agricultural transformation, and with varying seed system maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide future interventions for development partners, and inform policy making.</p>
-<p>The analysis is split by country, with a cross-country evaluation once all field results have been compiled. R code chunks are shown.</p>
+<p>The objective of this activity is to understand the operational efficiency and profitability of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce <strong>certified seeds</strong> as well as <strong>high-quality informal seeds</strong> that go through internal seed quality assurance mechanisms.</p>
+<p>We have chosen several countries that are at different stages of agricultural transformation and with varying degrees of seed systems maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide development partners in designing interventions and inform policy making and seed system regulations.</p>
+<p>The analysis is split by country, with a cross-country evaluation once all survey results have been compiled. R code chunks are shown for reproducibility.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
 <span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
@@ -219,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for tables</span></span>
 <span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>kable_def <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="fu">kable_styling</span>(</span>
-<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">font_size=</span><span class="dv">14</span>, ...)</span></code></pre></div>
+<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">font_size=</span><span class="dv">14</span>, ...)</span></code></pre></div>
 
 </div>
             </section>

@@ -12,9 +12,11 @@ bibliography: biblio.bib
 
 This notebook summarizes results from the 2020 S34D field surveys. 
 
-The objective of this activity is to understand the operational efficiency and associated business economics of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce **certified seeds** as well as **high-quality informal seeds** that go through internal seed quality assurance mechanisms. We have chosen several countries that are in different stages of agricultural transformation, and with varying seed system maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide future interventions for development partners, and inform policy making.
+The objective of this activity is to understand the operational efficiency and profitability of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce **certified seeds** as well as **high-quality informal seeds** that go through internal seed quality assurance mechanisms. 
 
-The analysis is split by country, with a cross-country evaluation once all field results have been compiled. R code chunks are shown.
+We have chosen several countries that are at different stages of agricultural transformation and with varying degrees of seed systems maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide development partners in designing interventions and inform policy making and seed system regulations.
+
+The analysis is split by country, with a cross-country evaluation once all survey results have been compiled. R code chunks are shown for reproducibility.
 
 
 ```{r setup, message=F}
@@ -52,7 +54,7 @@ theme_def <- function(
 
 # Default theme for tables
 kable_def <- function(...) kable_styling(
-  bootstrap_options=c("condensed", "responsive", "hover"), font_size=14, ...)
+  bootstrap_options=c("condensed", "responsive", "striped", "hover"), font_size=14, ...)
 
 ```
 
