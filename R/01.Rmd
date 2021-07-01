@@ -44,13 +44,15 @@ Additional recodes for categorical variables. Note that we create a categorical 
 
 ```{r}
 
+setorder(hh, adm1_nm, group, gender)
+
 hh[, `:=`(
   hhid = paste("VNM", sub(" ", "0", format(1:.N, width=3)), sep=""),
   iso3 = "VNM",
   adm1_nm = factor(adm1_nm),
-  group = factor(group),
+  group = factor(group, levels=hh[, unique(group)]),
   gender = factor(gender, labels=c(Nam="Male", Nữ="Female")),
-  ssd_formal = cert_lcu > 0
+  ssd_formal = factor(cert_lcu > 0, labels=c("Informal", "Formal"))
 )]
 
 ```
@@ -171,6 +173,23 @@ Note that in the current survey we are missing **farm sizes** (or planted acreag
 ## Descriptive Statistics
 
 ### Respondent Characteristics
+
+```{r}
+
+tmp <- hh[, .N, by=.(adm1_nm, group, ssd_formal, gender)]
+
+library(ggalluvial)
+ggplot(tmp, aes(axis1=adm1_nm, axis2=gender, axis3=ssd_formal, y=N)) +
+  scale_x_discrete(limits=c("Province", "Gender", "Seed Distribution"), expand=c(.2, .05)) +
+  geom_alluvium(aes(fill=group)) +
+  geom_stratum() +
+  geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90) +
+  theme_def() +
+  ggtitle("Vietnam Survey Respondents",
+          "Stratified by demographics and group membership")
+
+
+```
 
 
 
