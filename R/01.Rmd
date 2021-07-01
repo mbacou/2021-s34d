@@ -40,7 +40,7 @@ setnames(hh, lbl$label, lbl$code, skip_absent=T)
 
 ```
 
-Additional recodes for categorical variables.
+Additional recodes for categorical variables. Note that we create a categorical variable `ssd_formal` to indicate whether a farmer currently engages in formal seed system distribution.
 
 ```{r}
 
@@ -49,7 +49,8 @@ hh[, `:=`(
   iso3 = "VNM",
   adm1_nm = factor(adm1_nm),
   group = factor(group),
-  gender = factor(gender, labels=c(Nam="Male", Nữ="Female"))
+  gender = factor(gender, labels=c(Nam="Male", Nữ="Female")),
+  ssd_formal = cert_lcu > 0
 )]
 
 ```
@@ -118,7 +119,7 @@ hh[, summary(sales_ha_lcu - (sales_kg_lcu * sales_ha_kg))]
 
 ```
 
-Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` as percentages of total costs per hectare, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
+Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` as shares of total costs per hectare, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
 
 We also construct a measure of **total factor productivity** `tfp` as production over total costs per ha. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, and the costs of animal and mechanical implements.
 
@@ -177,7 +178,11 @@ Note that in the current survey we are missing **farm sizes** (or planted acreag
 
 We first look at the general distribution of production costs and sales receipts across farmer groups.
 
-### Profit Margins
+
+### Efficiency
+
+
+### Profitability
 
 ```{r}
 

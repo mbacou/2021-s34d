@@ -152,7 +152,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#respondent-characteristics"><i class="fa fa-check"></i>Respondent Characteristics</a></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#seed-production-costs"><i class="fa fa-check"></i>Seed Production Costs</a></li>
-<li class="chapter" data-level="" data-path="01.html"><a href="01.html#profit-margins"><i class="fa fa-check"></i>Profit Margins</a></li>
+<li class="chapter" data-level="" data-path="01.html"><a href="01.html#efficiency"><i class="fa fa-check"></i>Efficiency</a></li>
+<li class="chapter" data-level="" data-path="01.html"><a href="01.html#profitability"><i class="fa fa-check"></i>Profitability</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Niger</a></li>
@@ -606,9 +607,26 @@ tfp
 Total factor productivity
 </td>
 <td style="text-align:center;">
+numeric
 </td>
 <td style="text-align:center;">
 kg/lcu
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ssd_formal
+</td>
+<td style="text-align:left;">
+Farmer participates in formal seed system distribution
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+logical
 </td>
 <td style="text-align:center;">
 TRUE
@@ -822,14 +840,15 @@ TRUE
 </table>
 <p>Recode variable names.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="01.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(hh, lbl<span class="sc">$</span>label, lbl<span class="sc">$</span>code, <span class="at">skip_absent=</span>T)</span></code></pre></div>
-<p>Additional recodes for categorical variables.</p>
+<p>Additional recodes for categorical variables. Note that we create a categorical variable <code>ssd_formal</code> to indicate whether a farmer currently engages in formal seed system distribution.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="01.html#cb5-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
 <span id="cb5-2"><a href="01.html#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">hhid =</span> <span class="fu">paste</span>(<span class="st">&quot;VNM&quot;</span>, <span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="fu">format</span>(<span class="dv">1</span><span class="sc">:</span>.N, <span class="at">width=</span><span class="dv">3</span>)), <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
 <span id="cb5-3"><a href="01.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">iso3 =</span> <span class="st">&quot;VNM&quot;</span>,</span>
 <span id="cb5-4"><a href="01.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm1_nm =</span> <span class="fu">factor</span>(adm1_nm),</span>
 <span id="cb5-5"><a href="01.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group),</span>
-<span id="cb5-6"><a href="01.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">Nam=</span><span class="st">&quot;Male&quot;</span>, Nữ<span class="ot">=</span><span class="st">&quot;Female&quot;</span>))</span>
-<span id="cb5-7"><a href="01.html#cb5-7" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
+<span id="cb5-6"><a href="01.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">Nam=</span><span class="st">&quot;Male&quot;</span>, Nữ<span class="ot">=</span><span class="st">&quot;Female&quot;</span>)),</span>
+<span id="cb5-7"><a href="01.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssd_formal =</span> cert_lcu <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb5-8"><a href="01.html#cb5-8" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
 </div>
 <div id="data-enrichment" class="section level2">
 <h2>Data Enrichment</h2>
@@ -877,7 +896,7 @@ TRUE
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="01.html#cb9-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(sales_ha_lcu <span class="sc">-</span> (sales_kg_lcu <span class="sc">*</span> sales_ha_kg))]</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       0       0       0       0       0       0</code></pre>
-<p>Further we construct gross margin per ha <code>margin_ha_lcu</code>, total sales <code>sales_ha_sh</code> and profit margin <code>margin_ha_sh</code> as percentages of total costs per hectare, and <code>costs_ha_ppp</code>, <code>sales_ha_ppp</code> and <code>margin_ha_ppp</code> in PPP terms to allow for comparisons across groups and countries.</p>
+<p>Further we construct gross margin per ha <code>margin_ha_lcu</code>, total sales <code>sales_ha_sh</code> and profit margin <code>margin_ha_sh</code> as shares of total costs per hectare, and <code>costs_ha_ppp</code>, <code>sales_ha_ppp</code> and <code>margin_ha_ppp</code> in PPP terms to allow for comparisons across groups and countries.</p>
 <p>We also construct a measure of <strong>total factor productivity</strong> <code>tfp</code> as production over total costs per ha. Strictly speaking it is only “partial factor productivity” here because we don’t include the rental cost of land, land preparation costs, and the costs of animal and mechanical implements.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="01.html#cb11-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
 <span id="cb11-2"><a href="01.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_lcu =</span> sales_ha_lcu <span class="sc">-</span> costs_ha_lcu</span>
@@ -922,8 +941,11 @@ TRUE
 <h3>Seed Production Costs</h3>
 <p>We first look at the general distribution of production costs and sales receipts across farmer groups.</p>
 </div>
-<div id="profit-margins" class="section level3">
-<h3>Profit Margins</h3>
+<div id="efficiency" class="section level3">
+<h3>Efficiency</h3>
+</div>
+<div id="profitability" class="section level3">
+<h3>Profitability</h3>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="01.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hh), <span class="at">color=</span>group)) <span class="sc">+</span></span>
 <span id="cb13-2"><a href="01.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>costs_ha_ppp, <span class="at">ymax=</span>sales_ha_ppp), <span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
 <span id="cb13-3"><a href="01.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>costs_ha_ppp)) <span class="sc">+</span></span>
