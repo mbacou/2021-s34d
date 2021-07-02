@@ -35,9 +35,9 @@ knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220,
   error=FALSE, warning=FALSE, message=FALSE)
 
 # Default theme for plots
-thematic_on("transparent", "#2f2f29", c("#237c9a", "#7bb0c2"),
+thematic_on("transparent", "#2f2f29", c("#4799b5", "#e6e7e8"),
   font_spec(c("Roboto Condensed", "Roboto")),
-  qualitative = alpha(c("#237c9a", "#b35000", "#99C24D", "#88527F", "#7bb0c2"), .8))
+  qualitative = alpha(c("#4799b5", "#94a545", "#d37d28", "#403b33", "#8B1E3F", "#403b33"), .9))
 
 theme_def <- function(
   base_font = "Roboto Condensed",
@@ -48,7 +48,7 @@ theme_def <- function(
     plot.background = element_rect(fill=base_fill, color=NA),
     legend.box.background = element_rect(fill=base_fill, color=NA),
     text = element_text(family=base_font, lineheight=.8),
-    plot.subtitle = element_text(color="#237c9a", size=base_size*.9),
+    plot.subtitle = element_text(color="#4799b5", size=base_size*.9),
     strip.text = element_text(face="bold", hjust=0, size=base_size*.9),
     axis.text = element_text(size=base_size*.8)
   ) + theme(...)

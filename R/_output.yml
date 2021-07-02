@@ -5,7 +5,10 @@ bookdown::gitbook:
   split_by: rmd
   split_bib: yes
   number_sections: no
+  highlight: monochrome
   config:
+    fontsettings_size: 1
+    sharing_all: false
     download: []
     edit:
       link: https://github.com/mbacou/2021-s34d/blob/main/R/%s
