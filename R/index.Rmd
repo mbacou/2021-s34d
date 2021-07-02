@@ -37,7 +37,7 @@ knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220,
 # Default theme for plots
 thematic_on("transparent", "#2f2f29", c("#4799b5", "#e6e7e8"),
   font_spec(c("Roboto Condensed", "Roboto")),
-  qualitative = alpha(c("#4799b5", "#94a545", "#d37d28", "#403b33", "#403b33", "#8B1E3F"), .9))
+  qualitative = alpha(c("#4799b5", "#94a545", "#d37d28", "#403b33", "#8B1E3F"), .9))
 
 theme_def <- function(
   base_font = "Roboto Condensed",
