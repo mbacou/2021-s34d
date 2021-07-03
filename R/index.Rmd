@@ -51,7 +51,9 @@ theme_def <- function(
     text = element_text(family=base_font, lineheight=.8),
     plot.subtitle = element_text(color="#4799b5", size=base_size*.9),
     strip.text = element_text(face="bold", hjust=0, size=base_size*.9),
-    axis.text = element_text(size=base_size*.8)
+    axis.text = element_text(size=base_size*.8),
+    legend.key.width = unit(.8, "line"),
+    legend.key.height = unit(.8, "line")
   ) + theme(...)
 
 # Default theme for tables

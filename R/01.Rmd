@@ -206,11 +206,12 @@ ggplot(
 
 Showing contingency tables between each pair of categorical variables (seed group, gender, and a farmer's use of formal seed system distribution).
 
-```{r}
+```{r, fig.env="table-condensed"}
 
 library(sjPlot)
 sjtab(hh[, .(group, gender)], fun="xtab", var.labels=c("Group", "Gender"),
   show.row.prc=T, show.col.prc=T, show.summary=T, show.exp=T, show.legend=T)
+
 sjtab(hh[, .(gender, ssd)], fun="xtab", var.labels=c("Gender", "Seed System"),
   show.row.prc=T, show.col.prc=T, show.summary=T, show.exp=T, show.legend=T)
 
@@ -218,7 +219,7 @@ sjtab(hh[, .(gender, ssd)], fun="xtab", var.labels=c("Gender", "Seed System"),
 
 In the 1st table Chi-square test and p-value < 0 shows that gender and group membership are not independent. In the 2nd table with a Chi-square at zero and a small Cramér’s V (0.033) the variables can be assumed dependent, but that relationship is not significant, as shown also on the mosaic plot below.
 
-```{r}
+```{r, out.width="50%", fig.show="hold", fig.asp=1}
 
 mosaicplot(~gender+ssd, hh, shade=T,
   main = NA,
@@ -236,7 +237,33 @@ NB. blue means there are more observations in the cell than would be expected un
 
 ### Seed Production Costs
 
-We first look at the general breakdown and distribution of input costs within and across farmer groups.
+We first look at the general breakdown and distribution of input costs across farmer groups and gender.
+
+```{r}
+
+ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="",
+    title="Total Input Costs (PPP$ / ha)",
+    subtitle="Stratified by Male vs. Female") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +  
+  labs(x="", y="", fill="",
+    title="Total Input Costs (PPP$ / ha)",
+    subtitle="Stratified by Farmer Group") +
+  theme_def(legend.position="none")
+
+```
+
+Breakdown across categories of input.
 
 ```{r}
 
@@ -266,7 +293,7 @@ ggplot(tbl, aes(group, share, fill=category)) +
   geom_bar(stat="identity", alpha=.8, width=.6) +
   scale_y_continuous(labels=percent) +
   scale_fill_manual("", values=colorRampPalette(pal)(9)) +
-  facet_wrap(~ssd) +
+  facet_wrap(~ssd, scales="free_x") +
   labs(y="", x="",
     title="Breakdown of Input Costs by Group",
     subtitle="") +
@@ -278,26 +305,123 @@ Are there significant differences across groups?
 
 ```{r}
 
-ggplot(hh_prod_cost, aes(category, ppp, fill=gender)) +
+ggplot(hh_prod_cost[!category %in% c("Transport", "Marketing")], 
+  aes(category, ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare)",
-    subtitle="Male vs. Female") +
+    subtitle="Stratified by Male vs. Female") +
   theme_def(legend.position="top")
 
-ggplot(hh_prod_cost, aes(category, ppp, fill=group)) +
+ggplot(hh_prod_cost[!category %in% c("Transport", "Marketing")], 
+  aes(category, ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +  
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare)",
-    subtitle="Stratified by Group") +
+    subtitle="Stratified by Farmer Group") +
   theme_def(legend.position="top")
 
 ```
 
 
 ### Efficiency
+
+Differences in productivity measures across groups?
+
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+
+ggplot(hh, aes(gender, yield_ha_kg, fill=gender)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="",
+    title="Rice Seed Yield (kg / ha)",
+    subtitle="Stratified by Male vs. Female") +
+  theme_def(legend.position="none")
+
+ggplot(hh, aes(gender, sales_ha_ppp, fill=gender)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="",
+    title="Total Seed Sales (PPP$ / ha)",
+    subtitle="Stratified by Male vs. Female") +
+  theme_def(legend.position="none")
+
+```
+
+
+```{r}
+
+ggplot(hh, aes(group, yield_ha_kg, fill=group)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +  
+  labs(x="", y="", fill="",
+    title="Rice Seed Yield (Kg / ha)",
+    subtitle="Stratified by Farmer Group") +
+  theme_def(legend.position="none")
+
+ggplot(hh, aes(group, sales_ha_ppp, fill=group)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +  
+  labs(x="", y="", fill="",
+    title="Total Seed Sales (PPP$ / ha)",
+    subtitle="Stratified by Farmer Group") +
+  theme_def(legend.position="none")
+
+```
+
+Production frontiers across farmer groups and gender (units of output vs. cost units of input). We expect S-shape curves with farmers at different levels of technical efficiency along the curve.
+
+```{r}
+
+ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
+  geom_smooth() +
+  geom_point(alpha=.7, shape=20) +
+  scale_x_continuous(labels=comma) +
+  scale_y_continuous(labels=comma) +
+  coord_cartesian(ylim=c(4000,14000)) +
+  labs(x="Costs (PPP$/ha)", y="Yield (kg/ha)",
+    title="Production Frontiers (Crop Yield vs. Input Costs)",
+    subtitle="Each point is a respondent") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
+  geom_smooth(aes(color=gender, fill=gender)) +
+  geom_point(alpha=.7, shape=20) +
+  scale_x_continuous(labels=comma) +
+  scale_y_continuous(labels=comma) +
+  facet_wrap(~gender, scales="free_x") +
+  coord_cartesian(ylim=c(4000,14000)) +
+  labs(x="Costs (PPP$/ha)", y="Yield (kg/ha)",
+    title="Production Frontiers (Crop Yield vs. Input Costs)",
+    subtitle="Each point is a respondent") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh[costs_ha_ppp<4000], aes(costs_ha_ppp, yield_ha_kg)) +
+  geom_smooth(aes(color=group, fill=group)) +
+  geom_point(alpha=.7, shape=20) +
+  scale_x_continuous(labels=comma) +
+  scale_y_continuous(labels=comma) +
+  facet_wrap(~group) +
+  coord_cartesian(ylim=c(4000,17000)) +
+  labs(x="Costs (PPP$/ha)", y="Crop Yield (kg/ha)",
+    title="Production Frontiers (Yield vs. Input Costs)",
+    subtitle="Each point is a respondent") +
+  theme_def(legend.position="none")
+
+
+```
+
+NB. Removed 1 outlier.
 
 
 ### Profitability
@@ -306,25 +430,67 @@ ggplot(hh_prod_cost, aes(category, ppp, fill=group)) +
 
 ggplot(hh, aes(x=1:nrow(hh), color=group)) +
   geom_linerange(aes(ymin=costs_ha_ppp, ymax=sales_ha_ppp), size=.6) +
-  geom_point(aes(y=costs_ha_ppp)) +
-  geom_point(aes(y=sales_ha_ppp), shape=18, size=2) +
+  geom_point(aes(y=costs_ha_ppp), shape=20, size=1.4) +
+  geom_point(aes(y=sales_ha_ppp), shape=17, size=1.4) +
   scale_y_continuous(labels=comma) +
-  labs(x=NULL, y=NULL, 
+  labs(x=NULL, y=NULL, color="",
     title="Profit Margin (PPP$ per Hectare)",
     subtitle="Each bar is a respondent") +
-  theme_def(legend.position="right")
-
-ggplot(hh, aes(x=sales_ha_ppp-costs_ha_ppp, fill=group)) +
-  geom_histogram(color="white") + 
-  scale_x_continuous(labels=comma) +
-  facet_wrap("group") +
-  labs(x=NULL, y=NULL, 
-    title="Profit Margin (PPP$ per Hectare)",
-    subtitle="Each bar is a respondent") +
-  theme_def()
+  theme_def(legend.position="top")
 
 ```
 
+Farmers' gross profit margins by gender and across groups in both absolute terms and in relative terms as percentage of total costs per hectare.
+
+```{r}
+
+ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +
+  facet_wrap(~ssd) +
+  labs(x="", y="", fill="",
+    title="Gross Profit Margin in Absolute Terms (PPP$ / ha)",
+    subtitle="Stratified by Gender") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=percent) +
+  facet_wrap(~ssd) +
+  labs(x="", y="", fill="",
+    title="Gross Profit Margin in Relative Terms (% of variable input costs)",
+    subtitle="Stratified by Gender") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh, aes(group, margin_ha_ppp, fill=group)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=comma) +  
+  labs(x="", y="", fill="",
+    title="Gross Profit Margin in Absolute Terms (PPP$ / ha)",
+    subtitle="Stratified by Farmer Group") +
+  theme_def(legend.position="none")
+
+```
+
+```{r}
+
+ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
+  geom_boxplot(alpha=.7) +
+  scale_y_continuous(labels=percent) +  
+  labs(x="", y="", fill="",
+    title="Gross Profit Margin in Relative Terms (% of variable input costs)",
+    subtitle="Stratified by Farmer Group") +
+  theme_def(legend.position="none")
+
+```
 
 
 
