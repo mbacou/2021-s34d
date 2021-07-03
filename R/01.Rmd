@@ -360,7 +360,7 @@ ggplot(hh, aes(gender, sales_ha_ppp, fill=gender)) +
 ```
 
 
-```{r}
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
 ggplot(hh, aes(group, yield_ha_kg, fill=group)) +
   geom_boxplot(alpha=.7) +
@@ -472,8 +472,8 @@ ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~ssd) +
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Absolute Terms (PPP$ / ha)",
-    subtitle="Stratified by Gender") +
+    title="Gross Profit Margin in Absolute Terms",
+    subtitle="Stratified by Gender (PPP$ / ha)") +
   theme_def(legend.position="none")
 
 ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
@@ -481,32 +481,28 @@ ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
   scale_y_continuous(labels=percent) +
   facet_wrap(~ssd) +
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Relative Terms (% of variable input costs)",
-    subtitle="Stratified by Gender") +
+    title="Gross Profit Margin in Relative Terms",
+    subtitle="Stratified by Gender (% of variable input costs)") +
   theme_def(legend.position="none")
 
 ```
 
-```{r}
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
 ggplot(hh, aes(group, margin_ha_ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +  
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Absolute Terms (PPP$ / ha)",
-    subtitle="Stratified by Farmer Group") +
+    title="Gross Profit Margin in Absolute Terms",
+    subtitle="Stratified by Farmer Group (PPP$ / ha)") +
   theme_def(legend.position="none")
-
-```
-
-```{r}
 
 ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=percent) +  
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Relative Terms (% of variable input costs)",
-    subtitle="Stratified by Farmer Group") +
+    title="Gross Profit Margin in Relative Terms",
+    subtitle="Stratified by Farmer Group (% of variable input costs)") +
   theme_def(legend.position="none")
 
 ```
