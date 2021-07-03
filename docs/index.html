@@ -56,6 +56,7 @@
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
 <script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+<link href="libs/ttt_booktabs-1.0/ttt_booktabs.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -136,6 +137,7 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#seed-production-costs"><i class="fa fa-check"></i>Seed Production Costs</a></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#efficiency"><i class="fa fa-check"></i>Efficiency</a></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#profitability"><i class="fa fa-check"></i>Profitability</a></li>
+<li class="chapter" data-level="" data-path="01.html"><a href="01.html#clustering"><i class="fa fa-check"></i>Clustering</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Niger</a></li>
@@ -177,37 +179,39 @@ code span.wa { font-style: italic; } /* Warning */
 <span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thematic)</span>
-<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, </span>
-<span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.path=</span><span class="st">&quot;fig/&quot;</span>, <span class="at">include=</span><span class="cn">TRUE</span>, </span>
-<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">error=</span><span class="cn">FALSE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span>
-<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for plots</span></span>
-<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#94a545&quot;</span>, <span class="st">&quot;#d37d28&quot;</span>, <span class="st">&quot;#8B1E3F&quot;</span>, <span class="st">&quot;#403b33&quot;</span>)</span>
-<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">thematic_on</span>(<span class="st">&quot;transparent&quot;</span>, <span class="st">&quot;#2f2f29&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#e6e7e8&quot;</span>),</span>
-<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font_spec</span>(<span class="fu">c</span>(<span class="st">&quot;Roboto Condensed&quot;</span>, <span class="st">&quot;Roboto&quot;</span>)),</span>
-<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> <span class="fu">alpha</span>(pal, .<span class="dv">9</span>))</span>
-<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>theme_def <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="st">&quot;Roboto Condensed&quot;</span>,</span>
-<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">8</span>, </span>
-<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_fill =</span> <span class="st">&quot;transparent&quot;</span>, ...) <span class="fu">theme_minimal</span>(base_size) <span class="sc">+</span></span>
-<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family=</span>base_font, <span class="at">lineheight=</span>.<span class="dv">8</span>),</span>
-<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;#4799b5&quot;</span>, <span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">9</span>),</span>
-<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>, <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">9</span>),</span>
-<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">8</span>),</span>
-<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>),</span>
-<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>)</span>
-<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme</span>(...)</span>
-<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for tables</span></span>
-<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a>kable_def <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="fu">kable_styling</span>(</span>
-<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">font_size=</span><span class="dv">14</span>, ...)</span></code></pre></div>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ttt)</span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thematic)</span>
+<span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, </span>
+<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.path=</span><span class="st">&quot;fig/&quot;</span>, <span class="at">include=</span><span class="cn">TRUE</span>, </span>
+<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">error=</span><span class="cn">FALSE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span>
+<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ttt.theme=</span><span class="st">&quot;booktabs&quot;</span>) </span>
+<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for plots</span></span>
+<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#94a545&quot;</span>, <span class="st">&quot;#d37d28&quot;</span>, <span class="st">&quot;#8B1E3F&quot;</span>, <span class="st">&quot;#403b33&quot;</span>)</span>
+<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">thematic_on</span>(<span class="st">&quot;transparent&quot;</span>, <span class="st">&quot;#2f2f29&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#e6e7e8&quot;</span>),</span>
+<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font_spec</span>(<span class="fu">c</span>(<span class="st">&quot;Roboto Condensed&quot;</span>, <span class="st">&quot;Roboto&quot;</span>)),</span>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> <span class="fu">alpha</span>(pal, .<span class="dv">9</span>))</span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>theme_def <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_font =</span> <span class="st">&quot;Roboto Condensed&quot;</span>,</span>
+<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">8</span>, </span>
+<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_fill =</span> <span class="st">&quot;transparent&quot;</span>, ...) <span class="fu">theme_minimal</span>(base_size) <span class="sc">+</span></span>
+<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family=</span>base_font, <span class="at">lineheight=</span>.<span class="dv">8</span>),</span>
+<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;#4799b5&quot;</span>, <span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">9</span>),</span>
+<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>, <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">9</span>),</span>
+<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size<span class="sc">*</span>.<span class="dv">8</span>),</span>
+<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>)</span>
+<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme</span>(...)</span>
+<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Default theme for tables</span></span>
+<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a>kable_def <span class="ot">&lt;-</span> <span class="cf">function</span>(...) <span class="fu">kable_styling</span>(</span>
+<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a>  <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), <span class="at">font_size=</span><span class="dv">14</span>, ...)</span></code></pre></div>
 
 </div>
             </section>

@@ -330,6 +330,15 @@ ggplot(hh_prod_cost[!category %in% c("Transport", "Marketing")],
 
 Differences in productivity measures across groups?
 
+```{r}
+
+rndr.meansd <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
+ttt(yield_ha_kg ~ group | gender, data=hh, render=rndr.meansd,
+  caption="Rice Seed Yield (kg / ha)",
+  topclass="table-condensed table-striped table-hover")
+
+```
+
 ```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
 ggplot(hh, aes(gender, yield_ha_kg, fill=gender)) +
@@ -376,7 +385,7 @@ Production frontiers across farmer groups and gender (units of output vs. cost u
 ```{r}
 
 ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
-  geom_smooth() +
+  geom_smooth(size=.8) +
   geom_point(alpha=.7, shape=20) +
   scale_x_continuous(labels=comma) +
   scale_y_continuous(labels=comma) +
@@ -391,7 +400,7 @@ ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
 ```{r}
 
 ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
-  geom_smooth(aes(color=gender, fill=gender)) +
+  geom_smooth(aes(color=gender, fill=gender), size=.8) +
   geom_point(alpha=.7, shape=20) +
   scale_x_continuous(labels=comma) +
   scale_y_continuous(labels=comma) +
@@ -407,7 +416,7 @@ ggplot(hh, aes(costs_ha_ppp, yield_ha_kg)) +
 ```{r}
 
 ggplot(hh[costs_ha_ppp<4000], aes(costs_ha_ppp, yield_ha_kg)) +
-  geom_smooth(aes(color=group, fill=group)) +
+  geom_smooth(aes(color=group, fill=group), size=.8) +
   geom_point(alpha=.7, shape=20) +
   scale_x_continuous(labels=comma) +
   scale_y_continuous(labels=comma) +
@@ -428,6 +437,20 @@ NB. Removed 1 outlier.
 
 ```{r}
 
+rndr.meansd <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
+ttt(margin_ha_ppp ~ group | gender, data=hh, render=rndr.meansd,
+  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha)",
+  topclass="table-condensed table-striped table-hover")
+
+rndr.meansd <- function(x) c(Mean=percent(mean(x, na.rm=T)), SD=percent(sd(x, na.rm=T)))
+ttt(margin_ha_sh ~ group | gender, data=hh, render=rndr.meansd,
+  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs)",
+  topclass="table-condensed table-striped table-hover")
+
+```
+
+```{r}
+
 ggplot(hh, aes(x=1:nrow(hh), color=group)) +
   geom_linerange(aes(ymin=costs_ha_ppp, ymax=sales_ha_ppp), size=.6) +
   geom_point(aes(y=costs_ha_ppp), shape=20, size=1.4) +
@@ -442,7 +465,7 @@ ggplot(hh, aes(x=1:nrow(hh), color=group)) +
 
 Farmers' gross profit margins by gender and across groups in both absolute terms and in relative terms as percentage of total costs per hectare.
 
-```{r}
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
 ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
@@ -452,10 +475,6 @@ ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
     title="Gross Profit Margin in Absolute Terms (PPP$ / ha)",
     subtitle="Stratified by Gender") +
   theme_def(legend.position="none")
-
-```
-
-```{r}
 
 ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
   geom_boxplot(alpha=.7) +
@@ -492,9 +511,9 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 
 ```
 
+### Clustering
 
-
-
+[TBD]
 
 
 

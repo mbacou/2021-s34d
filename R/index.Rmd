@@ -28,11 +28,13 @@ library(scales)
 library(ggplot2)
 library(terra)
 library(data.table)
+library(ttt)
 library(thematic)
 
 knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220, 
   fig.path="fig/", include=TRUE, 
   error=FALSE, warning=FALSE, message=FALSE)
+options(ttt.theme="booktabs") 
 
 # Default theme for plots
 pal <- c("#4799b5", "#94a545", "#d37d28", "#8B1E3F", "#403b33")
