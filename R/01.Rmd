@@ -507,7 +507,7 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 
 ```
 
-### Clustering
+## Clustering
 
 [TBD]
 
