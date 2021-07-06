@@ -511,7 +511,7 @@ ggpairs(
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
-    combo=wrap("summarise_by", color=pal, size=3)),
+    combo=wrap("summarise_by", color=pal, size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
     combo=wrap("box_no_facet", fill=pal, alpha=.8)),
@@ -520,6 +520,7 @@ ggpairs(
     discrete=wrap("barDiag", fill=pal, alpha=.8)),
   title="Correlogram stratified by seed club"
 ) + theme_def(
+  strip.text=element_text(hjust=.5),
   panel.grid.major=element_blank()
 )
 
@@ -532,15 +533,16 @@ ggpairs(
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
-    combo=wrap("summarise_by", color=pal[1:2])),
+    combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
-    continuous=wrap("smooth", shape=NA), 
-    combo=wrap("box_no_facet", fill=pal[1:2])),
+    continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
+    combo=wrap("box_no_facet", fill=pal[1:2], alpha=.8)),
   diag = list(
     continuous=wrap("densityDiag", fill=NA),
-    discrete=wrap("barDiag", fill=pal[1:2])),
+    discrete=wrap("barDiag", fill=pal[1:2], alpha=.8)),
   title="Correlogram stratified by gender"
 ) + theme_def(
+  strip.text=element_text(hjust=.5),
   panel.grid.major=element_blank()
 )
 
