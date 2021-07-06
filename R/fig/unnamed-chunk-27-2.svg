@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='180.00pt' height='180.00pt' viewBox='0 0 180.00 180.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHwxODAuMDB8MC4wMHwxODAuMDA='>
+    <rect x='0.00' y='0.00' width='180.00' height='180.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwxODAuMDB8MC4wMHwxODAuMDA=)'>
+<rect x='-0.000000000000016' y='0.00' width='180.00' height='180.00' style='stroke-width: 0.78; stroke: none;' />
+</g>
+<defs>
+  <clipPath id='cpMjguNzV8MTc2LjAxfDIyLjc2fDE2MC4yMA=='>
+    <rect x='28.75' y='22.76' width='147.26' height='137.44' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMjguNzV8MTc2LjAxfDIyLjc2fDE2MC4yMA==)'>
+<rect x='28.75' y='22.76' width='147.26' height='137.44' style='stroke-width: 0.78; stroke: none;' />
+<polyline points='28.75,147.26 176.01,147.26 ' style='stroke-width: 0.19; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,121.10 176.01,121.10 ' style='stroke-width: 0.19; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,94.94 176.01,94.94 ' style='stroke-width: 0.19; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,68.77 176.01,68.77 ' style='stroke-width: 0.19; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,42.61 176.01,42.61 ' style='stroke-width: 0.19; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,134.18 176.01,134.18 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,108.02 176.01,108.02 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,81.85 176.01,81.85 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,55.69 176.01,55.69 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='28.75,29.53 176.01,29.53 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='45.74,160.20 45.74,22.76 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='74.06,160.20 74.06,22.76 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='102.38,160.20 102.38,22.76 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='130.70,160.20 130.70,22.76 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<polyline points='159.02,160.20 159.02,22.76 ' style='stroke-width: 0.78; stroke: #EBEBEB; stroke-linecap: butt;' />
+<line x1='45.74' y1='114.90' x2='45.74' y2='92.81' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='45.74' y1='133.04' x2='45.74' y2='144.77' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<polygon points='35.12,114.90 35.12,133.04 56.36,133.04 56.36,114.90 35.12,114.90 ' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; fill: #4799B5; fill-opacity: 0.70;' />
+<line x1='35.12' y1='129.48' x2='56.36' y2='129.48' style='stroke-width: 2.13; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<circle cx='74.06' cy='145.30' r='1.95' style='stroke-width: 0.71; stroke: #54544E; stroke-opacity: 0.70; fill: #54544E; fill-opacity: 0.70;' />
+<line x1='74.06' y1='97.35' x2='74.06' y2='90.70' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='74.06' y1='116.12' x2='74.06' y2='121.18' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<polygon points='63.44,97.35 63.44,116.12 84.68,116.12 84.68,97.35 63.44,97.35 ' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; fill: #94A545; fill-opacity: 0.70;' />
+<line x1='63.44' y1='106.56' x2='84.68' y2='106.56' style='stroke-width: 2.13; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='102.38' y1='107.07' x2='102.38' y2='76.78' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='102.38' y1='127.75' x2='102.38' y2='153.95' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<polygon points='91.76,107.07 91.76,127.75 113.00,127.75 113.00,107.07 91.76,107.07 ' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; fill: #D37D28; fill-opacity: 0.70;' />
+<line x1='91.76' y1='119.74' x2='113.00' y2='119.74' style='stroke-width: 2.13; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='130.70' y1='84.78' x2='130.70' y2='74.21' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='130.70' y1='105.01' x2='130.70' y2='113.61' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<polygon points='120.08,84.78 120.08,105.01 141.32,105.01 141.32,84.78 120.08,84.78 ' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; fill: #8B1E3F; fill-opacity: 0.70;' />
+<line x1='120.08' y1='101.79' x2='141.32' y2='101.79' style='stroke-width: 2.13; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='159.02' y1='72.39' x2='159.02' y2='29.00' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<line x1='159.02' y1='101.69' x2='159.02' y2='110.84' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+<polygon points='148.40,72.39 148.40,101.69 169.64,101.69 169.64,72.39 148.40,72.39 ' style='stroke-width: 1.07; stroke: #54544E; stroke-opacity: 0.80; fill: #403B33; fill-opacity: 0.70;' />
+<line x1='148.40' y1='95.29' x2='169.64' y2='95.29' style='stroke-width: 2.13; stroke: #54544E; stroke-opacity: 0.80; stroke-linecap: butt;' />
+</g>
+<g clip-path='url(#cpMC4wMHwxODAuMDB8MC4wMHwxODAuMDA=)'>
+<text x='25.17' y='136.45' text-anchor='end' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='13.50px' lengthAdjust='spacingAndGlyphs'>100%</text>
+<text x='25.17' y='110.29' text-anchor='end' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='13.50px' lengthAdjust='spacingAndGlyphs'>200%</text>
+<text x='25.17' y='84.13' text-anchor='end' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='13.50px' lengthAdjust='spacingAndGlyphs'>300%</text>
+<text x='25.17' y='57.97' text-anchor='end' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='13.50px' lengthAdjust='spacingAndGlyphs'>400%</text>
+<text x='25.17' y='31.80' text-anchor='end' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='13.50px' lengthAdjust='spacingAndGlyphs'>500%</text>
+<text x='45.74' y='168.33' text-anchor='middle' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='20.10px' lengthAdjust='spacingAndGlyphs'>Binh My</text>
+<text x='74.06' y='168.33' text-anchor='middle' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='21.10px' lengthAdjust='spacingAndGlyphs'>Vinh Qui</text>
+<text x='102.38' y='168.33' text-anchor='middle' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='27.07px' lengthAdjust='spacingAndGlyphs'>Vinh Trach</text>
+<text x='130.70' y='168.33' text-anchor='middle' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='17.43px' lengthAdjust='spacingAndGlyphs'>Ta Ben</text>
+<text x='159.02' y='168.33' text-anchor='middle' style='font-size: 6.40px; fill: #4D4D4D; font-family: Roboto Condensed;' textLength='27.66px' lengthAdjust='spacingAndGlyphs'>Trung Hiep</text>
+<text x='28.75' y='18.77' style='font-size: 7.20px; fill: #4799B5; font-family: Roboto Condensed;' textLength='150.17px' lengthAdjust='spacingAndGlyphs'>Stratified by Farmer Group (% of variable input costs)</text>
+<text x='28.75' y='9.67' style='font-size: 8.00px; font-family: Roboto Condensed;' textLength='117.99px' lengthAdjust='spacingAndGlyphs'>Gross Profit Margin in Relative Terms</text>
+</g>
+</svg>
