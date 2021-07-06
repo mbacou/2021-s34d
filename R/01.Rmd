@@ -504,28 +504,32 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 
 Significant associations. 
 
-```{r, fig.height=4}
+```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(`seed club`=group, age, `costs`=costs_ha_ppp, `seed yield`=yield_ha_kg, `margin`=margin_ha_ppp)],
+  hh[, .(`seed club`=group, age, `costs`=costs_ha_ppp, `seed yield`=yield_ha_kg,
+    `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
-    combo=wrap("summarise_by", color=pal)),
+    combo=wrap("summarise_by", color=pal, size=3)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
-    combo=wrap("box_no_facet", fill=pal)),
+    combo=wrap("box_no_facet", fill=pal, alpha=.8)),
   diag = list(
     continuous=wrap("densityDiag", fill=NA),
-    discrete=wrap("barDiag", fill=pal)),
+    discrete=wrap("barDiag", fill=pal, alpha=.8)),
   title="Correlogram stratified by seed club"
+) + theme_def(
+  panel.grid.major=element_blank()
 )
 
 ```
 
-```{r, fig.height=4}
+```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(gender, age, `costs`=costs_ha_ppp, `seed yield`=yield_ha_kg, `margin`=margin_ha_ppp)],
+  hh[, .(gender, age, `costs`=costs_ha_ppp, `seed yield`=yield_ha_kg, 
+    `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
     combo=wrap("summarise_by", color=pal[1:2])),
@@ -536,6 +540,8 @@ ggpairs(
     continuous=wrap("densityDiag", fill=NA),
     discrete=wrap("barDiag", fill=pal[1:2])),
   title="Correlogram stratified by gender"
+) + theme_def(
+  panel.grid.major=element_blank()
 )
 
 ```
