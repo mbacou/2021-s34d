@@ -32,7 +32,7 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="02.html"/>
-<script src="libs/header-attrs-2.8/header-attrs.js"></script>
+<script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -63,6 +63,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -142,7 +143,21 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#clustering"><i class="fa fa-check"></i>Clustering</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Niger</a></li>
-<li class="chapter" data-level="" data-path="03.html"><a href="03.html"><i class="fa fa-check"></i>Guatemala</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html"><i class="fa fa-check"></i>Guatemala</a>
+<ul>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#survey-codebook-1"><i class="fa fa-check"></i>Survey Codebook</a>
+<ul>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#spatial-covariates-1"><i class="fa fa-check"></i>Spatial Covariates</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#constructed-variables-1"><i class="fa fa-check"></i>Constructed Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#descriptive-statistics-1"><i class="fa fa-check"></i>Descriptive Statistics</a>
+<ul>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#respondent-characteristics-1"><i class="fa fa-check"></i>Respondent Characteristics</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#seed-production-costs-1"><i class="fa fa-check"></i>Seed Production Costs</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#efficiency-1"><i class="fa fa-check"></i>Efficiency</a></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#profitability-1"><i class="fa fa-check"></i>Profitability</a></li>
+</ul></li>
+</ul></li>
 <li class="chapter" data-level="" data-path="04.html"><a href="04.html"><i class="fa fa-check"></i>Uganda</a></li>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html"><i class="fa fa-check"></i>Zambia</a></li>
 </ul>
@@ -175,16 +190,16 @@ code span.wa { font-style: italic; } /* Warning */
 </ul>
 <div id="survey-codebook" class="section level2">
 <h2>Survey Codebook</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="01.html#cb2-1" aria-hidden="true" tabindex="-1"></a>xrate <span class="ot">=</span> <span class="fl">7473.67</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="01.html#cb2-1" aria-hidden="true" tabindex="-1"></a>xrate <span class="ot">&lt;-</span> <span class="fl">7473.67</span></span>
 <span id="cb2-2"><a href="01.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="01.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load respondent data</span></span>
 <span id="cb2-4"><a href="01.html#cb2-4" aria-hidden="true" tabindex="-1"></a>hh <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/vnm/hh.csv&quot;</span>)</span>
 <span id="cb2-5"><a href="01.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load group data</span></span>
 <span id="cb2-6"><a href="01.html#cb2-6" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/vnm/group.csv&quot;</span>)</span>
 <span id="cb2-7"><a href="01.html#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Load final codebook</span></span>
-<span id="cb2-8"><a href="01.html#cb2-8" aria-hidden="true" tabindex="-1"></a>lbl <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/vnm/codebook.csv&quot;</span>)</span></code></pre></div>
+<span id="cb2-8"><a href="01.html#cb2-8" aria-hidden="true" tabindex="-1"></a>lbl <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/codebook.csv&quot;</span>)</span></code></pre></div>
 <p>There are 21 variables and 60 observations in this set. A detailed codebook is shown below.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="01.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(lbl, <span class="at">align=</span><span class="st">&quot;llccc&quot;</span>, <span class="at">caption=</span><span class="st">&quot;Survey Codebook&quot;</span>,)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="01.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(lbl[label <span class="sc">%in%</span> <span class="fu">names</span>(hh)], <span class="at">align=</span><span class="st">&quot;llccc&quot;</span>, <span class="at">caption=</span><span class="st">&quot;Survey Codebook&quot;</span>)</span></code></pre></div>
 <table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
 <span id="tab:unnamed-chunk-2">Tab. 1: </span>Survey Codebook
@@ -316,7 +331,7 @@ FALSE
 seed_ha_lcu
 </td>
 <td style="text-align:left;">
-Cost seed per ha (VND)
+Cost seed per ha (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -333,7 +348,7 @@ FALSE
 fert_ha_lcu
 </td>
 <td style="text-align:left;">
-Cost of fertilizer per ha (VND)
+Cost of fertilizer per ha (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -350,7 +365,7 @@ FALSE
 pest_ha_lcu
 </td>
 <td style="text-align:left;">
-Cost of pesticide per ha (VND)
+Cost of pesticide per ha (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -367,7 +382,7 @@ FALSE
 tran_ha_lcu
 </td>
 <td style="text-align:left;">
-Cost of transport per ha (VND)
+Cost of transport per ha (LCU)
 </td>
 <td style="text-align:center;">
 logical
@@ -384,7 +399,7 @@ FALSE
 labor_ha_lcu
 </td>
 <td style="text-align:left;">
-Labor cost (VND)
+Labor cost (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -401,7 +416,7 @@ FALSE
 cert_lcu
 </td>
 <td style="text-align:left;">
-Inspection / certification Fees (VND)
+Inspection / certification Fees (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -418,7 +433,7 @@ FALSE
 labl_kg_lcu
 </td>
 <td style="text-align:left;">
-Labelling costs per kg (VND)
+Labelling costs per kg (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -435,7 +450,7 @@ FALSE
 pckg_kg_lcu
 </td>
 <td style="text-align:left;">
-Packaging costs per kg (VND)
+Packaging costs per kg (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -452,7 +467,7 @@ FALSE
 mark_kg_lcu
 </td>
 <td style="text-align:left;">
-Other marketing costs? (VND)
+Other marketing costs? (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -486,7 +501,7 @@ FALSE
 sales_kg_lcu
 </td>
 <td style="text-align:left;">
-Selling price of seed per kg (VND)
+Selling price of seed per kg (LCU)
 </td>
 <td style="text-align:center;">
 numeric
@@ -566,261 +581,6 @@ lcu/ha
 FALSE
 </td>
 </tr>
-<tr>
-<td style="text-align:left;">
-margin_ha_lcu
-</td>
-<td style="text-align:left;">
-Gross margin
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-lcu/ha
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tfp
-</td>
-<td style="text-align:left;">
-Total factor productivity
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-kg/lcu
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ssd
-</td>
-<td style="text-align:left;">
-Farmer participates in formal seed system distribution
-</td>
-<td style="text-align:center;">
-logical
-</td>
-<td style="text-align:center;">
-true/false
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-group_year
-</td>
-<td style="text-align:left;">
-Year the group was established
-</td>
-<td style="text-align:center;">
-integer
-</td>
-<td style="text-align:center;">
-year
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-group_size
-</td>
-<td style="text-align:left;">
-Members in the group
-</td>
-<td style="text-align:center;">
-integer
-</td>
-<td style="text-align:center;">
-members
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-soil_type
-</td>
-<td style="text-align:left;">
-Primary soil type
-</td>
-<td style="text-align:center;">
-character
-</td>
-<td style="text-align:center;">
-class
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-seasons
-</td>
-<td style="text-align:left;">
-Number of seasons per year
-</td>
-<td style="text-align:center;">
-integer
-</td>
-<td style="text-align:center;">
-seasons/year
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-irrigated
-</td>
-<td style="text-align:left;">
-Level of irrigation
-</td>
-<td style="text-align:center;">
-character
-</td>
-<td style="text-align:center;">
-class
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-market_access
-</td>
-<td style="text-align:left;">
-Market access
-</td>
-<td style="text-align:center;">
-character
-</td>
-<td style="text-align:center;">
-class
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-ttrade
-</td>
-<td style="text-align:left;">
-Presence of transboundary trade
-</td>
-<td style="text-align:center;">
-logical
-</td>
-<td style="text-align:center;">
-true/false
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-costs_ha_lcu_imp
-</td>
-<td style="text-align:left;">
-Total costs (imputed)
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-lcu/ha
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sales_ha_sh
-</td>
-<td style="text-align:left;">
-Gross sales as share of tpc
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-share
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sales_ha_ppp
-</td>
-<td style="text-align:left;">
-Gross sales in PPP equivalent
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-ppp/ha
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-margin_ha_sh
-</td>
-<td style="text-align:left;">
-Margin as share of tpc
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-share
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-margin_ha_ppp
-</td>
-<td style="text-align:left;">
-Margin in PPP equivalent
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-ppp/ha
-</td>
-<td style="text-align:center;">
-TRUE
-</td>
-</tr>
 </tbody>
 </table>
 <p>Recode variable names.</p>
@@ -831,11 +591,12 @@ TRUE
 <span id="cb5-3"><a href="01.html#cb5-3" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
 <span id="cb5-4"><a href="01.html#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">hhid =</span> <span class="fu">paste</span>(<span class="st">&quot;VNM&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="fu">format</span>(<span class="dv">1</span><span class="sc">:</span>.N, <span class="at">width=</span><span class="dv">3</span>)), <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
 <span id="cb5-5"><a href="01.html#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iso3 =</span> <span class="st">&quot;VNM&quot;</span>,</span>
-<span id="cb5-6"><a href="01.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm1_nm =</span> <span class="fu">factor</span>(adm1_nm),</span>
-<span id="cb5-7"><a href="01.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels=</span>hh[, <span class="fu">unique</span>(group)]),</span>
-<span id="cb5-8"><a href="01.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">Nam=</span><span class="st">&quot;Male&quot;</span>, Nữ<span class="ot">=</span><span class="st">&quot;Female&quot;</span>)),</span>
-<span id="cb5-9"><a href="01.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssd =</span> <span class="fu">factor</span>(cert_lcu <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Informal&quot;</span>, <span class="st">&quot;Formal&quot;</span>))</span>
-<span id="cb5-10"><a href="01.html#cb5-10" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
+<span id="cb5-6"><a href="01.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">crop =</span> <span class="st">&quot;rice&quot;</span>,</span>
+<span id="cb5-7"><a href="01.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm1_nm =</span> <span class="fu">factor</span>(adm1_nm),</span>
+<span id="cb5-8"><a href="01.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels=</span>hh[, <span class="fu">unique</span>(group)]),</span>
+<span id="cb5-9"><a href="01.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">Nam=</span><span class="st">&quot;Male&quot;</span>, Nữ<span class="ot">=</span><span class="st">&quot;Female&quot;</span>)),</span>
+<span id="cb5-10"><a href="01.html#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ssd =</span> <span class="fu">factor</span>(cert_lcu <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Informal&quot;</span>, <span class="st">&quot;Formal&quot;</span>))</span>
+<span id="cb5-11"><a href="01.html#cb5-11" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
 </div>
 <div id="data-enrichment" class="section level2">
 <h2>Data Enrichment</h2>
@@ -1094,18 +855,17 @@ Yes
 <div id="respondent-characteristics" class="section level3">
 <h3>Respondent Characteristics</h3>
 <p>First a breakdown by group.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="01.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalluvial)</span>
-<span id="cb14-2"><a href="01.html#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb14-3"><a href="01.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, ssd, gender)],</span>
-<span id="cb14-4"><a href="01.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>adm1_nm, <span class="at">axis2=</span>gender, <span class="at">axis3=</span>ssd, <span class="at">y=</span>N)) <span class="sc">+</span></span>
-<span id="cb14-5"><a href="01.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb14-6"><a href="01.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="01.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="01.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Province&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Seed Distribution&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb14-9"><a href="01.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Club&quot;</span>,</span>
-<span id="cb14-10"><a href="01.html#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Survey Respondents (Vietnam)&quot;</span>,</span>
-<span id="cb14-11"><a href="01.html#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stratified by club and demographics (N = 60)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb14-12"><a href="01.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="01.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb14-2"><a href="01.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, ssd, gender)],</span>
+<span id="cb14-3"><a href="01.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>adm1_nm, <span class="at">axis2=</span>gender, <span class="at">axis3=</span>ssd, <span class="at">y=</span>N)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="01.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="01.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="01.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="01.html#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Province&quot;</span>, <span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Seed Distribution&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="01.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Club&quot;</span>,</span>
+<span id="cb14-9"><a href="01.html#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Survey Respondents (Vietnam)&quot;</span>,</span>
+<span id="cb14-10"><a href="01.html#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stratified by club and demographics (N = 60)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="01.html#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
 <p><img src="fig/unnamed-chunk-10-1.svg" width="1100" /></p>
 <p>Showing contingency table between each pair of categorical variables (seed club <code>group</code>, <code>gender</code>, and use of formal seed system distribution <code>ssd</code>). Rice in Vietnam is a male-dominated production, hence the absence of female respondents in a few clubs.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="01.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt_ftable</span>(hh, <span class="at">vars=</span><span class="fu">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;ssd&quot;</span>))</span></code></pre></div>

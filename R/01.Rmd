@@ -14,22 +14,22 @@ Notes:
 
 ```{r}
 
-xrate = 7473.67
+xrate <- 7473.67
 
 # Load respondent data
 hh <- fread("../data/vnm/hh.csv")
 # Load group data
 group <- fread("../data/vnm/group.csv")
 # Load final codebook
-lbl <- fread("../data/vnm/codebook.csv")
+lbl <- fread("../data/codebook.csv")
 
 ```
 
-There are 21 variables and 60 observations in this set. A detailed codebook is shown below.
+There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A detailed codebook is shown below.
 
 ```{r}
 
-kbl(lbl, align="llccc", caption="Survey Codebook",)
+kbl(lbl[label %in% names(hh)], align="llccc", caption="Survey Codebook")
 
 ```
 
@@ -50,6 +50,7 @@ setorder(hh, adm1_nm, group, gender)
 hh[, `:=`(
   hhid = paste("VNM", gsub(" ", "0", format(1:.N, width=3)), sep=""),
   iso3 = "VNM",
+  crop = "rice",
   adm1_nm = factor(adm1_nm),
   group = factor(group, levels=hh[, unique(group)]),
   gender = factor(gender, labels=c(Nam="Male", Nữ="Female")),
@@ -188,7 +189,6 @@ First a breakdown by group.
 
 ```{r, fig.height=3.5}
 
-library(ggalluvial)
 ggplot(
   hh[, .N, by=.(adm1_nm, group, ssd, gender)],
   aes(axis1=adm1_nm, axis2=gender, axis3=ssd, y=N)) +
