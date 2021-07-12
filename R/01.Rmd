@@ -564,7 +564,7 @@ ggpairs(
 ```{r save-vnm}
 
 rm(tmp, x, y, i, fmt)
-save.image("../tmp/data_vnm.RData")
+saveRDS(hh, "../tmp/data_vnm.rds")
 
 ```
 

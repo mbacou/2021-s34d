@@ -269,7 +269,7 @@ ggplot(tbl, aes(group, share, fill=type)) +
 
 Are there significant differences across groups?
 
-```{r, fig.height=4}
+```{r, fig.height=5}
 
 ggplot(hh_prod_cost, 
   aes(type, ppp, fill=gender)) +
@@ -513,7 +513,18 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 ```{r save-zmb}
 
 rm(tmp, x, y, i, fmt)
-save.image("../tmp/data_zmb.RData")
+saveRDS(hh, "../tmp/data_zmb.rds")
+
+```
+
+```{r}
+
+gtm <- reaRDS("../tmp/data_gtm.rds")
+nre <- reaRDS("../tmp/data_nre.rds")
+vnm <- reaRDS("../tmp/data_vnm.rds")
+zmb <- reaRDS("../tmp/data_zmb.rds")
+hh <- rbind(gtm, nre, vnm, zmb)
+fwrite(hh, "../data/hh.csv")
 
 ```
 
