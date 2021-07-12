@@ -47,7 +47,12 @@ hh[, `:=`(
   hhid = paste("GTM", gsub(" ", "0", format(1:.N, width=3)), sep=""),
   iso3 = "GTM",
   adm1_nm = factor(adm1_nm),
-  group = factor(group, levels=hh[, unique(group)]),
+  group = factor(group, labels=c(
+    `ACORDI` = "Acordi",
+    `PAQUIX` = "Paquix",
+    `SAN BARTOLO` = "San Bartolo",
+    `ADAT, AXOLA, ADIPY` = "Adat Axola Adipy"
+  )),
   gender = factor(gender, labels=c(Male="Male", Female="Female")),
   age = factor(age, labels=c(`15-29`="< 30", `30`="≥ 30"))
 )]
@@ -160,14 +165,14 @@ First a breakdown by group.
 
 ggplot(
   hh[, .N, by=.(adm1_nm, group, age, gender, crop)],
-  aes(axis1=crop, axis2=gender, axis3=age, y=N)) +
+  aes(axis1=gender, axis2=age, axis3=crop, y=N)) +
   geom_alluvium(aes(fill=group), width=1/4) +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
-  scale_x_discrete(limits=c("Province", "Crop", "Gender", "Age")) +
+  scale_x_discrete(limits=c("Gender", "Age", "Crop")) +
   labs(y=NULL, fill="Seed Club",
     title = "Survey Respondents (Guatemala)",
-    subtitle = "Stratified by club and demographics (N = 39)") +
+    subtitle = "Stratified by club and demographics") +
   theme_def(axis.text=element_text(face="bold"))
 
 
@@ -203,7 +208,7 @@ We then look at the general breakdown and distribution of input costs across see
 
 Note that Acordi and Paquix grow potato, while San Bartolo and Adapt grow bean.
 
-```{r, out.width="50%", fig.show="hold", fig.width=2.5, fig.asp=1}
+```{r}
 
 ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
@@ -211,7 +216,7 @@ ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
   facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
     title="Total Input Costs (PPP$ / ha) - Guatemala",
-    subtitle="Stratified by gender") +
+    subtitle="Stratified by gender and crop type") +
   theme_def(legend.position="none")
 
 ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
@@ -220,7 +225,7 @@ ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
   facet_wrap(~crop, scales="free") +  
   labs(x="", y="", fill="",
     title="Total Input Costs (PPP$ / ha) - Guatemala",
-    subtitle="Stratified by seed club") +
+    subtitle="Stratified by seed club and crop type") +
   theme_def(legend.position="none")
 
 ```
@@ -258,7 +263,7 @@ ggplot(tbl, aes(group, share, fill=type)) +
   facet_wrap(~crop, scales="free_x") +
   labs(y="", x="",
     title="Breakdown of Input Costs by Category - Guatemala",
-    subtitle="Stratified by seed club") +
+    subtitle="Stratified by seed club and crop type") +
   theme_def()
 
 ```
@@ -271,20 +276,22 @@ ggplot(hh_prod_cost,
   aes(type, ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +
+  coord_flip() +
   facet_wrap(~crop, scales="free_x") +  
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare) - Guatemala",
-    subtitle="Stratified by gender") +
+    subtitle="Stratified by gender and crop type") +
   theme_def(legend.position="top")
 
 ggplot(hh_prod_cost, 
   aes(type, ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +
+  coord_flip() +
   facet_wrap(~crop, scales="free_x") +
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare) - Guatemala",
-    subtitle="Stratified by seed club") +
+    subtitle="Stratified by seed club and crop type") +
   theme_def(legend.position="top")
 
 ```
@@ -310,7 +317,7 @@ ttt(yield_ha_kg ~ group | age, data=hh, render=fmt,
 
 ```
 
-```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+```{r}
 
 ggplot(hh, aes(gender, yield_ha_kg, fill=gender)) +
   geom_boxplot(alpha=.7) +
@@ -333,13 +340,13 @@ ggplot(hh, aes(gender, sales_ha_ppp, fill=gender)) +
 ```
 
 
-```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+```{r}
 
 ggplot(hh, aes(group, yield_ha_kg, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_x_discrete(labels=label_wrap(5)) +
   scale_y_continuous(labels=comma) +
-    facet_wrap(~crop, scales="free") +
+  facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
     title="Seed Yield (Kg / ha) - Guatemala",
     subtitle="Stratified by seed club") +
@@ -349,7 +356,7 @@ ggplot(hh, aes(group, sales_ha_ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_x_discrete(labels=label_wrap(5)) +
   scale_y_continuous(labels=comma) +
-    facet_wrap(~crop, scales="free") +
+  facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
     title="Total Seed Sales (PPP$ / ha) - Guatemala",
     subtitle="Stratified by seed club") +

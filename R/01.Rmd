@@ -169,6 +169,7 @@ hh_prod_cost[hh, on=.(hhid), `:=`(
   # Add types
   group = i.group,
   gender = i.gender,
+  crop = i.crop,
   ssd = i.ssd
 )][, `:=`(
   # Add cost shares and PPP terms
@@ -237,6 +238,7 @@ We then look at the general breakdown and distribution of input costs across see
 ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +
+  facet_wrap(~crop) +
   labs(x="", y="", fill="",
     title="Total Input Costs (PPP$ / ha) - Vietnam",
     subtitle="Stratified by gender") +
@@ -245,6 +247,7 @@ ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
 ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +  
+  facet_wrap(~crop) +
   labs(x="", y="", fill="",
     title="Total Input Costs (PPP$ / ha) - Vietnam",
     subtitle="Stratified by seed club") +
@@ -298,6 +301,8 @@ ggplot(hh_prod_cost[!type %in% c("Transport", "Marketing")],
   aes(type, ppp, fill=gender)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +
+  coord_flip() +
+  facet_wrap(~crop) +  
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare) - Vietnam",
     subtitle="Stratified by gender") +
@@ -307,6 +312,8 @@ ggplot(hh_prod_cost[!type %in% c("Transport", "Marketing")],
   aes(type, ppp, fill=group)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=comma) +  
+  coord_flip() +
+  facet_wrap(~crop) +  
   labs(x="", y="", fill="",
     title="Input Costs by Category (PPP$ by Hectare) - Vietnam",
     subtitle="Stratified by seed club") +
