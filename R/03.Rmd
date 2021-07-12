@@ -49,7 +49,7 @@ hh[, `:=`(
   adm1_nm = factor(adm1_nm),
   group = factor(group, levels=hh[, unique(group)]),
   gender = factor(gender, labels=c(Male="Male", Female="Female")),
-  age = factor(age, labels=c(`< 30`="15-29", `≥ 30`="30"))
+  age = factor(age, labels=c(`15-29`="< 30", `30`="≥ 30"))
 )]
 
 ```
@@ -160,7 +160,7 @@ First a breakdown by group.
 
 ggplot(
   hh[, .N, by=.(adm1_nm, group, age, gender, crop)],
-  aes(axis1=adm1_nm, axis2=crop, axis3=gender, axis4=age, y=N)) +
+  aes(axis1=crop, axis2=gender, axis3=age, y=N)) +
   geom_alluvium(aes(fill=group), width=1/4) +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
@@ -188,7 +188,7 @@ Mantel-Haenszel test shows weak association between the 3 variables. This is fur
 mosaicplot(~gender+age, hh, shade=T,
   main=NA, xlab="Gender", ylab="Age")
 
-mosaicplot(~adm1_nm+age, hh, shade=T,
+mosaicplot(~group+age, hh, shade=T,
   main=NA, xlab="Province", ylab="Age")
 
 ```
@@ -210,7 +210,7 @@ ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
-    title="Total Input Costs (PPP$ / ha)",
+    title="Total Input Costs (PPP$ / ha) - Guatemala",
     subtitle="Stratified by gender") +
   theme_def(legend.position="none")
 
@@ -219,7 +219,7 @@ ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free") +  
   labs(x="", y="", fill="",
-    title="Total Input Costs (PPP$ / ha)",
+    title="Total Input Costs (PPP$ / ha) - Guatemala",
     subtitle="Stratified by seed club") +
   theme_def(legend.position="none")
 
@@ -239,7 +239,7 @@ ggplot(tbl, aes(gender, share, fill=type)) +
   scale_fill_manual("", values=colorRampPalette(pal)(9)) +
   facet_wrap(~crop) +
   labs(y="", x="",
-    title="Breakdown of Input Costs by Category",
+    title="Breakdown of Input Costs by Category - Guatemala",
     subtitle="Stratified by gender and crop types") +
   theme_def()
 
@@ -257,7 +257,7 @@ ggplot(tbl, aes(group, share, fill=type)) +
   scale_fill_manual("", values=colorRampPalette(pal)(9)) +
   facet_wrap(~crop, scales="free_x") +
   labs(y="", x="",
-    title="Breakdown of Input Costs by Category",
+    title="Breakdown of Input Costs by Category - Guatemala",
     subtitle="Stratified by seed club") +
   theme_def()
 
@@ -273,7 +273,7 @@ ggplot(hh_prod_cost,
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free_x") +  
   labs(x="", y="", fill="",
-    title="Input Costs by Category (PPP$ by Hectare)",
+    title="Input Costs by Category (PPP$ by Hectare) - Guatemala",
     subtitle="Stratified by gender") +
   theme_def(legend.position="top")
 
@@ -283,7 +283,7 @@ ggplot(hh_prod_cost,
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free_x") +
   labs(x="", y="", fill="",
-    title="Input Costs by Category (PPP$ by Hectare)",
+    title="Input Costs by Category (PPP$ by Hectare) - Guatemala",
     subtitle="Stratified by seed club") +
   theme_def(legend.position="top")
 
@@ -298,7 +298,7 @@ Differences in productivity measures across groups?
 
 fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(yield_ha_kg ~ group | gender, data=hh, render=fmt,
-  caption="Seed Yield (kg / ha)")
+  caption="Seed Yield (kg / ha) - Guatemala")
 
 ```
 
@@ -306,7 +306,7 @@ ttt(yield_ha_kg ~ group | gender, data=hh, render=fmt,
 
 fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(yield_ha_kg ~ group | age, data=hh, render=fmt,
-  caption="Seed Yield (kg / ha)")
+  caption="Seed Yield (kg / ha) - Guatemala")
 
 ```
 
@@ -317,7 +317,7 @@ ggplot(hh, aes(gender, yield_ha_kg, fill=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free_y") +  
   labs(x="", y="", fill="",
-    title="Seed Yield (kg / ha)",
+    title="Seed Yield (kg / ha) - Guatemala",
     subtitle="Stratified by gender") +
   theme_def(legend.position="none")
 
@@ -326,7 +326,7 @@ ggplot(hh, aes(gender, sales_ha_ppp, fill=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop, scales="free_y") +  
   labs(x="", y="", fill="",
-    title="Total Seed Sales (PPP$ / ha)",
+    title="Total Seed Sales (PPP$ / ha) - Guatemala",
     subtitle="Stratified by gender") +
   theme_def(legend.position="none")
 
@@ -341,7 +341,7 @@ ggplot(hh, aes(group, yield_ha_kg, fill=group)) +
   scale_y_continuous(labels=comma) +
     facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
-    title="Seed Yield (Kg / ha)",
+    title="Seed Yield (Kg / ha) - Guatemala",
     subtitle="Stratified by seed club") +
   theme_def(legend.position="none")
 
@@ -351,7 +351,7 @@ ggplot(hh, aes(group, sales_ha_ppp, fill=group)) +
   scale_y_continuous(labels=comma) +
     facet_wrap(~crop, scales="free") +
   labs(x="", y="", fill="",
-    title="Total Seed Sales (PPP$ / ha)",
+    title="Total Seed Sales (PPP$ / ha) - Guatemala",
     subtitle="Stratified by seed club") +
   theme_def(legend.position="none")
 
@@ -373,7 +373,7 @@ ggplot(hh[!hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg)) +
   facet_wrap(~crop, scales="free") +
   #coord_cartesian(ylim=c(4000, 14000)) +
   labs(x="", y="",
-    title="Production Frontier (Output vs. Input)",
+    title="Production Frontier (Output vs. Input) - Guatemala",
     subtitle="Each point is a respondent (kg vs. PPP$ / ha)") +
   theme_def(legend.position="none")
 
@@ -389,7 +389,7 @@ ggplot(hh[!hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg)) +
   facet_wrap(~crop, scales="free") +
   #coord_cartesian(ylim=c(4000, 14000)) +
   labs(x="", y="",
-    title="Production Frontier (Output vs. Input)",
+    title="Production Frontier (Output vs. Input) - Guatemala",
     subtitle="Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)") +
   theme_def(legend.position="right")
 
@@ -405,7 +405,7 @@ ggplot(hh[!hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg)) +
   facet_wrap(~crop, scales="free") +
   #coord_cartesian(ylim=c(4000, 14000)) +
   labs(x="", y="",
-    title="Production Frontier (Output vs. Input)",
+    title="Production Frontier (Output vs. Input) - Guatemala",
     subtitle="Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)") +
   theme_def(legend.position="right")
 
@@ -422,11 +422,11 @@ By gender:
 
 fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(margin_ha_ppp ~ group | gender, data=hh, render=fmt,
-  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha)")
+  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Guatemala")
 
 fmt <- function(x) c(Mean=percent(mean(x, na.rm=T)), SD=percent(sd(x, na.rm=T)))
 ttt(margin_ha_sh ~ group | gender, data=hh, render=fmt,
-  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs)")
+  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Guatemala")
 
 ```
 
@@ -436,11 +436,11 @@ By age group:
 
 fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(margin_ha_ppp ~ group | age, data=hh, render=fmt,
-  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha)")
+  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Guatemala")
 
 fmt <- function(x) c(Mean=percent(mean(x, na.rm=T)), SD=percent(sd(x, na.rm=T)))
 ttt(margin_ha_sh ~ group | age, data=hh, render=fmt,
-  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs)")
+  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Guatemala")
 
 ```
 
@@ -452,7 +452,7 @@ ggplot(hh, aes(x=1:nrow(hh), color=group)) +
   geom_point(aes(y=sales_ha_ppp), shape=17, size=1.4) +
   scale_y_continuous(labels=comma) +
   labs(x=NULL, y=NULL, color="", linetype="",
-    title="Profit Margin (PPP$ / ha)",
+    title="Profit Margin (PPP$ / ha) - Guatemala",
     subtitle="Each bar is a respondent's gross profit margin") +
   theme_def(legend.position="right")
 
@@ -467,7 +467,7 @@ ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop) +
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Absolute Terms",
+    title="Gross Profit Margin in Absolute Terms - Guatemala",
     subtitle="Stratified by gender (PPP$ / ha)") +
   theme_def(legend.position="none")
 
@@ -476,7 +476,7 @@ ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
   scale_y_continuous(labels=percent) +
   facet_wrap(~crop) +
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Relative Terms",
+    title="Gross Profit Margin in Relative Terms - Guatemala",
     subtitle="Stratified by gender (% of total costs)") +
   theme_def(legend.position="none")
 
@@ -489,7 +489,7 @@ ggplot(hh, aes(group, margin_ha_ppp, fill=group)) +
   scale_x_discrete(labels=label_wrap(5)) +
   scale_y_continuous(labels=comma) +  
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Absolute Terms",
+    title="Gross Profit Margin in Absolute Terms - Guatemala",
     subtitle="Stratified by seed club (PPP$ / ha)") +
   theme_def(legend.position="none")
 
@@ -498,7 +498,7 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
   scale_x_discrete(labels=label_wrap(5)) +  
   scale_y_continuous(labels=percent) +  
   labs(x="", y="", fill="",
-    title="Gross Profit Margin in Relative Terms",
+    title="Gross Profit Margin in Relative Terms - Guatemala",
     subtitle="Stratified by seed club (% of total costs)") +
   theme_def(legend.position="none")
 
