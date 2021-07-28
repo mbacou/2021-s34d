@@ -26,7 +26,6 @@ library(kableExtra)
 library(viridisLite)
 library(scales)
 library(ggplot2)
-library(terra)
 library(data.table)
 library(ttt)
 library(thematic)
@@ -91,6 +90,17 @@ ttt_ftable <- function(data, vars, ...) {
       "| p-value = ", comma(test[[3]], acc=.0001))
   )
 }
+
+# Helper - Formatters
+fmt <- function(x) c(
+  Mean = comma(mean(x, na.rm=T)), 
+  Med = comma(median(x, na.rm=T)),
+  SD = comma(sd(x, na.rm=T)))
+
+fmt_pct <- function(x) c(
+  Mean = percent(mean(x, na.rm=T)), 
+  Med = percent(median(x, na.rm=T)),
+  SD = percent(sd(x, na.rm=T)))
 
 ```
 

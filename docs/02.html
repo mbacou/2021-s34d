@@ -146,7 +146,6 @@ code span.wa { font-style: italic; } /* Warning */
 <ul>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#survey-codebook-1"><i class="fa fa-check"></i>Survey Codebook</a>
 <ul>
-<li class="chapter" data-level="" data-path="02.html"><a href="02.html#spatial-covariates-1"><i class="fa fa-check"></i>Spatial Covariates</a></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#constructed-variables-1"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#descriptive-statistics-1"><i class="fa fa-check"></i>Descriptive Statistics</a>
@@ -156,12 +155,12 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#efficiency-1"><i class="fa fa-check"></i>Efficiency</a></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#profitability-1"><i class="fa fa-check"></i>Profitability</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="02.html"><a href="02.html#correlation-1"><i class="fa fa-check"></i>Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html"><i class="fa fa-check"></i>Guatemala</a>
 <ul>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#survey-codebook-2"><i class="fa fa-check"></i>Survey Codebook</a>
 <ul>
-<li class="chapter" data-level="" data-path="03.html"><a href="03.html#spatial-covariates-2"><i class="fa fa-check"></i>Spatial Covariates</a></li>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#constructed-variables-2"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#descriptive-statistics-2"><i class="fa fa-check"></i>Descriptive Statistics</a>
@@ -177,7 +176,6 @@ code span.wa { font-style: italic; } /* Warning */
 <ul>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#survey-codebook-3"><i class="fa fa-check"></i>Survey Codebook</a>
 <ul>
-<li class="chapter" data-level="" data-path="05.html"><a href="05.html#spatial-covariates-3"><i class="fa fa-check"></i>Spatial Covariates</a></li>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#constructed-variables-3"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#descriptive-statistics-3"><i class="fa fa-check"></i>Descriptive Statistics</a>
@@ -215,17 +213,18 @@ code span.wa { font-style: italic; } /* Warning */
 </ul>
 <div id="survey-codebook-1" class="section level2">
 <h2>Survey Codebook</h2>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="02.html#cb36-1" aria-hidden="true" tabindex="-1"></a>xrate <span class="ot">&lt;-</span> <span class="fl">257.60</span></span>
-<span id="cb36-2"><a href="02.html#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="02.html#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load respondent data</span></span>
-<span id="cb36-4"><a href="02.html#cb36-4" aria-hidden="true" tabindex="-1"></a>hh <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/nre/hh.csv&quot;</span>)</span>
-<span id="cb36-5"><a href="02.html#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load complete codebook</span></span>
-<span id="cb36-6"><a href="02.html#cb36-6" aria-hidden="true" tabindex="-1"></a>lbl <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/codebook.csv&quot;</span>)</span></code></pre></div>
-<p>There are 23 variables and 80 observations in this set. A detailed codebook is shown below.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="02.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(lbl[label <span class="sc">%in%</span> <span class="fu">names</span>(hh)], <span class="at">align=</span><span class="st">&quot;llccc&quot;</span>, <span class="at">caption=</span><span class="st">&quot;Survey Codebook&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="02.html#cb40-1" aria-hidden="true" tabindex="-1"></a>xrate <span class="ot">&lt;-</span> <span class="fl">257.60</span></span>
+<span id="cb40-2"><a href="02.html#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="02.html#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load respondent data</span></span>
+<span id="cb40-4"><a href="02.html#cb40-4" aria-hidden="true" tabindex="-1"></a>hh <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/nre/hh.csv&quot;</span>)</span>
+<span id="cb40-5"><a href="02.html#cb40-5" aria-hidden="true" tabindex="-1"></a>group <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/nre/group.csv&quot;</span>)</span>
+<span id="cb40-6"><a href="02.html#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load complete codebook</span></span>
+<span id="cb40-7"><a href="02.html#cb40-7" aria-hidden="true" tabindex="-1"></a>lbl <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/codebook.csv&quot;</span>)</span></code></pre></div>
+<p>There are 24 variables and 80 observations in this set. A detailed codebook is shown below.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="02.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(lbl[label <span class="sc">%in%</span> <span class="fu">names</span>(hh)], <span class="at">align=</span><span class="st">&quot;llccc&quot;</span>, <span class="at">caption=</span><span class="st">&quot;Survey Codebook&quot;</span>)</span></code></pre></div>
 <table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
 <caption style="font-size: initial !important;">
-<span id="tab:unnamed-chunk-31">Tab. 2: </span>Survey Codebook
+<span id="tab:unnamed-chunk-34">Tab. 2: </span>Survey Codebook
 </caption>
 <thead>
 <tr>
@@ -249,16 +248,16 @@ constructed
 <tbody>
 <tr>
 <td style="text-align:left;">
-hhid
+adm2_nm
 </td>
 <td style="text-align:left;">
-Code
+District
 </td>
 <td style="text-align:center;">
 character
 </td>
 <td style="text-align:center;">
-uid
+class
 </td>
 <td style="text-align:center;">
 FALSE
@@ -266,27 +265,10 @@ FALSE
 </tr>
 <tr>
 <td style="text-align:left;">
-age
+adm3_nm
 </td>
 <td style="text-align:left;">
-Age
-</td>
-<td style="text-align:center;">
-numeric
-</td>
-<td style="text-align:center;">
-years
-</td>
-<td style="text-align:center;">
-FALSE
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-gender
-</td>
-<td style="text-align:left;">
-Sex
+Location
 </td>
 <td style="text-align:center;">
 character
@@ -317,10 +299,44 @@ FALSE
 </tr>
 <tr>
 <td style="text-align:left;">
-adm1_nm
+code
 </td>
 <td style="text-align:left;">
-Province
+Code
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+years
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:left;">
+Sex
 </td>
 <td style="text-align:center;">
 character
@@ -621,98 +637,480 @@ lcu/ha
 FALSE
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:center;">
+date
+</td>
+<td style="text-align:center;">
+date
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+</tr>
 </tbody>
 </table>
 <p>Recode variable names.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="02.html#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(hh, lbl<span class="sc">$</span>label, lbl<span class="sc">$</span>code, <span class="at">skip_absent=</span>T)</span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="02.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setnames</span>(hh, lbl<span class="sc">$</span>label, lbl<span class="sc">$</span>code, <span class="at">skip_absent=</span>T)</span></code></pre></div>
 <p>Additional recodes for categorical variables.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="02.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(hh, adm1_nm, group, gender, crop)</span>
-<span id="cb39-2"><a href="02.html#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="02.html#cb39-3" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb39-4"><a href="02.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">hhid =</span> <span class="fu">paste</span>(<span class="st">&quot;NRE&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="fu">format</span>(<span class="dv">1</span><span class="sc">:</span>.N, <span class="at">width=</span><span class="dv">3</span>)), <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
-<span id="cb39-5"><a href="02.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iso3 =</span> <span class="st">&quot;NRE&quot;</span>,</span>
-<span id="cb39-6"><a href="02.html#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm1_nm =</span> <span class="fu">factor</span>(adm1_nm),</span>
-<span id="cb39-7"><a href="02.html#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">labels=</span><span class="fu">c</span>(</span>
-<span id="cb39-8"><a href="02.html#cb39-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Boukassa_Noma</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Boukassa Noma&quot;</span>,</span>
-<span id="cb39-9"><a href="02.html#cb39-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Cigaban_Matta</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Cigaban Matta&quot;</span>,</span>
-<span id="cb39-10"><a href="02.html#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">Yada_Iri</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Yada Iri&quot;</span>,</span>
-<span id="cb39-11"><a href="02.html#cb39-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">HIMMA</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;Himma&quot;</span></span>
-<span id="cb39-12"><a href="02.html#cb39-12" aria-hidden="true" tabindex="-1"></a>  )),</span>
-<span id="cb39-13"><a href="02.html#cb39-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">labels=</span><span class="fu">c</span>(<span class="at">male=</span><span class="st">&quot;Male&quot;</span>, <span class="at">female=</span><span class="st">&quot;Female&quot;</span>)),</span>
-<span id="cb39-14"><a href="02.html#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">factor</span>(age, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">`</span><span class="at">15-29</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;&lt; 30&quot;</span>, <span class="st">`</span><span class="at">30+</span><span class="st">`</span><span class="ot">=</span><span class="st">&quot;≥ 30&quot;</span>)),</span>
-<span id="cb39-15"><a href="02.html#cb39-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">crop =</span> <span class="fu">factor</span>(crop)</span>
-<span id="cb39-16"><a href="02.html#cb39-16" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
-<div id="spatial-covariates-1" class="section level3">
-<h3>Spatial Covariates</h3>
-<p>Using <strong>community GPS coordinates</strong> we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:</p>
-<ul>
-<li>Agroecological zone</li>
-<li>Travel time to nearest market</li>
-<li>Distance to nearest seed center / company</li>
-<li>Size of nearest seed center / company</li>
-<li>Population density</li>
-<li>Last season total rainfall</li>
-<li>Last season heat stress days (if any)</li>
-</ul>
-<p>[pending GPS coordinates]</p>
-</div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="02.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setorder</span>(hh, adm2_nm, adm3_nm, group, gender, crop)</span>
+<span id="cb43-2"><a href="02.html#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="02.html#cb43-3" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb43-4"><a href="02.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">hhid =</span> <span class="fu">paste</span>(<span class="st">&quot;NRE&quot;</span>, <span class="fu">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;0&quot;</span>, <span class="fu">format</span>(<span class="dv">1</span><span class="sc">:</span>.N, <span class="at">width=</span><span class="dv">3</span>)), <span class="at">sep=</span><span class="st">&quot;&quot;</span>),</span>
+<span id="cb43-5"><a href="02.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">iso3 =</span> <span class="st">&quot;NRE&quot;</span>,</span>
+<span id="cb43-6"><a href="02.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm2_nm =</span> <span class="fu">factor</span>(adm2_nm),</span>
+<span id="cb43-7"><a href="02.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">adm3_nm =</span> <span class="fu">factor</span>(adm3_nm),</span>
+<span id="cb43-8"><a href="02.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels=</span><span class="fu">c</span>(</span>
+<span id="cb43-9"><a href="02.html#cb43-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Boukassa_Noma&quot;</span>,</span>
+<span id="cb43-10"><a href="02.html#cb43-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Cigaban_Matta&quot;</span>,</span>
+<span id="cb43-11"><a href="02.html#cb43-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Yada_Iri&quot;</span>,</span>
+<span id="cb43-12"><a href="02.html#cb43-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;HIMMA&quot;</span></span>
+<span id="cb43-13"><a href="02.html#cb43-13" aria-hidden="true" tabindex="-1"></a>  ), <span class="at">labels=</span><span class="fu">c</span>(</span>
+<span id="cb43-14"><a href="02.html#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Boukassa Noma&quot;</span>,</span>
+<span id="cb43-15"><a href="02.html#cb43-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Cigaban Matta&quot;</span>,</span>
+<span id="cb43-16"><a href="02.html#cb43-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Yada Iri&quot;</span>,</span>
+<span id="cb43-17"><a href="02.html#cb43-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Himma&quot;</span>    </span>
+<span id="cb43-18"><a href="02.html#cb43-18" aria-hidden="true" tabindex="-1"></a>  )),</span>
+<span id="cb43-19"><a href="02.html#cb43-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">factor</span>(gender, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;Male&quot;</span>, <span class="st">&quot;Female&quot;</span>)),</span>
+<span id="cb43-20"><a href="02.html#cb43-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">factor</span>(age, <span class="at">levels=</span><span class="fu">c</span>(<span class="st">&quot;15-29&quot;</span>, <span class="st">&quot;30+&quot;</span>), <span class="at">labels=</span><span class="fu">c</span>(<span class="st">&quot;&lt; 30&quot;</span>, <span class="st">&quot;≥ 30&quot;</span>)),</span>
+<span id="cb43-21"><a href="02.html#cb43-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">crop =</span> <span class="fu">factor</span>(crop)</span>
+<span id="cb43-22"><a href="02.html#cb43-22" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
 <div id="constructed-variables-1" class="section level3">
 <h3>Constructed Variables</h3>
 <p>We construct <strong>total costs per ha</strong> <code>costs_ha_lcu</code> as the sum of individual cost line items.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="02.html#cb40-1" aria-hidden="true" tabindex="-1"></a>hh[, </span>
-<span id="cb40-2"><a href="02.html#cb40-2" aria-hidden="true" tabindex="-1"></a>  tran_ha_lcu <span class="sc">:</span><span class="er">=</span> <span class="fu">as.numeric</span>(tran_ha_lcu)</span>
-<span id="cb40-3"><a href="02.html#cb40-3" aria-hidden="true" tabindex="-1"></a>][, </span>
-<span id="cb40-4"><a href="02.html#cb40-4" aria-hidden="true" tabindex="-1"></a>  tran_ha_lcu <span class="sc">:</span><span class="er">=</span> <span class="fu">fifelse</span>(<span class="fu">is.na</span>(tran_ha_lcu), <span class="dv">0</span>, tran_ha_lcu)</span>
-<span id="cb40-5"><a href="02.html#cb40-5" aria-hidden="true" tabindex="-1"></a>][, costs_ha_lcu <span class="sc">:</span><span class="er">=</span> </span>
-<span id="cb40-6"><a href="02.html#cb40-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Per ha costs</span></span>
-<span id="cb40-7"><a href="02.html#cb40-7" aria-hidden="true" tabindex="-1"></a>    seed_ha_lcu <span class="sc">+</span> fert_ha_lcu <span class="sc">+</span> pest_ha_lcu <span class="sc">+</span> tran_ha_lcu <span class="sc">+</span> labor_ha_lcu <span class="sc">+</span> cert_lcu <span class="sc">+</span> mark_kg_lcu <span class="sc">+</span></span>
-<span id="cb40-8"><a href="02.html#cb40-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Per kg costs</span></span>
-<span id="cb40-9"><a href="02.html#cb40-9" aria-hidden="true" tabindex="-1"></a>    yield_ha_kg <span class="sc">*</span> (labl_kg_lcu <span class="sc">+</span> pckg_kg_lcu)]</span>
-<span id="cb40-10"><a href="02.html#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="02.html#cb40-11" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(costs_ha_lcu)]</span></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="02.html#cb44-1" aria-hidden="true" tabindex="-1"></a>hh[, costs_ha_lcu <span class="sc">:</span><span class="er">=</span> </span>
+<span id="cb44-2"><a href="02.html#cb44-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Per ha costs</span></span>
+<span id="cb44-3"><a href="02.html#cb44-3" aria-hidden="true" tabindex="-1"></a>    seed_ha_lcu <span class="sc">+</span> fert_ha_lcu <span class="sc">+</span> pest_ha_lcu <span class="sc">+</span> tran_ha_lcu <span class="sc">+</span> labor_ha_lcu <span class="sc">+</span> cert_lcu <span class="sc">+</span> mark_kg_lcu <span class="sc">+</span></span>
+<span id="cb44-4"><a href="02.html#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Per kg costs</span></span>
+<span id="cb44-5"><a href="02.html#cb44-5" aria-hidden="true" tabindex="-1"></a>    yield_ha_kg <span class="sc">*</span> (labl_kg_lcu <span class="sc">+</span> pckg_kg_lcu)]</span>
+<span id="cb44-6"><a href="02.html#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="02.html#cb44-7" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(costs_ha_lcu)]</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##   21100   90719  172200  242594  299875  896000</code></pre>
 <p>We also construct <strong>total sales per ha</strong> <code>sales_ha_lcu</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="02.html#cb42-1" aria-hidden="true" tabindex="-1"></a>hh[, sales_ha_lcu <span class="sc">:</span><span class="er">=</span> sales_kg_lcu <span class="sc">*</span> sales_ha_kg]</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="02.html#cb46-1" aria-hidden="true" tabindex="-1"></a>hh[, sales_ha_lcu <span class="sc">:</span><span class="er">=</span> sales_kg_lcu <span class="sc">*</span> sales_ha_kg]</span>
+<span id="cb46-2"><a href="02.html#cb46-2" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(sales_ha_lcu)]</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0  100000  250000  297626  400000 1000000</code></pre>
+<p>Note that 6 respondents indicate no sales this past season (crop failure or decision not to sell):</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="02.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(hh[sales_ha_lcu<span class="sc">==</span><span class="dv">0</span>, .(hhid, group, adm2_nm, costs_ha_lcu, yield_ha_kg, sales_ha_kg)])</span></code></pre></div>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+hhid
+</th>
+<th style="text-align:left;">
+group
+</th>
+<th style="text-align:left;">
+adm2_nm
+</th>
+<th style="text-align:right;">
+costs_ha_lcu
+</th>
+<th style="text-align:right;">
+yield_ha_kg
+</th>
+<th style="text-align:right;">
+sales_ha_kg
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+NRE042
+</td>
+<td style="text-align:left;">
+Boukassa Noma
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+118200
+</td>
+<td style="text-align:right;">
+1500
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRE046
+</td>
+<td style="text-align:left;">
+Boukassa Noma
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+113250
+</td>
+<td style="text-align:right;">
+1000
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRE047
+</td>
+<td style="text-align:left;">
+Boukassa Noma
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+61900
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRE056
+</td>
+<td style="text-align:left;">
+Cigaban Matta
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+85000
+</td>
+<td style="text-align:right;">
+500
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRE074
+</td>
+<td style="text-align:left;">
+Yada Iri
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+502000
+</td>
+<td style="text-align:right;">
+800
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+NRE076
+</td>
+<td style="text-align:left;">
+Yada Iri
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:right;">
+542000
+</td>
+<td style="text-align:right;">
+800
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 <p>Further we construct gross margin per ha <code>margin_ha_lcu</code>, total sales <code>sales_ha_sh</code> and profit margin <code>margin_ha_sh</code> per unit of (variable) input costs, and <code>costs_ha_ppp</code>, <code>sales_ha_ppp</code> and <code>margin_ha_ppp</code> in PPP terms to allow for comparisons across groups and countries.</p>
 <p>We also construct a measure of <strong>total factor productivity</strong> <code>tfp</code> as output per unit of input costs. Strictly speaking it is only “partial factor productivity” here because we don’t include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="02.html#cb43-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb43-2"><a href="02.html#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_lcu =</span> sales_ha_lcu <span class="sc">-</span> costs_ha_lcu</span>
-<span id="cb43-3"><a href="02.html#cb43-3" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb43-4"><a href="02.html#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales_ha_sh =</span> sales_ha_lcu <span class="sc">/</span> costs_ha_lcu,</span>
-<span id="cb43-5"><a href="02.html#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_sh =</span> margin_ha_lcu <span class="sc">/</span> costs_ha_lcu,</span>
-<span id="cb43-6"><a href="02.html#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">costs_ha_ppp =</span> costs_ha_lcu <span class="sc">/</span> xrate,</span>
-<span id="cb43-7"><a href="02.html#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales_ha_ppp =</span> sales_ha_lcu <span class="sc">/</span> xrate,</span>
-<span id="cb43-8"><a href="02.html#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_ppp =</span> margin_ha_lcu <span class="sc">/</span> xrate</span>
-<span id="cb43-9"><a href="02.html#cb43-9" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb43-10"><a href="02.html#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">tfp =</span> yield_ha_kg <span class="sc">/</span> costs_ha_ppp</span>
-<span id="cb43-11"><a href="02.html#cb43-11" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
-<p>Finally we normalize all farmer cost line items into a “long” table <code>hh_prod_cost</code> for charting.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="02.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize production cost table per ha</span></span>
-<span id="cb44-2"><a href="02.html#cb44-2" aria-hidden="true" tabindex="-1"></a>hh_prod_cost <span class="ot">&lt;-</span> hh[, .(hhid,</span>
-<span id="cb44-3"><a href="02.html#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Seeds =</span> seed_ha_lcu, </span>
-<span id="cb44-4"><a href="02.html#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fertilizer =</span> fert_ha_lcu, </span>
-<span id="cb44-5"><a href="02.html#cb44-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Pesticides =</span> pest_ha_lcu, </span>
-<span id="cb44-6"><a href="02.html#cb44-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Transport =</span> tran_ha_lcu, </span>
-<span id="cb44-7"><a href="02.html#cb44-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labor =</span> labor_ha_lcu, </span>
-<span id="cb44-8"><a href="02.html#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Certification =</span> cert_lcu,</span>
-<span id="cb44-9"><a href="02.html#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labeling =</span> yield_ha_kg <span class="sc">*</span> labl_kg_lcu,</span>
-<span id="cb44-10"><a href="02.html#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Packaging =</span> yield_ha_kg <span class="sc">*</span> pckg_kg_lcu,</span>
-<span id="cb44-11"><a href="02.html#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Marketing =</span> mark_kg_lcu</span>
-<span id="cb44-12"><a href="02.html#cb44-12" aria-hidden="true" tabindex="-1"></a>)]</span>
-<span id="cb44-13"><a href="02.html#cb44-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-14"><a href="02.html#cb44-14" aria-hidden="true" tabindex="-1"></a>hh_prod_cost <span class="ot">&lt;-</span> <span class="fu">melt</span>(hh_prod_cost, <span class="at">id.vars=</span><span class="dv">1</span>, <span class="at">value.name=</span><span class="st">&quot;lcu&quot;</span>, <span class="at">variable.name=</span><span class="st">&quot;type&quot;</span>)</span>
-<span id="cb44-15"><a href="02.html#cb44-15" aria-hidden="true" tabindex="-1"></a>hh_prod_cost[hh, on<span class="ot">=</span>.(hhid), <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb44-16"><a href="02.html#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add categorical vars</span></span>
-<span id="cb44-17"><a href="02.html#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> i.group,</span>
-<span id="cb44-18"><a href="02.html#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> i.gender,</span>
-<span id="cb44-19"><a href="02.html#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> i.age,</span>
-<span id="cb44-20"><a href="02.html#cb44-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">crop =</span> i.crop</span>
-<span id="cb44-21"><a href="02.html#cb44-21" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
-<span id="cb44-22"><a href="02.html#cb44-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add cost shares and PPP terms</span></span>
-<span id="cb44-23"><a href="02.html#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">share =</span> lcu<span class="sc">/</span><span class="fu">sum</span>(lcu, <span class="at">na.rm=</span>T),</span>
-<span id="cb44-24"><a href="02.html#cb44-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">ppp =</span> lcu<span class="sc">/</span>xrate</span>
-<span id="cb44-25"><a href="02.html#cb44-25" aria-hidden="true" tabindex="-1"></a>), by<span class="ot">=</span>.(hhid)]</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="02.html#cb49-1" aria-hidden="true" tabindex="-1"></a>hh[, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb49-2"><a href="02.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_lcu =</span> sales_ha_lcu <span class="sc">-</span> costs_ha_lcu</span>
+<span id="cb49-3"><a href="02.html#cb49-3" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb49-4"><a href="02.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales_ha_sh =</span> sales_ha_lcu <span class="sc">/</span> costs_ha_lcu,</span>
+<span id="cb49-5"><a href="02.html#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_sh =</span> margin_ha_lcu <span class="sc">/</span> costs_ha_lcu,</span>
+<span id="cb49-6"><a href="02.html#cb49-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">costs_ha_ppp =</span> costs_ha_lcu <span class="sc">/</span> xrate,</span>
+<span id="cb49-7"><a href="02.html#cb49-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">sales_ha_ppp =</span> sales_ha_lcu <span class="sc">/</span> xrate,</span>
+<span id="cb49-8"><a href="02.html#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">margin_ha_ppp =</span> margin_ha_lcu <span class="sc">/</span> xrate</span>
+<span id="cb49-9"><a href="02.html#cb49-9" aria-hidden="true" tabindex="-1"></a>)][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb49-10"><a href="02.html#cb49-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">tfp =</span> yield_ha_kg <span class="sc">/</span> costs_ha_ppp</span>
+<span id="cb49-11"><a href="02.html#cb49-11" aria-hidden="true" tabindex="-1"></a>)]</span>
+<span id="cb49-12"><a href="02.html#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-13"><a href="02.html#cb49-13" aria-hidden="true" tabindex="-1"></a>hh[, <span class="fu">summary</span>(margin_ha_sh)]</span></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## -1.0000 -0.5173  0.4750  1.0650  1.8612  9.8108</code></pre>
+<p>Below we append some of the information that was recorded at the group level.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="02.html#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(group, <span class="at">align=</span><span class="st">&quot;lllllc&quot;</span>)</span></code></pre></div>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Group
+</th>
+<th style="text-align:left;">
+Region
+</th>
+<th style="text-align:left;">
+Department
+</th>
+<th style="text-align:left;">
+Commune
+</th>
+<th style="text-align:left;">
+Location
+</th>
+<th style="text-align:center;">
+Market access
+</th>
+<th style="text-align:left;">
+Irrigation
+</th>
+<th style="text-align:left;">
+Seasons
+</th>
+<th style="text-align:left;">
+Transboundary trade
+</th>
+<th style="text-align:left;">
+Members
+</th>
+<th style="text-align:left;">
+Established
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Boukassa Noma
+</td>
+<td style="text-align:left;">
+Maradi
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:left;">
+Chadakori
+</td>
+<td style="text-align:left;">
+Kouroungoussaou
+</td>
+<td style="text-align:center;">
+–
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+56
+</td>
+<td style="text-align:left;">
+1998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yada Iri
+</td>
+<td style="text-align:left;">
+Maradi
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:left;">
+Chadakori
+</td>
+<td style="text-align:left;">
+Chadakori
+</td>
+<td style="text-align:center;">
+–
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+80
+</td>
+<td style="text-align:left;">
+1998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Cigaban Matta
+</td>
+<td style="text-align:left;">
+Maradi
+</td>
+<td style="text-align:left;">
+Guidan Roumdji
+</td>
+<td style="text-align:left;">
+Chadakori
+</td>
+<td style="text-align:left;">
+Chadakori
+</td>
+<td style="text-align:center;">
+–
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+33
+</td>
+<td style="text-align:left;">
+1998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HIMMA
+</td>
+<td style="text-align:left;">
+Maradi
+</td>
+<td style="text-align:left;">
+Dakoro
+</td>
+<td style="text-align:left;">
+Sabon Machi
+</td>
+<td style="text-align:left;">
+Sabon Machi
+</td>
+<td style="text-align:center;">
+–
+</td>
+<td style="text-align:left;">
+–
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:left;">
+44
+</td>
+<td style="text-align:left;">
+1999
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="02.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same recodes in the group-level dataset</span></span>
+<span id="cb52-2"><a href="02.html#cb52-2" aria-hidden="true" tabindex="-1"></a>group[, Group <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(Group, <span class="at">levels=</span><span class="fu">c</span>(</span>
+<span id="cb52-3"><a href="02.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Boukassa Noma&quot;</span>,</span>
+<span id="cb52-4"><a href="02.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Cigaban Matta&quot;</span>,</span>
+<span id="cb52-5"><a href="02.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Yada Iri&quot;</span>,</span>
+<span id="cb52-6"><a href="02.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;HIMMA&quot;</span></span>
+<span id="cb52-7"><a href="02.html#cb52-7" aria-hidden="true" tabindex="-1"></a>), <span class="at">labels=</span><span class="fu">c</span>(</span>
+<span id="cb52-8"><a href="02.html#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Boukassa Noma&quot;</span>,</span>
+<span id="cb52-9"><a href="02.html#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Cigaban Matta&quot;</span>,</span>
+<span id="cb52-10"><a href="02.html#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Yada Iri&quot;</span>,</span>
+<span id="cb52-11"><a href="02.html#cb52-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;Himma&quot;</span>    </span>
+<span id="cb52-12"><a href="02.html#cb52-12" aria-hidden="true" tabindex="-1"></a>))]</span>
+<span id="cb52-13"><a href="02.html#cb52-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-14"><a href="02.html#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge</span></span>
+<span id="cb52-15"><a href="02.html#cb52-15" aria-hidden="true" tabindex="-1"></a>hh[group, on<span class="ot">=</span>.(<span class="at">group=</span>Group), <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb52-16"><a href="02.html#cb52-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_year =</span> <span class="st">`</span><span class="at">Established</span><span class="st">`</span>,</span>
+<span id="cb52-17"><a href="02.html#cb52-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">group_size =</span> <span class="st">`</span><span class="at">Members</span><span class="st">`</span>,</span>
+<span id="cb52-18"><a href="02.html#cb52-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">seasons =</span> <span class="st">`</span><span class="at">Seasons</span><span class="st">`</span>,</span>
+<span id="cb52-19"><a href="02.html#cb52-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">irrigated =</span> <span class="st">`</span><span class="at">Irrigation</span><span class="st">`</span>,</span>
+<span id="cb52-20"><a href="02.html#cb52-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">market_access =</span> <span class="st">`</span><span class="at">Market access</span><span class="st">`</span>,</span>
+<span id="cb52-21"><a href="02.html#cb52-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">ttrade =</span> <span class="st">`</span><span class="at">Transboundary trade</span><span class="st">`</span></span>
+<span id="cb52-22"><a href="02.html#cb52-22" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
+<p>Finally we normalize all cost line items into a “long” table <code>hh_prod_cost</code> for charting.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="02.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normalize production cost table per ha</span></span>
+<span id="cb53-2"><a href="02.html#cb53-2" aria-hidden="true" tabindex="-1"></a>hh_prod_cost <span class="ot">&lt;-</span> hh[, .(hhid,</span>
+<span id="cb53-3"><a href="02.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Seeds =</span> seed_ha_lcu, </span>
+<span id="cb53-4"><a href="02.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fertilizer =</span> fert_ha_lcu, </span>
+<span id="cb53-5"><a href="02.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Pesticides =</span> pest_ha_lcu, </span>
+<span id="cb53-6"><a href="02.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Transport =</span> tran_ha_lcu, </span>
+<span id="cb53-7"><a href="02.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labor =</span> labor_ha_lcu, </span>
+<span id="cb53-8"><a href="02.html#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Certification =</span> cert_lcu,</span>
+<span id="cb53-9"><a href="02.html#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labeling =</span> yield_ha_kg <span class="sc">*</span> labl_kg_lcu,</span>
+<span id="cb53-10"><a href="02.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Packaging =</span> yield_ha_kg <span class="sc">*</span> pckg_kg_lcu,</span>
+<span id="cb53-11"><a href="02.html#cb53-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">Marketing =</span> mark_kg_lcu</span>
+<span id="cb53-12"><a href="02.html#cb53-12" aria-hidden="true" tabindex="-1"></a>)]</span>
+<span id="cb53-13"><a href="02.html#cb53-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-14"><a href="02.html#cb53-14" aria-hidden="true" tabindex="-1"></a>hh_prod_cost <span class="ot">&lt;-</span> <span class="fu">melt</span>(hh_prod_cost, <span class="at">id.vars=</span><span class="dv">1</span>, <span class="at">value.name=</span><span class="st">&quot;lcu&quot;</span>, <span class="at">variable.name=</span><span class="st">&quot;type&quot;</span>)</span></code></pre></div>
+<p>And we lump all marketing costs into a single category.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="02.html#cb54-1" aria-hidden="true" tabindex="-1"></a>hh_prod_cost[, type_alt <span class="sc">:</span><span class="er">=</span> <span class="fu">factor</span>(<span class="fu">as.character</span>(type), <span class="at">labels=</span><span class="fu">c</span>(</span>
+<span id="cb54-2"><a href="02.html#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Seeds =</span> <span class="st">&quot;Seeds&quot;</span>,</span>
+<span id="cb54-3"><a href="02.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Fertilizer =</span> <span class="st">&quot;Fertilizer&quot;</span>,</span>
+<span id="cb54-4"><a href="02.html#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Pesticides =</span> <span class="st">&quot;Pesticides&quot;</span>,</span>
+<span id="cb54-5"><a href="02.html#cb54-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labor =</span> <span class="st">&quot;Labor&quot;</span>,</span>
+<span id="cb54-6"><a href="02.html#cb54-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Certification =</span> <span class="st">&quot;Marketing&quot;</span>,</span>
+<span id="cb54-7"><a href="02.html#cb54-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">Transport =</span> <span class="st">&quot;Marketing&quot;</span>,</span>
+<span id="cb54-8"><a href="02.html#cb54-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Labeling =</span> <span class="st">&quot;Marketing&quot;</span>,</span>
+<span id="cb54-9"><a href="02.html#cb54-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Packaging =</span> <span class="st">&quot;Marketing&quot;</span>,</span>
+<span id="cb54-10"><a href="02.html#cb54-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Marketing =</span> <span class="st">&quot;Marketing&quot;</span></span>
+<span id="cb54-11"><a href="02.html#cb54-11" aria-hidden="true" tabindex="-1"></a>))]</span>
+<span id="cb54-12"><a href="02.html#cb54-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-13"><a href="02.html#cb54-13" aria-hidden="true" tabindex="-1"></a>hh_prod_cost <span class="ot">&lt;-</span> hh_prod_cost[, .(</span>
+<span id="cb54-14"><a href="02.html#cb54-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">lcu =</span> <span class="fu">sum</span>(lcu, <span class="at">na.rm=</span>T)</span>
+<span id="cb54-15"><a href="02.html#cb54-15" aria-hidden="true" tabindex="-1"></a>), by<span class="ot">=</span>.(hhid, <span class="at">type=</span>type_alt)</span>
+<span id="cb54-16"><a href="02.html#cb54-16" aria-hidden="true" tabindex="-1"></a>][, <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb54-17"><a href="02.html#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add cost shares and PPP terms</span></span>
+<span id="cb54-18"><a href="02.html#cb54-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">share =</span> lcu<span class="sc">/</span><span class="fu">sum</span>(lcu, <span class="at">na.rm=</span>T),</span>
+<span id="cb54-19"><a href="02.html#cb54-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">ppp =</span> lcu<span class="sc">/</span>xrate</span>
+<span id="cb54-20"><a href="02.html#cb54-20" aria-hidden="true" tabindex="-1"></a>), by<span class="ot">=</span>.(hhid)</span>
+<span id="cb54-21"><a href="02.html#cb54-21" aria-hidden="true" tabindex="-1"></a>][hh, on<span class="ot">=</span>.(hhid), <span class="st">`</span><span class="at">:=</span><span class="st">`</span>(</span>
+<span id="cb54-22"><a href="02.html#cb54-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add classes</span></span>
+<span id="cb54-23"><a href="02.html#cb54-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> i.group,</span>
+<span id="cb54-24"><a href="02.html#cb54-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> i.gender,</span>
+<span id="cb54-25"><a href="02.html#cb54-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> i.age,</span>
+<span id="cb54-26"><a href="02.html#cb54-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">crop =</span> i.crop</span>
+<span id="cb54-27"><a href="02.html#cb54-27" aria-hidden="true" tabindex="-1"></a>)]</span></code></pre></div>
 </div>
 </div>
 <div id="descriptive-statistics-1" class="section level2">
@@ -720,20 +1118,20 @@ FALSE
 <div id="respondent-characteristics-1" class="section level3">
 <h3>Respondent Characteristics</h3>
 <p>First a breakdown by group.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="02.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb45-2"><a href="02.html#cb45-2" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(adm1_nm, group, age, gender, crop)],</span>
-<span id="cb45-3"><a href="02.html#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>gender, <span class="at">axis2=</span>age, <span class="at">axis3=</span>crop, <span class="at">y=</span>N)) <span class="sc">+</span></span>
-<span id="cb45-4"><a href="02.html#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb45-5"><a href="02.html#cb45-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb45-6"><a href="02.html#cb45-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
-<span id="cb45-7"><a href="02.html#cb45-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Crop&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb45-8"><a href="02.html#cb45-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Club&quot;</span>,</span>
-<span id="cb45-9"><a href="02.html#cb45-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Survey Respondents (Niger)&quot;</span>,</span>
-<span id="cb45-10"><a href="02.html#cb45-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stratified by club and demographics&quot;</span>) <span class="sc">+</span></span>
-<span id="cb45-11"><a href="02.html#cb45-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-38-1.svg" width="1100" /></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="02.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb55-2"><a href="02.html#cb55-2" aria-hidden="true" tabindex="-1"></a>  hh[, .N, <span class="at">by=</span>.(group, age, gender, crop)],</span>
+<span id="cb55-3"><a href="02.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">axis1=</span>gender, <span class="at">axis2=</span>age, <span class="at">axis3=</span>crop, <span class="at">y=</span>N)) <span class="sc">+</span></span>
+<span id="cb55-4"><a href="02.html#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_alluvium</span>(<span class="fu">aes</span>(<span class="at">fill=</span>group), <span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb55-5"><a href="02.html#cb55-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stratum</span>(<span class="at">width=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb55-6"><a href="02.html#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">stat=</span><span class="st">&quot;stratum&quot;</span>, <span class="fu">aes</span>(<span class="at">label=</span><span class="fu">after_stat</span>(stratum)), <span class="at">angle=</span><span class="dv">90</span>, <span class="at">size=</span><span class="fl">2.2</span>) <span class="sc">+</span></span>
+<span id="cb55-7"><a href="02.html#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Gender&quot;</span>, <span class="st">&quot;Age&quot;</span>, <span class="st">&quot;Crop&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb55-8"><a href="02.html#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="cn">NULL</span>, <span class="at">fill=</span><span class="st">&quot;Seed Club&quot;</span>,</span>
+<span id="cb55-9"><a href="02.html#cb55-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Survey Respondents (Niger)&quot;</span>,</span>
+<span id="cb55-10"><a href="02.html#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">&quot;Stratified by club and demographics&quot;</span>) <span class="sc">+</span></span>
+<span id="cb55-11"><a href="02.html#cb55-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>))</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-44-1.svg" width="1100" /></p>
 <p>Showing contingency table between each pair of categorical variables (seed club <code>group</code>, <code>gender</code>, and age <code>age</code>).</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="02.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt_ftable</span>(hh, <span class="at">vars=</span><span class="fu">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="02.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt_ftable</span>(hh, <span class="at">vars=</span><span class="fu">c</span>(<span class="st">&quot;group&quot;</span>, <span class="st">&quot;gender&quot;</span>, <span class="st">&quot;age&quot;</span>))</span></code></pre></div>
 <div class="Rttt">
 <table>
 <caption>Contingency Table (% of respondents)</caption>
@@ -752,15 +1150,15 @@ FALSE
 <tr>
 <td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Male</td>
-<td>1.2</td>
-<td>3.8</td>
-<td>5</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
 <td>0</td>
 <td>7.5</td>
 <td>7.5</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
+<td>1.2</td>
+<td>3.8</td>
+<td>5</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
@@ -772,14 +1170,14 @@ FALSE
 <td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Male</td>
 <td>0</td>
-<td>2.5</td>
-<td>2.5</td>
+<td>10</td>
+<td>10</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Female</td>
 <td>0</td>
-<td>10</td>
-<td>10</td>
+<td>2.5</td>
+<td>2.5</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
@@ -790,15 +1188,34 @@ FALSE
 <tr>
 <td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Male</td>
-<td>8.8</td>
-<td>17.5</td>
-<td>26.2</td>
+<td>0</td>
+<td>18.8</td>
+<td>18.8</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Female</td>
+<td>0</td>
+<td>6.2</td>
+<td>6.2</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
+<td>0</td>
+<td>25</td>
+<td>25</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Male</td>
 <td>1.2</td>
 <td>22.5</td>
 <td>23.8</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
+<td>8.8</td>
+<td>17.5</td>
+<td>26.2</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
@@ -807,36 +1224,17 @@ FALSE
 <td>50</td>
 </tr>
 <tr>
-<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
-<td class="Rttt-rl Rttt-rl-lvl1">Male</td>
-<td>0</td>
-<td>6.2</td>
-<td>6.2</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
-<td>0</td>
-<td>18.8</td>
-<td>18.8</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
-<td>0</td>
-<td>25</td>
-<td>25</td>
-</tr>
-<tr>
 <td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Sum</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Male</td>
-<td>10</td>
-<td>30</td>
-<td>40</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
 <td>1.2</td>
 <td>58.8</td>
 <td>60</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Female</td>
+<td>10</td>
+<td>30</td>
+<td>40</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">Sum</td>
@@ -847,99 +1245,24 @@ FALSE
 </tbody>
 </table>
 </div>
-<p>Mantel-Haenszel test shows weak association between the 3 variables. This is further shown in the 2x2 mosaic plots below (standardized residuals between [-2,2]).</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="02.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="sc">~</span>gender<span class="sc">+</span>age, hh, <span class="at">shade=</span>T,</span>
-<span id="cb47-2"><a href="02.html#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Gender&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Age&quot;</span>)</span>
-<span id="cb47-3"><a href="02.html#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-4"><a href="02.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="sc">~</span>group<span class="sc">+</span>age, hh, <span class="at">shade=</span>T,</span>
-<span id="cb47-5"><a href="02.html#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Province&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-40-1.svg" width="50%" /><img src="fig/unnamed-chunk-40-2.svg" width="50%" /></p>
+<p>Mantel-Haenszel test shows weak association between the 3 variables, however there is an over-representation of younger female farmers in the sample, as shown in the 2x2 mosaic plots below (standardized residual of the loglinear model over 2).</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="02.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="sc">~</span>gender<span class="sc">+</span>age, hh, <span class="at">shade=</span>T,</span>
+<span id="cb57-2"><a href="02.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Gender&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Age&quot;</span>)</span>
+<span id="cb57-3"><a href="02.html#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="02.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mosaicplot</span>(<span class="sc">~</span><span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>, group)<span class="sc">+</span>age, hh, <span class="at">shade=</span>T,</span>
+<span id="cb57-5"><a href="02.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlab=</span><span class="st">&quot;Group&quot;</span>, <span class="at">ylab=</span><span class="st">&quot;Age&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-46-1.svg" width="50%" /><img src="fig/unnamed-chunk-46-2.svg" width="50%" /></p>
 <p>NB. blue means there are more observations in the cell than would be expected under the null model (independence). Red means there are fewer observations than would have been expected.</p>
 </div>
 <div id="seed-production-costs-1" class="section level3">
 <h3>Seed Production Costs</h3>
-<p>We then look at the general breakdown and distribution of input costs across seed clubs, crop, gender, and input type.</p>
-<p>Note that HIMMA group grows both cowpea and millet.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="02.html#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, costs_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb48-2"><a href="02.html#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb48-3"><a href="02.html#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb48-4"><a href="02.html#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb48-5"><a href="02.html#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb48-6"><a href="02.html#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Input Costs (PPP$ / ha) - Niger&quot;</span>,</span>
-<span id="cb48-7"><a href="02.html#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender and crop type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb48-8"><a href="02.html#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-41-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="02.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb49-2"><a href="02.html#cb49-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb49-3"><a href="02.html#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb49-4"><a href="02.html#cb49-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb49-5"><a href="02.html#cb49-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb49-6"><a href="02.html#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Input Costs (PPP$ / ha) - Niger&quot;</span>,</span>
-<span id="cb49-7"><a href="02.html#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club and crop type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb49-8"><a href="02.html#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-41-2.svg" width="1100" /></p>
-<p>Breakdown across categories of farm input.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="02.html#cb50-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> hh_prod_cost[, .(</span>
-<span id="cb50-2"><a href="02.html#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">share =</span> <span class="fu">mean</span>(share, <span class="at">na.rm=</span>T)</span>
-<span id="cb50-3"><a href="02.html#cb50-3" aria-hidden="true" tabindex="-1"></a>), keyby<span class="ot">=</span>.(crop, gender, type)]</span>
-<span id="cb50-4"><a href="02.html#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="02.html#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tbl, <span class="fu">aes</span>(gender, share, <span class="at">fill=</span>type)) <span class="sc">+</span></span>
-<span id="cb50-6"><a href="02.html#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">width=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb50-7"><a href="02.html#cb50-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
-<span id="cb50-8"><a href="02.html#cb50-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="at">values=</span><span class="fu">colorRampPalette</span>(pal)(<span class="dv">9</span>)) <span class="sc">+</span></span>
-<span id="cb50-9"><a href="02.html#cb50-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
-<span id="cb50-10"><a href="02.html#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb50-11"><a href="02.html#cb50-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Breakdown of Input Costs by Category - Niger&quot;</span>,</span>
-<span id="cb50-12"><a href="02.html#cb50-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender and crop types&quot;</span>) <span class="sc">+</span></span>
-<span id="cb50-13"><a href="02.html#cb50-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-42-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="02.html#cb51-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> hh_prod_cost[, .(</span>
-<span id="cb51-2"><a href="02.html#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">share =</span> <span class="fu">mean</span>(share, <span class="at">na.rm=</span>T)</span>
-<span id="cb51-3"><a href="02.html#cb51-3" aria-hidden="true" tabindex="-1"></a>), keyby<span class="ot">=</span>.(group, crop, type)]</span>
-<span id="cb51-4"><a href="02.html#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="02.html#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tbl, <span class="fu">aes</span>(group, share, <span class="at">fill=</span>type)) <span class="sc">+</span></span>
-<span id="cb51-6"><a href="02.html#cb51-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">width=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb51-7"><a href="02.html#cb51-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
-<span id="cb51-8"><a href="02.html#cb51-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="at">values=</span><span class="fu">colorRampPalette</span>(pal)(<span class="dv">9</span>)) <span class="sc">+</span></span>
-<span id="cb51-9"><a href="02.html#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
-<span id="cb51-10"><a href="02.html#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb51-11"><a href="02.html#cb51-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Breakdown of Input Costs by Category - Niger&quot;</span>,</span>
-<span id="cb51-12"><a href="02.html#cb51-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club and crop type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb51-13"><a href="02.html#cb51-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-43-1.svg" width="1100" /></p>
-<p>Are there significant differences across groups?</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="02.html#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh_prod_cost, </span>
-<span id="cb52-2"><a href="02.html#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(type, ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb52-3"><a href="02.html#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb52-4"><a href="02.html#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb52-5"><a href="02.html#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb52-6"><a href="02.html#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="02.html#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb52-8"><a href="02.html#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Input Costs by Category (PPP$ by Hectare) - Niger&quot;</span>,</span>
-<span id="cb52-9"><a href="02.html#cb52-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender and crop type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb52-10"><a href="02.html#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-44-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="02.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh_prod_cost, </span>
-<span id="cb53-2"><a href="02.html#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(type, ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb53-3"><a href="02.html#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb53-4"><a href="02.html#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb53-5"><a href="02.html#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb53-6"><a href="02.html#cb53-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
-<span id="cb53-7"><a href="02.html#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb53-8"><a href="02.html#cb53-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Input Costs by Category (PPP$ by Hectare) - Niger&quot;</span>,</span>
-<span id="cb53-9"><a href="02.html#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club and crop type&quot;</span>) <span class="sc">+</span></span>
-<span id="cb53-10"><a href="02.html#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-44-2.svg" width="1100" /></p>
-</div>
-<div id="efficiency-1" class="section level3">
-<h3>Efficiency</h3>
-<p>Differences in productivity measures across groups?</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="02.html#cb54-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb54-2"><a href="02.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(yield_ha_kg <span class="sc">~</span> group <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb54-3"><a href="02.html#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Seed Yield (kg / ha) - Niger&quot;</span>)</span></code></pre></div>
+<p>General breakdown and distribution of input costs across seed clubs, crop, gender, and input type.</p>
+<p>Note that HIMMA group grows both <strong>cowpea</strong> and <strong>millet</strong>.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="02.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(costs_ha_ppp <span class="sc">~</span> group <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
+<span id="cb58-2"><a href="02.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Total Input Costs in Absolute Terms (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
-<caption>Seed Yield (kg / ha) - Niger</caption>
+<caption>Total Input Costs in Absolute Terms (PPP$ / ha) - Niger</caption>
 <thead>
 <tr>
 <th class="Rttt-rlh">group</th>
@@ -950,206 +1273,589 @@ FALSE
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>838</td>
-<td>850</td>
+<td>1,455</td>
+<td>1,469</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>1,545</td>
+<td>1,334</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>565</td>
-<td>459</td>
+<td>1,046</td>
+<td>1,272</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>340</td>
-<td>688</td>
+<td>309</td>
+<td>205</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>265</td>
+<td>205</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>198</td>
-<td>236</td>
+<td>148</td>
+<td>79</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>665</td>
-<td>771</td>
+<td>994</td>
+<td>923</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>811</td>
+<td>571</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>185</td>
-<td>231</td>
+<td>674</td>
+<td>751</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>620</td>
-<td>562</td>
+<td>1,098</td>
+<td>831</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>978</td>
+<td>429</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>179</td>
-<td>279</td>
+<td>686</td>
+<td>858</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="02.html#cb55-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb55-2"><a href="02.html#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(yield_ha_kg <span class="sc">~</span> group <span class="sc">|</span> age, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb55-3"><a href="02.html#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Seed Yield (kg / ha) - Niger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="02.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, costs_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb59-2"><a href="02.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb59-3"><a href="02.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb59-4"><a href="02.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
+<span id="cb59-5"><a href="02.html#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb59-6"><a href="02.html#cb59-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Input Costs (PPP$ / ha) - Niger&quot;</span>,</span>
+<span id="cb59-7"><a href="02.html#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by crop and gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-8"><a href="02.html#cb59-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb59-9"><a href="02.html#cb59-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-10"><a href="02.html#cb59-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>, group), costs_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb59-11"><a href="02.html#cb59-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb59-12"><a href="02.html#cb59-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span>  </span>
+<span id="cb59-13"><a href="02.html#cb59-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-14"><a href="02.html#cb59-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb59-15"><a href="02.html#cb59-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Input Costs (PPP$ / ha) - Niger&quot;</span>,</span>
+<span id="cb59-16"><a href="02.html#cb59-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by crop and seed club&quot;</span>) <span class="sc">+</span></span>
+<span id="cb59-17"><a href="02.html#cb59-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-48-1.svg" width="50%" /><img src="fig/unnamed-chunk-48-2.svg" width="50%" /></p>
+<p>Breakdown across categories of farm input.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="02.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(ppp <span class="sc">~</span> type <span class="sc">|</span> gender<span class="sc">+</span>crop, <span class="at">data=</span>hh_prod_cost, <span class="at">render=</span>fmt,</span>
+<span id="cb60-2"><a href="02.html#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Input Costs in Absolute Terms by Gender (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
-<caption>Seed Yield (kg / ha) - Niger</caption>
+<caption>Input Costs in Absolute Terms by Gender (PPP$ / ha) - Niger</caption>
 <thead>
 <tr>
-<th class="Rttt-rlh">group</th>
-<th class="Rttt-rlh">Statistic</th>
-<th class="Rttt-cl Rttt-cl-lvl1">< 30</th>
-<th class="Rttt-cl Rttt-cl-lvl1">≥ 30</th>
+<th rowspan="2" class="Rttt-rlh">type</th>
+<th rowspan="2" class="Rttt-rlh">Statistic</th>
+<th colspan="2" class="Rttt-cl Rttt-cl-lvl2">cowpea</th>
+<th colspan="2" class="Rttt-cl Rttt-cl-lvl2">millet</th>
+</tr>
+<tr>
+<th class="Rttt-cl Rttt-cl-lvl1">Male</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Female</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Male</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Female</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Seeds</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>150</td>
-<td>922</td>
+<td>11</td>
+<td>14</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>12</td>
+<td>12</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>NA</td>
-<td>429</td>
+<td>7</td>
+<td>10</td>
+<td>5</td>
+<td>5</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Fertilizer</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>NA</td>
-<td>618</td>
+<td>113</td>
+<td>112</td>
+<td>132</td>
+<td>71</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>136</td>
+<td>140</td>
+<td>130</td>
+<td>68</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>NA</td>
-<td>263</td>
+<td>40</td>
+<td>40</td>
+<td>68</td>
+<td>51</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Pesticides</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>689</td>
-<td>722</td>
+<td>267</td>
+<td>216</td>
+<td>531</td>
+<td>425</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>136</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>158</td>
-<td>225</td>
+<td>466</td>
+<td>456</td>
+<td>793</td>
+<td>814</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Labor</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>NA</td>
-<td>576</td>
+<td>185</td>
+<td>152</td>
+<td>108</td>
+<td>90</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>155</td>
+<td>116</td>
+<td>103</td>
+<td>78</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>NA</td>
-<td>254</td>
+<td>87</td>
+<td>87</td>
+<td>55</td>
+<td>50</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Marketing</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>370</td>
+<td>347</td>
+<td>252</td>
+<td>320</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>375</td>
+<td>292</td>
+<td>80</td>
+<td>74</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>190</td>
+<td>136</td>
+<td>343</td>
+<td>391</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="02.html#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, yield_ha_kg, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb56-2"><a href="02.html#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb56-3"><a href="02.html#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb56-4"><a href="02.html#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb56-5"><a href="02.html#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb56-6"><a href="02.html#cb56-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Seed Yield (kg / ha) - Niger&quot;</span>,</span>
-<span id="cb56-7"><a href="02.html#cb56-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender&quot;</span>) <span class="sc">+</span></span>
-<span id="cb56-8"><a href="02.html#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-47-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="02.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, sales_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb57-2"><a href="02.html#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb57-3"><a href="02.html#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb57-4"><a href="02.html#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span>  </span>
-<span id="cb57-5"><a href="02.html#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb57-6"><a href="02.html#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Seed Sales (PPP$ / ha) - Niger&quot;</span>,</span>
-<span id="cb57-7"><a href="02.html#cb57-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender&quot;</span>) <span class="sc">+</span></span>
-<span id="cb57-8"><a href="02.html#cb57-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-47-2.svg" width="1100" /></p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="02.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, yield_ha_kg, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb58-2"><a href="02.html#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb58-3"><a href="02.html#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb58-4"><a href="02.html#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb58-5"><a href="02.html#cb58-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb58-6"><a href="02.html#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb58-7"><a href="02.html#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Seed Yield (Kg / ha) - Niger&quot;</span>,</span>
-<span id="cb58-8"><a href="02.html#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
-<span id="cb58-9"><a href="02.html#cb58-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-48-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="02.html#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, sales_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb59-2"><a href="02.html#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb59-3"><a href="02.html#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb59-4"><a href="02.html#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb59-5"><a href="02.html#cb59-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb59-6"><a href="02.html#cb59-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb59-7"><a href="02.html#cb59-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Seed Sales (PPP$ / ha) - Niger&quot;</span>,</span>
-<span id="cb59-8"><a href="02.html#cb59-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
-<span id="cb59-9"><a href="02.html#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-48-2.svg" width="1100" /></p>
-<p>Looking at <strong>production frontiers</strong> (units of output vs. units of input). We expect S-shape curves with farmers at different levels of technical efficiency along the curve.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="02.html#cb60-1" aria-hidden="true" tabindex="-1"></a>outlier <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
-<span id="cb60-2"><a href="02.html#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="02.html#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh[<span class="sc">!</span>hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg)) <span class="sc">+</span></span>
-<span id="cb60-4"><a href="02.html#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size=</span>.<span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb60-5"><a href="02.html#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">shape=</span><span class="dv">20</span>, <span class="at">color=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb60-6"><a href="02.html#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>hh[hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg), </span>
-<span id="cb60-7"><a href="02.html#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">color=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="dv">18</span>) <span class="sc">+</span></span>
-<span id="cb60-8"><a href="02.html#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb60-9"><a href="02.html#cb60-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb60-10"><a href="02.html#cb60-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb60-11"><a href="02.html#cb60-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#coord_cartesian(ylim=c(4000, 14000)) +</span></span>
-<span id="cb60-12"><a href="02.html#cb60-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb60-13"><a href="02.html#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Production Frontier (Output vs. Input) - Niger&quot;</span>,</span>
-<span id="cb60-14"><a href="02.html#cb60-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each point is a respondent (kg vs. PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb60-15"><a href="02.html#cb60-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-49-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="02.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh[<span class="sc">!</span>hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg)) <span class="sc">+</span></span>
-<span id="cb61-2"><a href="02.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span>gender, <span class="at">fill=</span>gender), <span class="at">size=</span>.<span class="dv">8</span>, <span class="at">level=</span>.<span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb61-3"><a href="02.html#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">shape=</span><span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb61-4"><a href="02.html#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb61-5"><a href="02.html#cb61-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb61-6"><a href="02.html#cb61-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb61-7"><a href="02.html#cb61-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#coord_cartesian(ylim=c(4000, 14000)) +</span></span>
-<span id="cb61-8"><a href="02.html#cb61-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb61-9"><a href="02.html#cb61-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Production Frontier (Output vs. Input) - Niger&quot;</span>,</span>
-<span id="cb61-10"><a href="02.html#cb61-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb61-11"><a href="02.html#cb61-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="02.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(ppp <span class="sc">~</span> type <span class="sc">|</span> group, <span class="at">data=</span>hh_prod_cost, <span class="at">render=</span>fmt,</span>
+<span id="cb61-2"><a href="02.html#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Input Costs in Absolute Terms by Seed Group (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
+<div class="Rttt">
+<table>
+<caption>Input Costs in Absolute Terms by Seed Group (PPP$ / ha) - Niger</caption>
+<thead>
+<tr>
+<th class="Rttt-rlh">type</th>
+<th class="Rttt-rlh">Statistic</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Boukassa Noma</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Cigaban Matta</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Yada Iri</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Himma</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Seeds</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>4</td>
+<td>1</td>
+<td>12</td>
+<td>8</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>1</td>
+<td>0</td>
+<td>19</td>
+<td>12</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>5</td>
+<td>2</td>
+<td>9</td>
+<td>8</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Fertilizer</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>101</td>
+<td>118</td>
+<td>124</td>
+<td>96</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>66</td>
+<td>125</td>
+<td>140</td>
+<td>107</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>103</td>
+<td>47</td>
+<td>33</td>
+<td>47</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Pesticides</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>720</td>
+<td>0</td>
+<td>377</td>
+<td>360</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>689</td>
+<td>0</td>
+<td>0</td>
+<td>146</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>714</td>
+<td>0</td>
+<td>623</td>
+<td>704</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Labor</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>104</td>
+<td>85</td>
+<td>147</td>
+<td>154</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>96</td>
+<td>71</td>
+<td>150</td>
+<td>135</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>50</td>
+<td>41</td>
+<td>69</td>
+<td>94</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">Marketing</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>531</td>
+<td>84</td>
+<td>316</td>
+<td>340</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>329</td>
+<td>43</td>
+<td>312</td>
+<td>288</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>489</td>
+<td>127</td>
+<td>174</td>
+<td>260</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="02.html#cb62-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> hh_prod_cost[, .(</span>
+<span id="cb62-2"><a href="02.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ppp =</span> <span class="fu">mean</span>(ppp, <span class="at">na.rm=</span>T)</span>
+<span id="cb62-3"><a href="02.html#cb62-3" aria-hidden="true" tabindex="-1"></a>), keyby<span class="ot">=</span>.(gender, crop, type)]</span>
+<span id="cb62-4"><a href="02.html#cb62-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-5"><a href="02.html#cb62-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tbl, <span class="fu">aes</span>(gender, ppp, <span class="at">fill=</span>type)) <span class="sc">+</span></span>
+<span id="cb62-6"><a href="02.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">position=</span><span class="st">&quot;fill&quot;</span>, <span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">width=</span>.<span class="dv">6</span>, <span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb62-7"><a href="02.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
+<span id="cb62-8"><a href="02.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="at">values=</span><span class="fu">colorRampPalette</span>(pal)(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb62-9"><a href="02.html#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
+<span id="cb62-10"><a href="02.html#cb62-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb62-11"><a href="02.html#cb62-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Breakdown of Input Costs by Category - Niger&quot;</span>,</span>
+<span id="cb62-12"><a href="02.html#cb62-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by crop and gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb62-13"><a href="02.html#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
 <p><img src="fig/unnamed-chunk-50-1.svg" width="1100" /></p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="02.html#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh[<span class="sc">!</span>hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg)) <span class="sc">+</span></span>
-<span id="cb62-2"><a href="02.html#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span>group, <span class="at">fill=</span>group), <span class="at">size=</span>.<span class="dv">8</span>, <span class="at">level=</span>.<span class="dv">9</span>) <span class="sc">+</span></span>
-<span id="cb62-3"><a href="02.html#cb62-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">shape=</span><span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb62-4"><a href="02.html#cb62-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb62-5"><a href="02.html#cb62-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb62-6"><a href="02.html#cb62-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
-<span id="cb62-7"><a href="02.html#cb62-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#coord_cartesian(ylim=c(4000, 14000)) +</span></span>
-<span id="cb62-8"><a href="02.html#cb62-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb62-9"><a href="02.html#cb62-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Production Frontier (Output vs. Input) - Niger&quot;</span>,</span>
-<span id="cb62-10"><a href="02.html#cb62-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb62-11"><a href="02.html#cb62-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="02.html#cb63-1" aria-hidden="true" tabindex="-1"></a>tbl <span class="ot">&lt;-</span> hh_prod_cost[, .(</span>
+<span id="cb63-2"><a href="02.html#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">ppp =</span> <span class="fu">mean</span>(ppp, <span class="at">na.rm=</span>T)</span>
+<span id="cb63-3"><a href="02.html#cb63-3" aria-hidden="true" tabindex="-1"></a>), keyby<span class="ot">=</span>.(group, crop, type)]</span>
+<span id="cb63-4"><a href="02.html#cb63-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-5"><a href="02.html#cb63-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tbl, <span class="fu">aes</span>(group, ppp, <span class="at">fill=</span>type)) <span class="sc">+</span></span>
+<span id="cb63-6"><a href="02.html#cb63-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="at">position=</span><span class="st">&quot;fill&quot;</span>, <span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">width=</span>.<span class="dv">6</span>, <span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span></span>
+<span id="cb63-7"><a href="02.html#cb63-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
+<span id="cb63-8"><a href="02.html#cb63-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="st">&quot;&quot;</span>, <span class="at">values=</span><span class="fu">colorRampPalette</span>(pal)(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb63-9"><a href="02.html#cb63-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span></span>
+<span id="cb63-10"><a href="02.html#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">x=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb63-11"><a href="02.html#cb63-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Breakdown of Input Costs by Category - Niger&quot;</span>,</span>
+<span id="cb63-12"><a href="02.html#cb63-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
+<span id="cb63-13"><a href="02.html#cb63-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>()</span></code></pre></div>
 <p><img src="fig/unnamed-chunk-51-1.svg" width="1100" /></p>
+<p>Are there significant differences across groups? We first compare input cost shares across gender, then across seed clubs.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="02.html#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh_prod_cost[<span class="sc">!</span>type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Seeds&quot;</span>)], </span>
+<span id="cb64-2"><a href="02.html#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(type, share, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb64-3"><a href="02.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb64-4"><a href="02.html#cb64-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
+<span id="cb64-5"><a href="02.html#cb64-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb64-6"><a href="02.html#cb64-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb64-7"><a href="02.html#cb64-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb64-8"><a href="02.html#cb64-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Input Costs by Category (Percent of Total Costs by Ha) - Niger&quot;</span>,</span>
+<span id="cb64-9"><a href="02.html#cb64-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb64-10"><a href="02.html#cb64-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-52-1.svg" width="1100" /></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="02.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh_prod_cost[<span class="sc">!</span>type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;Seeds&quot;</span>)], </span>
+<span id="cb65-2"><a href="02.html#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(type, share, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb65-3"><a href="02.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb65-4"><a href="02.html#cb65-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span>  </span>
+<span id="cb65-5"><a href="02.html#cb65-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb65-6"><a href="02.html#cb65-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_x&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb65-7"><a href="02.html#cb65-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb65-8"><a href="02.html#cb65-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Input Costs by Category (PPP$ by Hectare) - Niger&quot;</span>,</span>
+<span id="cb65-9"><a href="02.html#cb65-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
+<span id="cb65-10"><a href="02.html#cb65-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;top&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-53-1.svg" width="1100" /></p>
+</div>
+<div id="efficiency-1" class="section level3">
+<h3>Efficiency</h3>
+<p>Differences in productivity measures across groups?</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="02.html#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(yield_ha_kg <span class="sc">~</span> group<span class="sc">+</span>crop <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
+<span id="cb66-2"><a href="02.html#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Expected Seed Yield (kg / ha) - Niger&quot;</span>)</span></code></pre></div>
+<div class="Rttt">
+<table>
+<caption>Expected Seed Yield (kg / ha) - Niger</caption>
+<thead>
+<tr>
+<th class="Rttt-rlh">group</th>
+<th class="Rttt-rlh">crop</th>
+<th class="Rttt-rlh">Statistic</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Male</th>
+<th class="Rttt-cl Rttt-cl-lvl1">Female</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>850</td>
+<td>838</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>900</td>
+<td>850</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>459</td>
+<td>565</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>688</td>
+<td>340</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>700</td>
+<td>340</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>236</td>
+<td>198</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>562</td>
+<td>620</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>800</td>
+<td>600</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>279</td>
+<td>179</td>
+</tr>
+<tr>
+<td rowspan="6" class="Rttt-rl Rttt-rl-lvl3">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>693</td>
+<td>583</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>700</td>
+<td>600</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>169</td>
+<td>214</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>990</td>
+<td>697</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>1,000</td>
+<td>700</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>256</td>
+<td>170</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="02.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, yield_ha_kg, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb67-2"><a href="02.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb67-3"><a href="02.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb67-4"><a href="02.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb67-5"><a href="02.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb67-6"><a href="02.html#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Expected Seed Yield (kg / ha) - Niger&quot;</span>,</span>
+<span id="cb67-7"><a href="02.html#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb67-8"><a href="02.html#cb67-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb67-9"><a href="02.html#cb67-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-10"><a href="02.html#cb67-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, sales_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb67-11"><a href="02.html#cb67-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb67-12"><a href="02.html#cb67-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb67-13"><a href="02.html#cb67-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free_y&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb67-14"><a href="02.html#cb67-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb67-15"><a href="02.html#cb67-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Seed Sales (PPP$ / ha) - Niger&quot;</span>,</span>
+<span id="cb67-16"><a href="02.html#cb67-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender&quot;</span>) <span class="sc">+</span></span>
+<span id="cb67-17"><a href="02.html#cb67-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-55-1.svg" width="50%" /><img src="fig/unnamed-chunk-55-2.svg" width="50%" /></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="02.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, yield_ha_kg, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb68-2"><a href="02.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb68-3"><a href="02.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb68-4"><a href="02.html#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb68-5"><a href="02.html#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb68-6"><a href="02.html#cb68-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb68-7"><a href="02.html#cb68-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Expected Seed Yield (Kg / ha) - Niger&quot;</span>,</span>
+<span id="cb68-8"><a href="02.html#cb68-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
+<span id="cb68-9"><a href="02.html#cb68-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb68-10"><a href="02.html#cb68-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-11"><a href="02.html#cb68-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, sales_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb68-12"><a href="02.html#cb68-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb68-13"><a href="02.html#cb68-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb68-14"><a href="02.html#cb68-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb68-15"><a href="02.html#cb68-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb68-16"><a href="02.html#cb68-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb68-17"><a href="02.html#cb68-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Total Seed Sales (PPP$ / ha) - Niger&quot;</span>,</span>
+<span id="cb68-18"><a href="02.html#cb68-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club&quot;</span>) <span class="sc">+</span></span>
+<span id="cb68-19"><a href="02.html#cb68-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-56-1.svg" width="50%" /><img src="fig/unnamed-chunk-56-2.svg" width="50%" /></p>
+<p>Looking at <strong>production frontiers</strong> (units of output vs. units of input). We expect S-shape curves with farmers at different levels of technical efficiency along the curve.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="02.html#cb69-1" aria-hidden="true" tabindex="-1"></a>outlier <span class="ot">&lt;-</span> hh[crop<span class="sc">==</span><span class="st">&quot;millet&quot;</span> <span class="sc">&amp;</span> costs_ha_ppp <span class="sc">&gt;</span> <span class="dv">2000</span>, hhid]</span>
+<span id="cb69-2"><a href="02.html#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="02.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh[<span class="sc">!</span>hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg)) <span class="sc">+</span></span>
+<span id="cb69-4"><a href="02.html#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">size=</span>.<span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb69-5"><a href="02.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">shape=</span><span class="dv">20</span>, <span class="at">color=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb69-6"><a href="02.html#cb69-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>hh[hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg), </span>
+<span id="cb69-7"><a href="02.html#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">color=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="dv">18</span>) <span class="sc">+</span></span>
+<span id="cb69-8"><a href="02.html#cb69-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb69-9"><a href="02.html#cb69-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb69-10"><a href="02.html#cb69-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb69-11"><a href="02.html#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb69-12"><a href="02.html#cb69-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Production Frontier (Output vs. Input) - Niger&quot;</span>,</span>
+<span id="cb69-13"><a href="02.html#cb69-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each point is a respondent (kg vs. PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb69-14"><a href="02.html#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-57-1.svg" width="1100" /></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="02.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh[<span class="sc">!</span>hhid <span class="sc">%in%</span> outlier], <span class="fu">aes</span>(costs_ha_ppp, yield_ha_kg)) <span class="sc">+</span></span>
+<span id="cb70-2"><a href="02.html#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color=</span>gender, <span class="at">fill=</span>gender), <span class="at">size=</span>.<span class="dv">8</span>, <span class="at">level=</span>.<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb70-3"><a href="02.html#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">shape=</span><span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb70-4"><a href="02.html#cb70-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb70-5"><a href="02.html#cb70-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb70-6"><a href="02.html#cb70-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop, <span class="at">scales=</span><span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb70-7"><a href="02.html#cb70-7" aria-hidden="true" tabindex="-1"></a>  <span class="co">#coord_cartesian(xlim=c(0, 2000)) +</span></span>
+<span id="cb70-8"><a href="02.html#cb70-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb70-9"><a href="02.html#cb70-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Production Frontier (Output vs. Input) - Niger&quot;</span>,</span>
+<span id="cb70-10"><a href="02.html#cb70-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb70-11"><a href="02.html#cb70-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-58-1.svg" width="1100" /></p>
 </div>
 <div id="profitability-1" class="section level3">
 <h3>Profitability</h3>
 <p>By gender:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="02.html#cb63-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb63-2"><a href="02.html#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_ppp <span class="sc">~</span> group <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb63-3"><a href="02.html#cb63-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="02.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_ppp <span class="sc">~</span> group<span class="sc">+</span>crop <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
+<span id="cb71-2"><a href="02.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
 <caption>Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger</caption>
 <thead>
 <tr>
 <th class="Rttt-rlh">group</th>
+<th class="Rttt-rlh">crop</th>
 <th class="Rttt-rlh">Statistic</th>
 <th class="Rttt-cl Rttt-cl-lvl1">Male</th>
 <th class="Rttt-cl Rttt-cl-lvl1">Female</th>
@@ -1157,61 +1863,101 @@ FALSE
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>-619</td>
 <td>33</td>
+<td>-619</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-37</td>
+<td>-606</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>277</td>
 <td>919</td>
+<td>277</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>125</td>
 <td>639</td>
+<td>125</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>695</td>
+<td>125</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>113</td>
 <td>572</td>
+<td>113</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>91</td>
-<td>509</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>1,362</td>
-<td>1,279</td>
-</tr>
-<tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
-<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>280</td>
 <td>68</td>
+<td>280</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>105</td>
+<td>617</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>668</td>
 <td>1,342</td>
+<td>668</td>
+</tr>
+<tr>
+<td rowspan="6" class="Rttt-rl Rttt-rl-lvl3">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>923</td>
+<td>507</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>566</td>
+<td>799</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>1,192</td>
+<td>1,060</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>-651</td>
+<td>-75</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-522</td>
+<td>349</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>679</td>
+<td>1,465</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="02.html#cb64-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">percent</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">percent</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb64-2"><a href="02.html#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_sh <span class="sc">~</span> group <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb64-3"><a href="02.html#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="02.html#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_sh <span class="sc">~</span> group<span class="sc">+</span>crop <span class="sc">|</span> gender, <span class="at">data=</span>hh, <span class="at">render=</span>fmt_pct,</span>
+<span id="cb72-2"><a href="02.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
 <caption>Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger</caption>
 <thead>
 <tr>
 <th class="Rttt-rlh">group</th>
+<th class="Rttt-rlh">crop</th>
 <th class="Rttt-rlh">Statistic</th>
 <th class="Rttt-cl Rttt-cl-lvl1">Male</th>
 <th class="Rttt-cl Rttt-cl-lvl1">Female</th>
@@ -1219,62 +1965,102 @@ FALSE
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>-66%</td>
 <td>-27%</td>
+<td>-66%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-23%</td>
+<td>-67%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>38%</td>
 <td>69%</td>
+<td>38%</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>54%</td>
 <td>219%</td>
+<td>54%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>283%</td>
+<td>54%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>34%</td>
 <td>156%</td>
+<td>34%</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>202%</td>
-<td>77%</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>319%</td>
-<td>147%</td>
-</tr>
-<tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
-<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>70%</td>
 <td>68%</td>
+<td>70%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>18%</td>
+<td>113%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>99%</td>
 <td>203%</td>
+<td>99%</td>
+</tr>
+<tr>
+<td rowspan="6" class="Rttt-rl Rttt-rl-lvl3">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>117%</td>
+<td>84%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>82%</td>
+<td>142%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>150%</td>
+<td>134%</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>-35%</td>
+<td>250%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-37%</td>
+<td>171%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>50%</td>
+<td>361%</td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>By age group:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="02.html#cb65-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb65-2"><a href="02.html#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_ppp <span class="sc">~</span> group <span class="sc">|</span> age, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb65-3"><a href="02.html#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="02.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_ppp <span class="sc">~</span> group<span class="sc">+</span>crop <span class="sc">|</span> age, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
+<span id="cb73-2"><a href="02.html#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
 <caption>Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Niger</caption>
 <thead>
 <tr>
 <th class="Rttt-rlh">group</th>
+<th class="Rttt-rlh">crop</th>
 <th class="Rttt-rlh">Statistic</th>
 <th class="Rttt-cl Rttt-cl-lvl1">< 30</th>
 <th class="Rttt-cl Rttt-cl-lvl1">≥ 30</th>
@@ -1282,10 +2068,16 @@ FALSE
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>-328</td>
 <td>-217</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-328</td>
+<td>-440</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
@@ -1293,10 +2085,16 @@ FALSE
 <td>827</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>NA</td>
 <td>536</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>538</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
@@ -1304,39 +2102,67 @@ FALSE
 <td>550</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
-<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>-820</td>
-<td>567</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>1,493</td>
-<td>1,141</td>
-</tr>
-<tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>NA</td>
 <td>121</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>135</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
 <td>NA</td>
 <td>1,196</td>
 </tr>
+<tr>
+<td rowspan="6" class="Rttt-rl Rttt-rl-lvl3">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>NA</td>
+<td>798</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>663</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>NA</td>
+<td>1,143</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>-820</td>
+<td>182</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-816</td>
+<td>328</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>1,493</td>
+<td>1,075</td>
+</tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="02.html#cb66-1" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(<span class="at">Mean=</span><span class="fu">percent</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), <span class="at">SD=</span><span class="fu">percent</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb66-2"><a href="02.html#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_sh <span class="sc">~</span> group <span class="sc">|</span> age, <span class="at">data=</span>hh, <span class="at">render=</span>fmt,</span>
-<span id="cb66-3"><a href="02.html#cb66-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="02.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ttt</span>(margin_ha_sh <span class="sc">~</span> group<span class="sc">+</span>crop <span class="sc">|</span> age, <span class="at">data=</span>hh, <span class="at">render=</span>fmt_pct,</span>
+<span id="cb74-2"><a href="02.html#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption=</span><span class="st">&quot;Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger&quot;</span>)</span></code></pre></div>
 <div class="Rttt">
 <table>
 <caption>Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Niger</caption>
 <thead>
 <tr>
 <th class="Rttt-rlh">group</th>
+<th class="Rttt-rlh">crop</th>
 <th class="Rttt-rlh">Statistic</th>
 <th class="Rttt-cl Rttt-cl-lvl1">< 30</th>
 <th class="Rttt-cl Rttt-cl-lvl1">≥ 30</th>
@@ -1344,10 +2170,16 @@ FALSE
 </thead>
 <tbody>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Boukassa Noma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>-99%</td>
 <td>-36%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-99%</td>
+<td>-34%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
@@ -1355,10 +2187,16 @@ FALSE
 <td>59%</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Cigaban Matta</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>NA</td>
 <td>186%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>230%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
@@ -1366,81 +2204,154 @@ FALSE
 <td>154%</td>
 </tr>
 <tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Yada Iri</td>
-<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
-<td>87%</td>
-<td>157%</td>
-</tr>
-<tr>
-<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
-<td>372%</td>
-<td>226%</td>
-</tr>
-<tr>
-<td rowspan="2" class="Rttt-rl Rttt-rl-lvl2">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl3">Yada Iri</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
 <td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
 <td>NA</td>
 <td>69%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>46%</td>
 </tr>
 <tr>
 <td class="Rttt-rl Rttt-rl-lvl1">SD</td>
 <td>NA</td>
 <td>180%</td>
 </tr>
+<tr>
+<td rowspan="6" class="Rttt-rl Rttt-rl-lvl3">Himma</td>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">cowpea</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>NA</td>
+<td>107%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>NA</td>
+<td>94%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>NA</td>
+<td>143%</td>
+</tr>
+<tr>
+<td rowspan="3" class="Rttt-rl Rttt-rl-lvl2">millet</td>
+<td class="Rttt-rl Rttt-rl-lvl1">Mean</td>
+<td>87%</td>
+<td>239%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">Med</td>
+<td>-78%</td>
+<td>206%</td>
+</tr>
+<tr>
+<td class="Rttt-rl Rttt-rl-lvl1">SD</td>
+<td>372%</td>
+<td>311%</td>
+</tr>
 </tbody>
 </table>
 </div>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="02.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hh), <span class="at">color=</span>group)) <span class="sc">+</span></span>
-<span id="cb67-2"><a href="02.html#cb67-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>costs_ha_ppp, <span class="at">ymax=</span>sales_ha_ppp, <span class="at">linetype=</span>gender), <span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb67-3"><a href="02.html#cb67-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>costs_ha_ppp), <span class="at">shape=</span><span class="dv">20</span>, <span class="at">size=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb67-4"><a href="02.html#cb67-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>sales_ha_ppp), <span class="at">shape=</span><span class="dv">17</span>, <span class="at">size=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
-<span id="cb67-5"><a href="02.html#cb67-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb67-6"><a href="02.html#cb67-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, <span class="at">color=</span><span class="st">&quot;&quot;</span>, <span class="at">linetype=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb67-7"><a href="02.html#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ / ha) - Niger&quot;</span>,</span>
-<span id="cb67-8"><a href="02.html#cb67-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&#39;s gross profit margin&quot;</span>) <span class="sc">+</span></span>
-<span id="cb67-9"><a href="02.html#cb67-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-54-1.svg" width="1100" /></p>
-<p>Farmers’ gross profit margins by gender and across groups in both absolute terms and in relative terms as percentage of total costs per hectare.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb68-1"><a href="02.html#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, margin_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb68-2"><a href="02.html#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb68-3"><a href="02.html#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
-<span id="cb68-4"><a href="02.html#cb68-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
-<span id="cb68-5"><a href="02.html#cb68-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb68-6"><a href="02.html#cb68-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Absolute Terms - Niger&quot;</span>,</span>
-<span id="cb68-7"><a href="02.html#cb68-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender (PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb68-8"><a href="02.html#cb68-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
-<span id="cb68-9"><a href="02.html#cb68-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb68-10"><a href="02.html#cb68-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, margin_ha_sh, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
-<span id="cb68-11"><a href="02.html#cb68-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb68-12"><a href="02.html#cb68-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
-<span id="cb68-13"><a href="02.html#cb68-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
-<span id="cb68-14"><a href="02.html#cb68-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb68-15"><a href="02.html#cb68-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Relative Terms - Niger&quot;</span>,</span>
-<span id="cb68-16"><a href="02.html#cb68-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender (% of total costs)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb68-17"><a href="02.html#cb68-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-55-1.svg" width="50%" /><img src="fig/unnamed-chunk-55-2.svg" width="50%" /></p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="02.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, margin_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb69-2"><a href="02.html#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb69-3"><a href="02.html#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb69-4"><a href="02.html#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span>  </span>
-<span id="cb69-5"><a href="02.html#cb69-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb69-6"><a href="02.html#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Absolute Terms&quot;</span>,</span>
-<span id="cb69-7"><a href="02.html#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club (PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb69-8"><a href="02.html#cb69-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
-<span id="cb69-9"><a href="02.html#cb69-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb69-10"><a href="02.html#cb69-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, margin_ha_sh, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
-<span id="cb69-11"><a href="02.html#cb69-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
-<span id="cb69-12"><a href="02.html#cb69-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span>  </span>
-<span id="cb69-13"><a href="02.html#cb69-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span>  </span>
-<span id="cb69-14"><a href="02.html#cb69-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
-<span id="cb69-15"><a href="02.html#cb69-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Relative Terms - Niger&quot;</span>,</span>
-<span id="cb69-16"><a href="02.html#cb69-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club (% of total costs)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb69-17"><a href="02.html#cb69-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="fig/unnamed-chunk-56-1.svg" width="50%" /><img src="fig/unnamed-chunk-56-2.svg" width="50%" /></p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="02.html#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i, fmt)</span>
-<span id="cb70-2"><a href="02.html#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hh, <span class="st">&quot;../tmp/data_nre.rds&quot;</span>)</span></code></pre></div>
-
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="02.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(hh), <span class="at">color=</span>group)) <span class="sc">+</span></span>
+<span id="cb75-2"><a href="02.html#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>costs_ha_ppp, <span class="at">ymax=</span>sales_ha_ppp), <span class="at">size=</span>.<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb75-3"><a href="02.html#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>costs_ha_ppp), <span class="at">shape=</span><span class="dv">20</span>, <span class="at">size=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb75-4"><a href="02.html#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>sales_ha_ppp, <span class="at">shape=</span>margin_ha_ppp<span class="sc">&gt;</span><span class="dv">0</span>, <span class="at">fill=</span>group), <span class="at">size=</span><span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb75-5"><a href="02.html#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb75-6"><a href="02.html#cb75-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">24</span>)) <span class="sc">+</span></span>
+<span id="cb75-7"><a href="02.html#cb75-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">shape=</span>F, <span class="at">fill=</span>F) <span class="sc">+</span></span>
+<span id="cb75-8"><a href="02.html#cb75-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="cn">NULL</span>, <span class="at">y=</span><span class="cn">NULL</span>, <span class="at">color=</span><span class="st">&quot;&quot;</span>, <span class="at">linetype=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb75-9"><a href="02.html#cb75-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Profit Margin (PPP$ / ha) - Niger&quot;</span>,</span>
+<span id="cb75-10"><a href="02.html#cb75-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Each bar is a respondent&#39;s gross profit margin&quot;</span>) <span class="sc">+</span></span>
+<span id="cb75-11"><a href="02.html#cb75-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;right&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-61-1.svg" width="1100" /></p>
+<p>Farmers’ gross profit margins by gender and across groups in both absolute terms and in relative terms (percentage of total costs per hectare).</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="02.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, margin_ha_ppp, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb76-2"><a href="02.html#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb76-3"><a href="02.html#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span></span>
+<span id="cb76-4"><a href="02.html#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
+<span id="cb76-5"><a href="02.html#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb76-6"><a href="02.html#cb76-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Absolute Terms - Niger&quot;</span>,</span>
+<span id="cb76-7"><a href="02.html#cb76-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender (PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-8"><a href="02.html#cb76-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb76-9"><a href="02.html#cb76-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-10"><a href="02.html#cb76-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(gender, margin_ha_sh, <span class="at">fill=</span>gender)) <span class="sc">+</span></span>
+<span id="cb76-11"><a href="02.html#cb76-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb76-12"><a href="02.html#cb76-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span></span>
+<span id="cb76-13"><a href="02.html#cb76-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>crop) <span class="sc">+</span></span>
+<span id="cb76-14"><a href="02.html#cb76-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb76-15"><a href="02.html#cb76-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Relative Terms - Niger&quot;</span>,</span>
+<span id="cb76-16"><a href="02.html#cb76-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by gender (% of total costs)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb76-17"><a href="02.html#cb76-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-62-1.svg" width="50%" /><img src="fig/unnamed-chunk-62-2.svg" width="50%" /></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="02.html#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, margin_ha_ppp, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb77-2"><a href="02.html#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb77-3"><a href="02.html#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb77-4"><a href="02.html#cb77-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>comma) <span class="sc">+</span>  </span>
+<span id="cb77-5"><a href="02.html#cb77-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb77-6"><a href="02.html#cb77-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Absolute Terms&quot;</span>,</span>
+<span id="cb77-7"><a href="02.html#cb77-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club (PPP$ / ha)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-8"><a href="02.html#cb77-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span>
+<span id="cb77-9"><a href="02.html#cb77-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-10"><a href="02.html#cb77-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hh, <span class="fu">aes</span>(group, margin_ha_sh, <span class="at">fill=</span>group)) <span class="sc">+</span></span>
+<span id="cb77-11"><a href="02.html#cb77-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>) <span class="sc">+</span></span>
+<span id="cb77-12"><a href="02.html#cb77-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels=</span><span class="fu">label_wrap</span>(<span class="dv">5</span>)) <span class="sc">+</span>  </span>
+<span id="cb77-13"><a href="02.html#cb77-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels=</span>percent) <span class="sc">+</span>  </span>
+<span id="cb77-14"><a href="02.html#cb77-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">&quot;&quot;</span>, <span class="at">y=</span><span class="st">&quot;&quot;</span>, <span class="at">fill=</span><span class="st">&quot;&quot;</span>,</span>
+<span id="cb77-15"><a href="02.html#cb77-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">&quot;Gross Profit Margin in Relative Terms - Niger&quot;</span>,</span>
+<span id="cb77-16"><a href="02.html#cb77-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle=</span><span class="st">&quot;Stratified by seed club (% of total costs)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-17"><a href="02.html#cb77-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-63-1.svg" width="50%" /><img src="fig/unnamed-chunk-63-2.svg" width="50%" /></p>
 </div>
+</div>
+<div id="correlation-1" class="section level2">
+<h2>Correlation</h2>
+<p>Significant associations.</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="02.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(</span>
+<span id="cb78-2"><a href="02.html#cb78-2" aria-hidden="true" tabindex="-1"></a>  hh[, .(<span class="st">`</span><span class="at">seed club</span><span class="st">`</span><span class="ot">=</span><span class="fu">sub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>, group), <span class="st">`</span><span class="at">costs PPP$</span><span class="st">`</span><span class="ot">=</span>costs_ha_ppp, </span>
+<span id="cb78-3"><a href="02.html#cb78-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">seed yield kg/ha</span><span class="st">`</span><span class="ot">=</span>yield_ha_kg,</span>
+<span id="cb78-4"><a href="02.html#cb78-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">margin PPP$</span><span class="st">`</span><span class="ot">=</span>margin_ha_ppp, <span class="st">`</span><span class="at">margin %</span><span class="st">`</span><span class="ot">=</span>margin_ha_sh)],</span>
+<span id="cb78-5"><a href="02.html#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">list</span>(</span>
+<span id="cb78-6"><a href="02.html#cb78-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="st">&quot;cor&quot;</span>, </span>
+<span id="cb78-7"><a href="02.html#cb78-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">combo=</span><span class="fu">wrap</span>(<span class="st">&quot;summarise_by&quot;</span>, <span class="at">color=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">size=</span><span class="dv">2</span>)),</span>
+<span id="cb78-8"><a href="02.html#cb78-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">list</span>(</span>
+<span id="cb78-9"><a href="02.html#cb78-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="fu">wrap</span>(<span class="st">&quot;smooth&quot;</span>, <span class="at">shape=</span><span class="cn">NA</span>), </span>
+<span id="cb78-10"><a href="02.html#cb78-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">combo=</span><span class="fu">wrap</span>(<span class="st">&quot;box_no_facet&quot;</span>, <span class="at">fill=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">alpha=</span>.<span class="dv">8</span>)),</span>
+<span id="cb78-11"><a href="02.html#cb78-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag =</span> <span class="fu">list</span>(</span>
+<span id="cb78-12"><a href="02.html#cb78-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="fu">wrap</span>(<span class="st">&quot;densityDiag&quot;</span>, <span class="at">fill=</span><span class="cn">NA</span>),</span>
+<span id="cb78-13"><a href="02.html#cb78-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">discrete=</span><span class="fu">wrap</span>(<span class="st">&quot;barDiag&quot;</span>, <span class="at">fill=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">alpha=</span>.<span class="dv">8</span>)),</span>
+<span id="cb78-14"><a href="02.html#cb78-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">title=</span><span class="st">&quot;Correlogram stratified by seed club - Niger&quot;</span></span>
+<span id="cb78-15"><a href="02.html#cb78-15" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
+<span id="cb78-16"><a href="02.html#cb78-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(</span>
+<span id="cb78-17"><a href="02.html#cb78-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">5</span>),</span>
+<span id="cb78-18"><a href="02.html#cb78-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major=</span><span class="fu">element_blank</span>()</span>
+<span id="cb78-19"><a href="02.html#cb78-19" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-64-1.svg" width="1100" /></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="02.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(</span>
+<span id="cb79-2"><a href="02.html#cb79-2" aria-hidden="true" tabindex="-1"></a>  hh[, .(gender, age, <span class="st">`</span><span class="at">costs PPP$</span><span class="st">`</span><span class="ot">=</span>costs_ha_ppp, <span class="st">`</span><span class="at">seed yield kg/ha</span><span class="st">`</span><span class="ot">=</span>yield_ha_kg, </span>
+<span id="cb79-3"><a href="02.html#cb79-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">`</span><span class="at">margin PPP$</span><span class="st">`</span><span class="ot">=</span>margin_ha_ppp, <span class="st">`</span><span class="at">margin %</span><span class="st">`</span><span class="ot">=</span>margin_ha_sh)],</span>
+<span id="cb79-4"><a href="02.html#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">upper =</span> <span class="fu">list</span>(</span>
+<span id="cb79-5"><a href="02.html#cb79-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="st">&quot;cor&quot;</span>, </span>
+<span id="cb79-6"><a href="02.html#cb79-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">combo=</span><span class="fu">wrap</span>(<span class="st">&quot;summarise_by&quot;</span>, <span class="at">color=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">size=</span><span class="dv">2</span>)),</span>
+<span id="cb79-7"><a href="02.html#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">lower =</span> <span class="fu">list</span>(</span>
+<span id="cb79-8"><a href="02.html#cb79-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="fu">wrap</span>(<span class="st">&quot;smooth&quot;</span>, <span class="at">shape=</span><span class="cn">NA</span>, <span class="at">color=</span>hh[, pal[gender]]), </span>
+<span id="cb79-9"><a href="02.html#cb79-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">combo=</span><span class="fu">wrap</span>(<span class="st">&quot;box_no_facet&quot;</span>, <span class="at">fill=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">8</span>)),</span>
+<span id="cb79-10"><a href="02.html#cb79-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">diag =</span> <span class="fu">list</span>(</span>
+<span id="cb79-11"><a href="02.html#cb79-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">continuous=</span><span class="fu">wrap</span>(<span class="st">&quot;densityDiag&quot;</span>, <span class="at">fill=</span><span class="cn">NA</span>),</span>
+<span id="cb79-12"><a href="02.html#cb79-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">discrete=</span><span class="fu">wrap</span>(<span class="st">&quot;barDiag&quot;</span>, <span class="at">fill=</span>pal[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">8</span>)),</span>
+<span id="cb79-13"><a href="02.html#cb79-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">title=</span><span class="st">&quot;Correlogram stratified by gender - Niger&quot;</span></span>
+<span id="cb79-14"><a href="02.html#cb79-14" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span>   </span>
+<span id="cb79-15"><a href="02.html#cb79-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_def</span>(</span>
+<span id="cb79-16"><a href="02.html#cb79-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text=</span><span class="fu">element_text</span>(<span class="at">hjust=</span>.<span class="dv">5</span>),</span>
+<span id="cb79-17"><a href="02.html#cb79-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major=</span><span class="fu">element_blank</span>()</span>
+<span id="cb79-18"><a href="02.html#cb79-18" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="fig/unnamed-chunk-65-1.svg" width="1100" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="02.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(tmp, x, y, i)</span>
+<span id="cb80-2"><a href="02.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(hh, <span class="st">&quot;../tmp/data_nre.rds&quot;</span>)</span></code></pre></div>
+
 </div>
 </div>
             </section>

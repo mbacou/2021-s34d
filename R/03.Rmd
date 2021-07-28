@@ -3,7 +3,10 @@
 Notes:   
 
 - 1 Int'l \$ = 4.01 GTQ (Quetzal) using [2020 World Bank PPP conversion rates](https://data.worldbank.org/indicator/PA.NUS.PPP) (1 Int'l \$ = 1 USD)
-- All costs are reported per hectare, except for labeling and packaging costs (per bag of 3 pounds or 1.36 kg). Other marketing costs are assumed also per hectare
+- All costs are reported per hectare, except for labeling and packaging costs
+- For beans these costs are per bag of 3 pounds or 1.36 kg
+- For potato these costs are per crate of 22.68 kg
+- Other marketing costs are assumed also per hectare
 - Inspection and certification fees are per farm (total fees for a single season)
 - Some farmers grow multiple crops
 
@@ -47,32 +50,23 @@ hh[, `:=`(
   hhid = paste("GTM", gsub(" ", "0", format(1:.N, width=3)), sep=""),
   iso3 = "GTM",
   adm1_nm = factor(adm1_nm),
-  group = factor(group, labels=c(
-    `ACORDI` = "Acordi",
-    `PAQUIX` = "Paquix",
-    `SAN BARTOLO` = "San Bartolo",
-    `ADAT, AXOLA, ADIPY` = "Adat Axola Adipy"
+  group = factor(group, levels=c(
+    "ACORDI",
+    "PAQUIX",
+    "SAN BARTOLO",
+    "ADAT, AXOLA, ADIPY"
+  ), labels=c(
+    "Acordi",
+    "Paquix",
+    "San Bartolo",
+    "Adat Axola Adipy"    
   )),
-  gender = factor(gender, labels=c(Male="Male", Female="Female")),
-  age = factor(age, labels=c(`15-29`="< 30", `30`="≥ 30"))
+  gender = factor(gender, levels=c("Male", "Female")),
+  age = factor(age, levels=c("15-29", "30"), labels=c("< 30", "≥ 30")),
+  crop = factor(crop)
 )]
 
 ```
-
-
-### Spatial Covariates
-
-Using **community GPS coordinates** we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:
-
-- Agroecological zone
-- Travel time to nearest market
-- Distance to nearest seed center / company
-- Size of nearest seed center / company
-- Population density
-- Last season total rainfall
-- Last season heat stress days (if any)
-
-[pending GPS coordinates]
 
 
 ### Constructed Variables
@@ -89,7 +83,7 @@ hh[,
     # Per ha costs
     seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + cert_lcu + mark_kg_lcu +
     # Per kg costs
-    yield_ha_kg * (1/1.36) * (labl_kg_lcu + pckg_kg_lcu)]
+    fifelse(crop=="bean", 1/1.36, 1/22.68) * yield_ha_kg * (labl_kg_lcu + pckg_kg_lcu)]
 
 hh[, summary(costs_ha_lcu)]
 
@@ -127,7 +121,7 @@ Finally we normalize all farmer cost line items into a "long" table `hh_prod_cos
 
 ```{r}
 
-# Normalize production cost table
+# Normalize production cost table per ha
 hh_prod_cost <- hh[, .(hhid,
   Seeds = seed_ha_lcu, 
   Fertilizer = fert_ha_lcu, 
@@ -135,23 +129,46 @@ hh_prod_cost <- hh[, .(hhid,
   Transport = tran_ha_lcu, 
   Labor = labor_ha_lcu, 
   Certification = cert_lcu,
-  Labeling = yield_ha_kg * (1/1.36) * labl_kg_lcu,
-  Packaging = yield_ha_kg * (1/1.36) * pckg_kg_lcu,
+  Labeling = fifelse(crop=="bean", 1/1.36, 1/22.68) * yield_ha_kg * labl_kg_lcu,
+  Packaging = fifelse(crop=="bean", 1/1.36, 1/22.68) * yield_ha_kg * pckg_kg_lcu,
   Marketing = mark_kg_lcu
 )]
 
 hh_prod_cost <- melt(hh_prod_cost, id.vars=1, value.name="lcu", variable.name="type")
-hh_prod_cost[hh, on=.(hhid), `:=`(
-  # Add categorical vars
+
+```
+
+And we lump all marketing costs into a single category.
+
+```{r}
+
+hh_prod_cost[, type_alt := factor(as.character(type), labels=c(
+  Seeds = "Seeds",
+  Fertilizer = "Fertilizer",
+  Pesticides = "Pesticides",
+  Labor = "Labor",
+  Certification = "Marketing",
+  Transport = "Marketing",
+  Labeling = "Marketing",
+  Packaging = "Marketing",
+  Marketing = "Marketing"
+))]
+
+hh_prod_cost <- hh_prod_cost[, .(
+  lcu = sum(lcu, na.rm=T)
+), by=.(hhid, type=type_alt)
+][, `:=`(
+  # Add cost shares and PPP terms
+  share = lcu/sum(lcu, na.rm=T),
+  ppp = lcu/xrate
+), by=.(hhid)
+][hh, on=.(hhid), `:=`(
+  # Add classes
   group = i.group,
   gender = i.gender,
   age = i.age,
   crop = i.crop
-)][, `:=`(
-  # Add cost shares and PPP terms
-  share = lcu/sum(lcu, na.rm=T),
-  ppp = lcu/xrate
-), by=.(hhid)]
+)]
 
 ```
 
@@ -206,7 +223,14 @@ NB. blue means there are more observations in the cell than would be expected un
 
 We then look at the general breakdown and distribution of input costs across seed clubs, crop, gender, and input type.
 
-Note that Acordi and Paquix grow potato, while San Bartolo and Adapt grow bean.
+Note that Acordi and Paquix grow **potato**, while San Bartolo and Adapt grow **bean**.
+
+```{r}
+
+ttt(costs_ha_ppp ~ group | gender, data=hh, render=fmt,
+  caption="Total Input Costs in Absolute Terms (PPP$ / ha) - Guatemala")
+
+```
 
 ```{r}
 
@@ -234,18 +258,28 @@ Breakdown across categories of farm input.
 
 ```{r}
 
-tbl <- hh_prod_cost[, .(
-  share = mean(share, na.rm=T)
-), keyby=.(crop, gender, type)]
+ttt(ppp ~ type | gender+crop, data=hh_prod_cost, render=fmt,
+  caption="Input Costs in Absolute Terms by Gender (PPP$ / ha) - Guatemala")
 
-ggplot(tbl, aes(gender, share, fill=type)) +
-  geom_bar(stat="identity", alpha=.8, width=.6) +
+ttt(ppp ~ type | group, data=hh_prod_cost, render=fmt,
+  caption="Input Costs in Absolute Terms by Seed Group (PPP$ / ha) - Guatemala")
+
+```
+
+```{r}
+
+tbl <- hh_prod_cost[, .(
+  ppp = mean(ppp, na.rm=T)
+), keyby=.(gender, crop, type)]
+
+ggplot(tbl, aes(gender, ppp, fill=type)) +
+  geom_bar(stat="identity", position="fill", alpha=.7, width=.6, color="white") +
   scale_y_continuous(labels=percent) +
-  scale_fill_manual("", values=colorRampPalette(pal)(9)) +
+  scale_fill_manual("", values=colorRampPalette(pal)(5)) +
   facet_wrap(~crop) +
   labs(y="", x="",
     title="Breakdown of Input Costs by Category - Guatemala",
-    subtitle="Stratified by gender and crop types") +
+    subtitle="Stratified by crop and gender") +
   theme_def()
 
 ```
@@ -253,17 +287,17 @@ ggplot(tbl, aes(gender, share, fill=type)) +
 ```{r}
 
 tbl <- hh_prod_cost[, .(
-  share = mean(share, na.rm=T)
+  ppp = mean(ppp, na.rm=T)
 ), keyby=.(group, crop, type)]
 
-ggplot(tbl, aes(group, share, fill=type)) +
-  geom_bar(stat="identity", alpha=.8, width=.6) +
+ggplot(tbl, aes(group, ppp, fill=type)) +
+  geom_bar(stat="identity", position="fill", alpha=.7, width=.6, color="white") +
   scale_y_continuous(labels=percent) +
-  scale_fill_manual("", values=colorRampPalette(pal)(9)) +
+  scale_fill_manual("", values=colorRampPalette(pal)(5)) +
   facet_wrap(~crop, scales="free_x") +
   labs(y="", x="",
     title="Breakdown of Input Costs by Category - Guatemala",
-    subtitle="Stratified by seed club and crop type") +
+    subtitle="Stratified by seed club") +
   theme_def()
 
 ```
@@ -427,12 +461,10 @@ By gender:
 
 ```{r}
 
-fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(margin_ha_ppp ~ group | gender, data=hh, render=fmt,
   caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Guatemala")
 
-fmt <- function(x) c(Mean=percent(mean(x, na.rm=T)), SD=percent(sd(x, na.rm=T)))
-ttt(margin_ha_sh ~ group | gender, data=hh, render=fmt,
+ttt(margin_ha_sh ~ group | gender, data=hh, render=fmt_pct,
   caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Guatemala")
 
 ```
@@ -441,12 +473,10 @@ By age group:
 
 ```{r}
 
-fmt <- function(x) c(Mean=comma(mean(x, na.rm=T)), SD=comma(sd(x, na.rm=T)))
 ttt(margin_ha_ppp ~ group | age, data=hh, render=fmt,
   caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Guatemala")
 
-fmt <- function(x) c(Mean=percent(mean(x, na.rm=T)), SD=percent(sd(x, na.rm=T)))
-ttt(margin_ha_sh ~ group | age, data=hh, render=fmt,
+ttt(margin_ha_sh ~ group | age, data=hh, render=fmt_pct,
   caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Guatemala")
 
 ```
@@ -513,7 +543,7 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 
 ```{r save-gtm}
 
-rm(tmp, x, y, i, fmt)
+rm(tmp, x, y, i)
 saveRDS(hh, "../tmp/data_gtm.rds")
 
 ```
