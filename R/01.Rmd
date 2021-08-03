@@ -1,6 +1,6 @@
 # Vietnam
 
-Field work in Vietnam consisted of a qualitative assessment with focus group discussions and quantitative surveys. We first look at the consolidated survey results.
+Field work in Vietnam consists of a qualitative assessment with focus group discussions and quantitative surveys. We first look at the consolidated survey results.
 
 Notes:   
 
@@ -9,10 +9,11 @@ Notes:
 - Transportation costs are lumped into the cost of pesticides, fertilizers and harvesting.
 - Labor costs are per hectare
 - Inspection and certification fees are per farm (total fees for a single season). Only farmers who sell to **seed centers** or **seed companies** do incur these marketing costs.
+- We differentiate between expected yield per ha `yield_ha_kg` and realized sales in the last season `sales_ha_kg`.
 
-## Survey Codebook
+## Survey Recodes
 
-```{r}
+```{r vnm}
 
 xrate <- 7473.67
 
@@ -20,20 +21,19 @@ xrate <- 7473.67
 hh <- fread("../data/vnm/hh.csv")
 # Load group data
 group <- fread("../data/vnm/group.csv")
-# Load final codebook
-lbl <- fread("../data/codebook.csv")
 
 ```
 
-There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A detailed codebook is shown below.
+There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A summary is shown below.
 
-```{r}
+```{r, results="asis"}
 
-kbl(lbl[label %in% names(hh)], align="llccc", caption="Survey Codebook")
+print(dfSummary(hh),
+  max.tbl.height=500, table.classes="table-condensed", method="render")
 
 ```
 
-Recode variable names.
+Recode variable names (see [codebook](index.html#objectives)).
 
 ```{r}
 
@@ -41,7 +41,7 @@ setnames(hh, lbl$label, lbl$code, skip_absent=T)
 
 ```
 
-Additional recodes for categorical variables. Note that we create a categorical variable `ssd` to indicate whether a farmer currently engages in formal seed system distribution.
+Additional recodes for categorical variables. Note that we create a categorical variable `ssd` to indicate whether a farmer currently engages in formal seed system distribution. For consistency across countries we also reclassify `age` into 2 categories `< 30` and `≥ 30`.
 
 ```{r}
 
@@ -53,14 +53,78 @@ hh[, `:=`(
   crop = "rice",
   adm1_nm = factor(adm1_nm),
   group = factor(group, levels=hh[, unique(group)]),
-  Gender = factor(gender, levels=c("Nam", "Nữ"), labels=c("Male", "Female")),
-  ssd = factor(cert_lcu > 0, labels=c("Informal", "Formal"))
+  gender = factor(gender, levels=c("Nam", "Nữ"), labels=c("Male", "Female")),
+  ssd = factor(cert_lcu > 0, levels=c(F, T), labels=c("Informal", "Formal")),
+  age_num = age,
+  age = factor(age >= 30, levels=c(F, T), labels=c("< 30", "≥ 30"))
 )]
 
 ```
 
+### Spatial Covariates
 
-## Data Enrichment
+Using **community GPS coordinates** we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:
+
+- Agroecological zone
+- Travel time to nearest market
+- Distance to nearest seed center / company
+- Size of nearest seed center / company
+- Population density
+- Last season total rainfall
+- Last season heat stress days (if any)
+
+[pending GPS coordinates]
+
+
+### Constructed Variables
+
+Farmers report both expected yields `yield_ha_kg` and sales in the last season `sales_ha_kg`, so we can construct both **expected** and **realized** costs in monetary terms `costs_exp_ha_lcu` and `costs_real_ha_lcu`. Note that we then use **realized** yields to calculate profitability metrics.
+
+```{r}
+
+hh[, 
+  tran_ha_lcu := as.numeric(tran_ha_lcu)
+][, 
+  tran_ha_lcu := fifelse(is.na(tran_ha_lcu), 0, tran_ha_lcu)
+][, `:=`(
+  # Expected costs
+  costs_exp_ha_lcu = 
+    # Per ha costs
+    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + cert_lcu +
+    # Per kg costs
+    yield_ha_kg * (labl_kg_lcu + pckg_kg_lcu + mark_kg_lcu),  
+  # Realized costs
+  costs_real_ha_lcu = 
+    # Per ha costs
+    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + cert_lcu +
+    # Per kg costs
+    sales_ha_kg * (labl_kg_lcu + pckg_kg_lcu + mark_kg_lcu)
+)]
+
+```
+
+Using **realized** costs and sales, we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` per unit of (variable) input costs, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
+
+We also construct a measure of **total factor productivity** `tfp` as **expected** output per unit of (expected) input costs. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.
+
+```{r}
+
+hh[, `:=`(
+  sales_exp_ha_lcu = yield_ha_kg * sales_kg_lcu,
+  sales_real_ha_lcu = sales_ha_kg * sales_kg_lcu
+)][, `:=`(
+  margin_ha_lcu = sales_real_ha_lcu - costs_real_ha_lcu
+)][, `:=`(
+  sales_ha_sh = sales_real_ha_lcu / costs_real_ha_lcu,
+  margin_ha_sh = margin_ha_lcu / costs_real_ha_lcu,
+  costs_ha_ppp = costs_real_ha_lcu / xrate,
+  sales_ha_ppp = sales_real_ha_lcu / xrate,
+  margin_ha_ppp = margin_ha_lcu / xrate
+)][, `:=`(
+  tfp = yield_ha_kg / (costs_exp_ha_lcu / xrate)
+)]
+
+```
 
 Below we append some of the information that was recorded at the group level.
 
@@ -81,72 +145,6 @@ hh[group, on=.(group=Group), `:=`(
 
 ```
 
-
-### Spatial Covariates
-
-Using **community GPS coordinates** we also suggest to enrich this dataset with additional biophysical and geospatial variables, e.g.:
-
-- Agroecological zone
-- Travel time to nearest market
-- Distance to nearest seed center / company
-- Size of nearest seed center / company
-- Population density
-- Last season total rainfall
-- Last season heat stress days (if any)
-
-[pending GPS coordinates]
-
-
-### Constructed Variables
-
-We check farmer-reported total costs `costs_ha_lcu` against the sum of individual cost line items.
-
-```{r}
-
-hh[, 
-  tran_ha_lcu := as.numeric(tran_ha_lcu)
-][, 
-  tran_ha_lcu := fifelse(is.na(tran_ha_lcu), 0, tran_ha_lcu)
-][, costs_ha_lcu_imp := 
-    # Per ha costs
-    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + cert_lcu +
-    # Per kg costs
-    yield_ha_kg * (labl_kg_lcu + pckg_kg_lcu + mark_kg_lcu)]
-
-hh[, summary(costs_ha_lcu_imp - costs_ha_lcu)]
-
-```
-
-There is no discrepancy between the 2 quantities, so we can assume that total costs are constructed per the formula above. No error was found.
-
-We also check that farmer-reported sales and profit margins are consistent.
-
-```{r}
-
-hh[, summary(sales_ha_lcu - (sales_kg_lcu * sales_ha_kg))]
-
-```
-
-Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` per unit of (variable) input costs, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
-
-We also construct a measure of **total factor productivity** `tfp` as output per unit of input costs. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.
-
-```{r}
-
-hh[, `:=`(
-  margin_ha_lcu = sales_ha_lcu - costs_ha_lcu
-)][, `:=`(
-  sales_ha_sh = sales_ha_lcu / costs_ha_lcu,
-  margin_ha_sh = margin_ha_lcu / costs_ha_lcu,
-  costs_ha_ppp = costs_ha_lcu / xrate,
-  sales_ha_ppp = sales_ha_lcu / xrate,
-  margin_ha_ppp = margin_ha_lcu / xrate
-)][, `:=`(
-  tfp = yield_ha_kg / costs_ha_ppp
-)]
-
-```
-
 Finally we normalize all farmer cost line items into a "long" table `hh_prod_cost` for charting.
 
 ```{r}
@@ -159,9 +157,9 @@ hh_prod_cost <- hh[, .(hhid,
   Transport = tran_ha_lcu, 
   Labor = labor_ha_lcu, 
   Certification = cert_lcu,
-  Labeling = yield_ha_kg * labl_kg_lcu,
-  Packaging = yield_ha_kg * pckg_kg_lcu,
-  Marketing = yield_ha_kg * mark_kg_lcu
+  Labeling = sales_ha_kg * labl_kg_lcu,
+  Packaging = sales_ha_kg * pckg_kg_lcu,
+  Marketing = sales_ha_kg * mark_kg_lcu
 )]
 
 hh_prod_cost <- melt(hh_prod_cost, id.vars=1, value.name="lcu", variable.name="type")
@@ -173,7 +171,7 @@ And we lump all marketing costs into a single category.
 
 ```{r}
 
-hh_prod_cost[, type_alt := factor(as.character(type), labels=c(
+hh_prod_cost[, type_alt := factor(type, labels=c(
   Seeds = "Seeds",
   Fertilizer = "Fertilizer",
   Pesticides = "Pesticides",
@@ -194,12 +192,12 @@ hh_prod_cost <- hh_prod_cost[, .(
   ppp = lcu/xrate
 ), by=.(hhid)
 ][hh, on=.(hhid), `:=`(
-  # Add classes
-  group = i.group,
-  gender = i.gender,
-  age = i.age,
-  crop = i.crop,
-  ssd = i.ssd
+  # Add categorical variables
+  group = group,
+  gender = gender,
+  age = age,
+  crop = crop,
+  ssd = ssd
 )]
 
 ```
@@ -216,12 +214,12 @@ First a breakdown by group.
 ```{r, fig.height=3.5}
 
 ggplot(
-  hh[, .N, by=.(adm1_nm, group, ssd, gender)],
-  aes(axis1=adm1_nm, axis2=gender, axis3=ssd, y=N)) +
-  geom_alluvium(aes(fill=group), width=1/4) +
+  hh[, .N, by=.(adm1_nm, group, age, ssd, gender)],
+  aes(axis1=adm1_nm, axis2=gender, axis3=age, axis4=ssd, y=N)) +
+  geom_alluvium(aes(fill=group), width=1/4, alpha=.7, color="white") +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
-  scale_x_discrete(limits=c("Province", "Gender", "Seed Distribution")) +
+  scale_x_discrete(limits=c("Province", "Gender", "Age", "Seed Distribution")) +
   labs(y=NULL, fill="Seed Club",
     title = "Survey Respondents (Vietnam)",
     subtitle = "Stratified by club and demographics (N = 60)") +
@@ -232,31 +230,22 @@ ggplot(
 
 Showing contingency table between each pair of categorical variables (seed club `group`, `gender`, and use of formal seed system distribution `ssd`). Rice in Vietnam is a male-dominated production, hence the absence of female respondents in a few clubs.
 
-```{r}
+```{r, results="asis"}
 
-ttt_ftable(hh, vars=c("group", "gender", "ssd"))
+print(ctable(hh$group, hh$gender, chisq=T, round.digits=0, 
+  dnn=c("Group", "Gender")), 
+  table.classes="table-condensed", method="render")
 
-```
-
-Mantel-Haenszel test shows weak association between the 3 variables. This is further shown in the 2x2 mosaic plots below (standardized residuals between [-2,2]).
-
-```{r, out.width="50%", fig.show="hold", fig.asp=1}
-
-mosaicplot(~gender+ssd, hh, shade=T,
-  main=NA, xlab="Gender", ylab="Seed System")
-
-mosaicplot(~adm1_nm+ssd, hh, shade=T,
-  main=NA, xlab="Province", ylab="Seed System")
+print(ctable(hh$group, hh$ssd, chisq=T, round.digits=0, 
+  dnn=c("Group", "Seed System")),
+  table.classes="table-condensed", method="render")
 
 ```
-
-NB. blue means there are more observations in the cell than would be expected under the null model (independence). Red means there are fewer observations than would have been expected.
-
 
 
 ### Seed Production Costs
 
-General breakdown and distribution of input costs across seed clubs, gender, and input type.
+General breakdown and distribution of (realized) input costs across seed clubs, gender, and input type.
 
 ```{r}
 
@@ -267,8 +256,7 @@ ttt(costs_ha_ppp ~ group | gender, data=hh, render=fmt,
 
 ```{r, out.width="50%", fig.show="hold", fig.width=2.5, fig.asp=1}
 
-ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh, aes(gender, costs_ha_ppp, fill=gender, color=gender)) +
   scale_y_continuous(labels=comma) +
   facet_wrap(~crop) +
   labs(x="", y="", fill="",
@@ -276,10 +264,9 @@ ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
     subtitle="Stratified by gender") +
   theme_def(legend.position="none")
 
-ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
-  geom_boxplot(alpha=.7) +
-  scale_y_continuous(labels=comma) +  
+ggBoxTest(hh, aes(group, costs_ha_ppp, fill=group)) +
   facet_wrap(~crop) +
+  scale_y_continuous(labels=comma) +
   labs(x="", y="", fill="",
     title="Total Input Costs (PPP$ / ha) - Vietnam",
     subtitle="Stratified by seed club") +
@@ -342,6 +329,7 @@ ggplot(hh_prod_cost[!type %in% c("Pesticides", "Seeds")],
   aes(type, share, fill=gender)) +
   geom_boxplot(alpha=.7) +
   scale_y_continuous(labels=percent) +
+  stat_compare_means(label="p.signif", ref.group=".all.", size=3, fontface="bold") +  
   coord_flip() +
   facet_wrap(~crop) +  
   labs(x="", y="", fill="",
@@ -369,12 +357,15 @@ ggplot(hh_prod_cost[!type %in% c("Pesticides", "Seeds")],
 
 ### Efficiency
 
-Differences in productivity measures across groups?
+Differences in productivity measures (expected yields and sales) across groups?
 
 ```{r}
 
 ttt(yield_ha_kg ~ group | gender, data=hh, render=fmt,
   caption="Expected Rice Seed Yield (kg / ha) - Vietnam")
+
+ttt(sales_ha_kg ~ group | gender, data=hh, render=fmt,
+  caption="Seed Sales (kg / ha) - Vietnam")
 
 ```
 
@@ -558,18 +549,18 @@ Significant associations.
 ```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(`seed club`=group, age, `costs PPP$`=costs_ha_ppp, 
-    `seed yield kg/ha`=yield_ha_kg,
+  hh[, .(`seed club`=group, `age`=age_num, `years in group`=member_years,
+    `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
-    combo=wrap("summarise_by", color=pal, size=2)),
+    combo=wrap("summarise_by", color=pal[1:4], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
-    combo=wrap("box_no_facet", fill=pal, alpha=.8)),
+    combo=wrap("box_no_facet", fill=pal[1:4], alpha=.8)),
   diag = list(
     continuous=wrap("densityDiag", fill=NA),
-    discrete=wrap("barDiag", fill=pal, alpha=.8)),
+    discrete=wrap("barDiag", fill=pal[1:4], alpha=.8)),
   title="Correlogram stratified by seed club - Vietnam"
 ) + 
   theme_def(
@@ -583,7 +574,8 @@ ggpairs(
 ```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(gender, age, `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
+  hh[, .(gender, `age`=age_num, `years in group`=member_years,
+    `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
     continuous="cor", 
@@ -611,7 +603,6 @@ ggpairs(
 
 ```{r save-vnm}
 
-rm(tmp, x, y, i)
 saveRDS(hh, "../tmp/data_vnm.rds")
 
 ```

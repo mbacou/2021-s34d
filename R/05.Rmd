@@ -3,33 +3,33 @@
 Notes: 
 
 - 1 Int'l \$ = 5.59 ZMW (Kwacha) using [2020 World Bank PPP conversion rates](https://data.worldbank.org/indicator/PA.NUS.PPP) (1 Int'l \$ = 1 USD)
+- Focus crop = **rice**
 - All costs are reported per hectare. Inspection, certification and other marketing costs are assumed for the entire farm. Labeling and packaging are per kg.
 - Some farmers grow multiple crops
 
 
-## Survey Codebook
+## Survey Recodes
 
-```{r}
+```{r zmb}
 
 xrate <- 5.59
 
 # Load respondent data
 hh <- fread("../data/zmb/hh.csv")
 group <- fread("../data/zmb/group.csv")
-# Load complete codebook
-lbl <- fread("../data/codebook.csv")
 
 ```
 
-There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A detailed codebook is shown below.
+There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A summary is shown below.
 
-```{r}
+```{r, results="asis"}
 
-kbl(lbl[label %in% names(hh)], align="llccc", caption="Survey Codebook")
+print(dfSummary(hh),
+  max.tbl.height=500, table.classes="table-condensed", method="render")
 
 ```
 
-Recode variable names.
+Recode variable names (see [codebook](index.html#objectives)).
 
 ```{r}
 
@@ -70,7 +70,7 @@ hh[, `:=`(
 
 ### Constructed Variables
 
-We construct **total costs per ha** `costs_ha_lcu` as the sum of individual cost line items.
+Farmers report both expected yields `yield_ha_kg` and sales in the last season `sales_ha_kg`, so we can construct both **expected** and **realized** costs in monetary terms `costs_exp_ha_lcu` and `costs_real_ha_lcu`. We use **realized** yields to calculate profitability metrics.
 
 ```{r}
 
@@ -78,40 +78,46 @@ hh[,
   tran_ha_lcu := as.numeric(tran_ha_lcu)
 ][, 
   tran_ha_lcu := fifelse(is.na(tran_ha_lcu), 0, tran_ha_lcu)
-][, costs_ha_lcu := 
+][, `:=`(
+  # Expected costs
+  costs_exp_ha_lcu = 
     # Per ha costs
-    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + cert_lcu + mark_kg_lcu +
+    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + 
+    cert_lcu + mark_kg_lcu +
     # Per kg costs
-    yield_ha_kg * (labl_kg_lcu + pckg_kg_lcu)]
+    yield_ha_kg * (labl_kg_lcu + pckg_kg_lcu),  
+  # Realized costs
+  costs_real_ha_lcu = 
+    # Per ha costs
+    seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + 
+      cert_lcu + mark_kg_lcu +
+    # Per kg costs
+    sales_ha_kg * (labl_kg_lcu + pckg_kg_lcu)
+)]
 
-hh[, summary(costs_ha_lcu)]
+hh[, summary(costs_real_ha_lcu)]
 
 ```
 
-We also construct **total sales per ha** `sales_ha_lcu`.
+Using **realized** costs and sales, we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` per unit of (variable) input costs, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
 
-```{r}
-
-hh[, sales_ha_lcu := sales_kg_lcu * sales_ha_kg]
-
-```
-
-Further we construct gross margin per ha `margin_ha_lcu`, total sales `sales_ha_sh` and profit margin `margin_ha_sh` per unit of (variable) input costs, and `costs_ha_ppp`, `sales_ha_ppp` and `margin_ha_ppp` in PPP terms to allow for comparisons across groups and countries. 
-
-We also construct a measure of **total factor productivity** `tfp` as output per unit of input costs. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.
+We also construct a measure of **total factor productivity** `tfp` as **expected** output per unit of (expected) input costs. Strictly speaking it is only "partial factor productivity" here because we don't include the rental cost of land, land preparation costs, irrigation costs, and the costs of animal and mechanical implements.
 
 ```{r}
 
 hh[, `:=`(
-  margin_ha_lcu = sales_ha_lcu - costs_ha_lcu
+  sales_exp_ha_lcu = yield_ha_kg * sales_kg_lcu,
+  sales_real_ha_lcu = sales_ha_kg * sales_kg_lcu
 )][, `:=`(
-  sales_ha_sh = sales_ha_lcu / costs_ha_lcu,
-  margin_ha_sh = margin_ha_lcu / costs_ha_lcu,
-  costs_ha_ppp = costs_ha_lcu / xrate,
-  sales_ha_ppp = sales_ha_lcu / xrate,
+  margin_ha_lcu = sales_real_ha_lcu - costs_real_ha_lcu
+)][, `:=`(
+  sales_ha_sh = sales_real_ha_lcu / costs_real_ha_lcu,
+  margin_ha_sh = margin_ha_lcu / costs_real_ha_lcu,
+  costs_ha_ppp = costs_real_ha_lcu / xrate,
+  sales_ha_ppp = sales_real_ha_lcu / xrate,
   margin_ha_ppp = margin_ha_lcu / xrate
 )][, `:=`(
-  tfp = yield_ha_kg / costs_ha_ppp
+  tfp = yield_ha_kg / (costs_exp_ha_lcu / xrate)
 )]
 
 ```
@@ -161,8 +167,8 @@ hh_prod_cost <- hh[, .(hhid,
   Transport = tran_ha_lcu, 
   Labor = labor_ha_lcu, 
   Certification = cert_lcu,
-  Labeling = yield_ha_kg * labl_kg_lcu,
-  Packaging = yield_ha_kg * pckg_kg_lcu,
+  Labeling = sales_ha_kg * labl_kg_lcu,
+  Packaging = sales_ha_kg * pckg_kg_lcu,
   Marketing = mark_kg_lcu
 )]
 
@@ -216,7 +222,7 @@ First a breakdown by group.
 ggplot(
   hh[, .N, by=.(adm1_nm, group, age, gender, crop)],
   aes(axis1=gender, axis2=age, axis3=crop, y=N)) +
-  geom_alluvium(aes(fill=group), width=1/4) +
+  geom_alluvium(aes(fill=group), width=1/4, alpha=.7, color="white") +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
   scale_x_discrete(limits=c("Gender", "Age", "Crop")) +
@@ -229,27 +235,16 @@ ggplot(
 
 Showing contingency table between each pair of categorical variables (seed club `group`, `gender`, and age `age`).
 
-```{r}
+```{r, results="asis"}
 
-ttt_ftable(hh, vars=c("group", "gender", "age"))
-
-```
-
-Mantel-Haenszel test shows weak association between the 3 variables. This is further shown in the 2x2 mosaic plots below (standardized residuals between [-2,2]).
-
-```{r, out.width="50%", fig.show="hold", fig.asp=1}
-
-mosaicplot(~gender+age, hh, shade=T,
-  main=NA, xlab="Gender", ylab="Age")
-
-mosaicplot(~group+age, hh, shade=T,
-  main=NA, xlab="Province", ylab="Age")
+print(ctable(hh$group, hh$gender, chisq=T, round.digits=0, 
+  dnn=c("Group", "Gender")), 
+  table.classes="table-condensed", method="render")
+print(ctable(hh$group, hh$age, chisq=T, round.digits=0, 
+  dnn=c("Group", "Age")),
+  table.classes="table-condensed", method="render")
 
 ```
-
-NB. blue means there are more observations in the cell than would be expected under the null model (independence). Red means there are fewer observations than would have been expected.
-
-
 
 ### Seed Production Costs
 
@@ -363,19 +358,27 @@ ggplot(hh_prod_cost,
 
 ### Efficiency
 
-Differences in productivity measures across groups?
+Differences in productivity measures (expected yields and sales) across seed groups?
 
 ```{r}
 
 ttt(yield_ha_kg ~ group | gender, data=hh, render=fmt,
-  caption="Seed Yield (kg / ha) - Zambia")
+  caption="Expected Seed Yield (kg / ha) - Zambia")
+
+ttt(sales_ha_kg ~ group | gender, data=hh, render=fmt,
+  caption="Realized Seed Sales (kg / ha) - Zambia")
 
 ```
+
+Across age groups?
 
 ```{r}
 
 ttt(yield_ha_kg ~ group | age, data=hh, render=fmt,
   caption="Seed Yield (kg / ha) - Zambia")
+
+ttt(sales_ha_kg ~ group | age, data=hh, render=fmt,
+  caption="Realized Seed Sales (kg / ha) - Zambia")
 
 ```
 
@@ -553,9 +556,61 @@ ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
 
 ```
 
+## Correlation
+
+Significant associations. 
+
+```{r, fig.height=5}
+
+ggpairs(
+  hh[, .(`seed club`=sub(" ", "\n", group), 
+    `age`=age_num, `years in group`=member_years,
+    `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
+    `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
+  upper = list(
+    continuous="cor", 
+    combo=wrap("summarise_by", color=pal[1:4], size=2)),
+  lower = list(
+    continuous=wrap("smooth", shape=NA), 
+    combo=wrap("box_no_facet", fill=pal[1:4], alpha=.8)),
+  diag = list(
+    continuous=wrap("densityDiag", fill=NA),
+    discrete=wrap("barDiag", fill=pal[1:4], alpha=.8)),
+  title="Correlogram stratified by seed club - Zambia"
+) + 
+  theme_def(
+    strip.text=element_text(hjust=.5),
+    panel.grid.major=element_blank()
+  )
+
+```
+
+```{r, fig.height=5}
+
+ggpairs(
+  hh[, .(gender, `age`=age_num, `years in group`=member_years, 
+    `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
+    `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
+  upper = list(
+    continuous="cor", 
+    combo=wrap("summarise_by", color=pal[1:2], size=2)),
+  lower = list(
+    continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
+    combo=wrap("box_no_facet", fill=pal[1:2], alpha=.8)),
+  diag = list(
+    continuous=wrap("densityDiag", fill=NA),
+    discrete=wrap("barDiag", fill=pal[1:2], alpha=.8)),
+  title="Correlogram stratified by gender - Zambia"
+) +   
+  theme_def(
+    strip.text=element_text(hjust=.5),
+    panel.grid.major=element_blank()
+  )
+
+```
+
 ```{r save-zmb}
 
-rm(tmp, x, y, i)
 saveRDS(hh, "../tmp/data_zmb.rds")
 
 ```

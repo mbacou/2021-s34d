@@ -16,45 +16,53 @@ The objective of this activity is to understand the operational efficiency and p
 
 We have chosen several countries that are at different stages of agricultural transformation and with varying degrees of seed systems maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide development partners in designing interventions and inform policy making and seed system regulations.
 
-The analysis is split by country, with a cross-country evaluation once all survey results have been compiled. R code chunks are shown for reproducibility.
+The analysis is split by country. R code chunks are shown for reproducibility.
 
 
 ```{r setup, message=F}
 
-library(lubridate)
-library(kableExtra)
-library(viridisLite)
-library(scales)
-library(ggplot2)
-library(data.table)
-library(ttt)
 library(thematic)
 library(showtext)
+library(viridisLite)
+library(lubridate)
+library(kableExtra)
+library(scales)
+library(ggpubr)
+library(data.table)
+library(summarytools)
 library(ggalluvial)
 library(GGally)
+library(ttt)
 
+rm(list=ls())
+
+# Global package options
+options(ttt.theme="booktabs") 
+st_options(plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE,
+  dfSummary.graph.magnif=.8, dfSummary.varnumbers=FALSE) 
 knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220, 
   fig.path="fig/", fig.showtext=TRUE, include=TRUE, 
   error=FALSE, warning=FALSE, message=FALSE)
 
-# Helper - Default FtF colors for plots
+# Helper - Default USAID FtF colors for plots
 pal <- c("#4799b5", "#94a545", "#d37d28", "#8B1E3F", "#403b33")
 
 thematic_on("transparent", "#2f2f29", c("#4799b5", "#e6e7e8"),
   font_spec(c("Roboto Condensed", "Roboto")),
-  qualitative = alpha(pal, .9))
+  qualitative = pal)
 
 theme_def <- function(
   base_size = 7, 
   base_family = "Roboto Condensed",
-  base_fill = "transparent", ...) theme_minimal(base_size, base_family) +
+  base_fill = "transparent",
+  ...) theme_minimal(base_size, base_family) +
   theme(
     panel.background = element_rect(fill=base_fill, color=NA),
     plot.background = element_rect(fill=base_fill, color=NA),
     legend.box.background = element_rect(fill=base_fill, color=NA),
     text = element_text(lineheight=.8),
     plot.title = element_text(size=base_size+1),
-    plot.subtitle = element_text(color="#4799b5", size=base_size),
+    plot.subtitle = element_text(color=pal[1], size=base_size),
     strip.text = element_text(face="bold", hjust=0, size=base_size),
     axis.text = element_text(size=base_size),
     axis.title = element_text(hjust=0),
@@ -66,41 +74,39 @@ theme_def <- function(
 kbl <- function(...) kableExtra::kbl(...) %>% 
   kable_styling(
     bootstrap_options=c("condensed", "responsive", "striped", "hover"), 
-    font_size=14)
+    font_size = 14)
 
-# Helper - Print contingency table with chisq tests
-options(ttt.theme="booktabs") 
-ttt_ftable <- function(data, vars, ...) {
-  stopifnot(length(vars)==3)
-  dt = data[, .SD, .SDcols=vars]
-  N = nrow(dt)
-  dt = table(dt)
-  test = mantelhaen.test(dt)
-  dt = dt %>%
-    prop.table() %>%
-    addmargins(...) %>%
-    ftable()
-  names(attr(dt, "row.vars")) = vars[1:2]
-  dt = round(100*dt, digits=1)
-  ttt(dt,
-    caption="Contingency Table (% of respondents)",
-    footnote=paste(
-      "N =", N,
-      "| Mantel-Haenszel chi-squared =", comma(test[[1]], acc=.01),
-      "| p-value = ", comma(test[[3]], acc=.0001))
-  )
-}
-
-# Helper - Formatters
+# Helper - TTT Formatters
 fmt <- function(x) c(
-  Mean = comma(mean(x, na.rm=T)), 
-  Med = comma(median(x, na.rm=T)),
-  SD = comma(sd(x, na.rm=T)))
+  mean = comma(mean(x, na.rm=T)), 
+  median = comma(median(x, na.rm=T)),
+  sd = comma(sd(x, na.rm=T)))
 
 fmt_pct <- function(x) c(
-  Mean = percent(mean(x, na.rm=T)), 
-  Med = percent(median(x, na.rm=T)),
-  SD = percent(sd(x, na.rm=T)))
+  mean = percent(mean(x, na.rm=T)), 
+  median = percent(median(x, na.rm=T)),
+  sd = percent(sd(x, na.rm=T)))
+
+count <- function(x) data.frame(y=Inf, label=paste("N =", length(x)))
+ggBoxTest <- function(...) ggplot(...) +
+  geom_jitter(alpha=.5) +
+  geom_boxplot(alpha=.7, outlier.size=0) +
+  stat_compare_means(size=3, label.y.npc=.94) +
+  stat_compare_means(label="p.signif", ref.group=".all.", 
+    label.y.npc=.99, size=3, fontface="bold") +
+  stat_summary(fun.data=count, geom="text", size=2.5, color=1, vjust=1)  
+
+```
+
+# Codebook
+
+All survey datasets have been consolidated into a unique data file. A unified codebook is shown below for reference.
+
+```{r}
+
+# Load unified codebook
+lbl <- fread("../data/codebook.csv")
+kbl(lbl, align="llccc", caption="Consolidated Survey Codebook")
 
 ```
 

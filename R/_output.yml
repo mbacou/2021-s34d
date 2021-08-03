@@ -1,11 +1,13 @@
 bookdown::gitbook:
+  output_dir: ../docs
+  new_session: true
   dev: svglite
   df_print: kable
   css: ./www/book.css
   split_by: rmd
   split_bib: yes
   number_sections: no
-  highlight: monochrome
+  highlight: default
   config:
     fontsettings_size: 1
     sharing_all: false

@@ -15,5 +15,5 @@ LaTeX: pdfLaTeX
 AutoAppendNewline: Yes
 StripTrailingWhitespace: Yes
 
-BuildType: Custom
-CustomScriptPath: build.sh
+BuildType: Website
+WebsitePath: R
