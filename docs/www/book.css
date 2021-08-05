@@ -90,9 +90,9 @@ table > caption {
 
 .Rttt table, .Rttt tfoot tr td p, .Rttt caption {
   font-family: unset;
-  font-size: unset;
+  font-size: 14px;
 }
 
 .Rttt th, .Rttt td {
-  padding: .4rem .9rem;
+  padding: .2rem .9rem;
 }

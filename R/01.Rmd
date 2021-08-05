@@ -26,10 +26,9 @@ group <- fread("../data/vnm/group.csv")
 
 There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A summary is shown below.
 
-```{r, results="asis"}
+```{r}
 
-print(dfSummary(hh),
-  max.tbl.height=500, table.classes="table-condensed", method="render")
+print(dfSummary(hh), max.tbl.height=500)
 
 ```
 
@@ -222,21 +221,11 @@ ggplot(
 
 ```
 
-Showing contingency table between each pair of categorical variables (seed club `group`, `gender`, years in seed club `years`, and use of formal seed system distribution `ssd`). Rice in Vietnam is a male-dominated production, hence the absence of female respondents in a few clubs.
+Showing contingency tables between each pair of categorical variables (seed club `group`, `gender`, years in seed club `years`, and use of formal seed system distribution `ssd`). Rice in Vietnam is a male-dominated production, hence the absence of female respondents in a few clubs.
 
-```{r, results="asis"}
+```{r}
 
-print(ctable(hh$group, hh$gender, chisq=T, round.digits=0, 
-  dnn=c("Group", "Gender")), 
-  table.classes="table-condensed", method="render")
-
-print(ctable(hh$group, hh$ssd, chisq=T, round.digits=0, 
-  dnn=c("Group", "Seed System")),
-  table.classes="table-condensed", method="render")
-
-print(ctable(hh$group, hh$years, chisq=T, round.digits=0, 
-  dnn=c("Group", "Years in Seed Club")),
-  table.classes="table-condensed", method="render")
+ttt_ftable(hh, vars=c("group", "gender", "years"))
 
 ```
 

@@ -1,11 +1,11 @@
 ---
-title: Supporting Seed Systems for Development
-author: BACOU, Melanie
-date: Last updated on `r Sys.Date()` -- CODES AND NOTES
-description: Analysis for S34D field surveys.
-site: bookdown::bookdown_site
-output: bookdown::gitbook
+title: "Supporting Seed Systems for Development"
+author: "BACOU, Melanie"
+date: "Last updated on `r Sys.Date()` -- CODES AND NOTES"
+output: word_document2
 bibliography: biblio.bib
+always_allow_html: yes
+description: Analysis for S34D field surveys.
 ---
 
 # Objectives
@@ -40,7 +40,7 @@ rm(list=ls())
 options(
   ttt.theme="booktabs") 
 st_options(
-  plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE,
+  plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE, footnote=NA,
   dfSummary.graph.magnif=.8, dfSummary.varnumbers=FALSE) 
 knitr::opts_chunk$set(
   fig.height=3, fig.width=5, dpi=220, fig.path="fig/", fig.showtext=TRUE, 
@@ -76,7 +76,7 @@ theme_def <- function(
 kbl <- function(...) kableExtra::kbl(...) %>% 
   kable_styling(
     bootstrap_options=c("condensed", "responsive", "striped", "hover"), 
-    font_size = 14)
+    font_size=14)
 
 # Helper - TTT Formatters
 fmt <- function(x) c(
@@ -95,12 +95,34 @@ ggBoxTest <- function(..., jitter=TRUE, grp.c=NULL, grp.s=NULL, cp=NULL, ref=NUL
   if(jitter) p = p + geom_jitter(alpha=.5)
   p = p + 
     geom_boxplot(alpha=.7, outlier.shape=NA) +
-    stat_summary(grp.c, fun.data=count, geom="text", size=3, color=1, vjust=.9)
+    stat_summary(grp.c, fun.data=count, geom="text", size=2, color=1, vjust=.9)
   if(is.null(cp) && is.null(ref)) p = p +
-      stat_compare_means(grp.s, label="p.signif", size=3.5, vjust=1, fontface="bold") +
-      stat_compare_means(grp.s, label="p.format", size=3, vjust=3)
+    stat_compare_means(grp.s, label="p.signif", size=2.5, vjust=1, fontface="bold") +
+    stat_compare_means(grp.s, label="p.format", size=2, vjust=3)
   else p = p +
-      stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", size=3, vjust=0)
+    stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", vjust=0, size=2)
+}
+
+# Helper - Contingency table
+ttt_ftable <- function(data, vars, ...) {
+  stopifnot(length(vars)==3)
+  dt = data[, .SD, .SDcols=vars]
+  N = nrow(dt)
+  dt = table(dt)
+  test = mantelhaen.test(dt)
+  dt = dt %>%
+    prop.table() %>%
+    addmargins(...) %>%
+    ftable()
+  names(attr(dt, "row.vars")) = vars[1:2]
+  dt = round(100*dt, digits=1)
+  ttt(dt,
+    caption="Contingency Table (% of respondents)",
+    footnote=paste(
+      "N =", N,
+      "| Mantel-Haenszel chi-squared =", comma(test[[1]], acc=.01),
+      "| p-value = ", comma(test[[3]], acc=.0001))
+  )
 }
 
 ```

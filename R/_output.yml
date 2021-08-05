@@ -1,7 +1,7 @@
 bookdown::gitbook:
   output_dir: ../docs
   new_session: true
-  dev: ragg_png
+  dev: svglite
   df_print: kable
   css: ./www/book.css
   split_by: rmd
@@ -21,3 +21,12 @@ bookdown::gitbook:
         <li><a href="/2021-s34d/">Feed the Future S34D</a></li>
     toolbar:
       position: fixed
+
+bookdown::word_document2:
+  output_dir: ../docx
+  new_session: true
+  dev: png
+  df_print: kable
+  number_sections: no
+  always_allow_html: true
+  highlight: default
