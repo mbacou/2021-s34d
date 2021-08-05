@@ -2,10 +2,10 @@
 title: "Supporting Seed Systems for Development"
 author: "BACOU, Melanie"
 date: "Last updated on `r Sys.Date()` -- CODES AND NOTES"
-output: word_document2
 bibliography: biblio.bib
 always_allow_html: yes
 description: Analysis for S34D field surveys.
+site: bookdown::bookdown_site
 ---
 
 # Objectives
@@ -92,13 +92,13 @@ fmt_pct <- function(x) c(
 count <- function(x) data.frame(y=Inf, label=paste("N =", length(x)))
 ggBoxTest <- function(..., jitter=TRUE, grp.c=NULL, grp.s=NULL, cp=NULL, ref=NULL) {
   p = ggplot(...)
-  if(jitter) p = p + geom_jitter(alpha=.5)
+  if(jitter) p = p + geom_jitter(alpha=.5, size=.2)
   p = p + 
     geom_boxplot(alpha=.7, outlier.shape=NA) +
-    stat_summary(grp.c, fun.data=count, geom="text", size=2, color=1, vjust=.9)
+    stat_summary(grp.c, fun.data=count, geom="text", size=2.5, color=1, vjust=.9)
   if(is.null(cp) && is.null(ref)) p = p +
-    stat_compare_means(grp.s, label="p.signif", size=2.5, vjust=1, fontface="bold") +
-    stat_compare_means(grp.s, label="p.format", size=2, vjust=3)
+    stat_compare_means(grp.s, label="p.signif", size=3, vjust=2, fontface="bold") +
+    stat_compare_means(grp.s, label="p.format", size=2.5, vjust=4)
   else p = p +
     stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", vjust=0, size=2)
 }

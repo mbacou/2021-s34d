@@ -28,7 +28,7 @@ group <- fread("../data/gtm/group.csv")
 
 There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A summary is shown below.
 
-```{r}
+```{r, results="asis"}
 
 print(dfSummary(hh), max.tbl.height=500)
 

@@ -23,7 +23,7 @@ bookdown::gitbook:
       position: fixed
 
 bookdown::word_document2:
-  output_dir: ../docx
+  output_dir: ../docs
   new_session: true
   dev: png
   df_print: kable
