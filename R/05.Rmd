@@ -3,7 +3,7 @@
 Notes: 
 
 - 1 Int'l \$ = 5.59 ZMW (Kwacha) using [2020 World Bank PPP conversion rates](https://data.worldbank.org/indicator/PA.NUS.PPP) (1 Int'l \$ = 1 USD)
-- Focus crop = **rice**
+- Focus crops = **soybean**, **maize**, **cowpea**, **bean**
 - All costs are reported per hectare. Inspection, certification and other marketing costs are assumed for the entire farm. Labeling and packaging are per kg.
 - Some farmers grow multiple crops
 
@@ -46,6 +46,7 @@ setorder(hh, adm1_nm, group, gender, crop)
 hh[, `:=`(
   hhid = paste("ZMB", gsub(" ", "0", format(1:.N, width=3)), sep=""),
   iso3 = "ZMB",
+  crop = factor(crop),
   adm1_nm = factor(adm1_nm),
   # Abbreviate seed club names
   group = factor(group, levels=c(
@@ -61,9 +62,8 @@ hh[, `:=`(
   )),
   gender = factor(gender, levels=c("male", "female"), labels=c("Male", "Female")),
   age = factor(age, levels=c("25", "15-29", "30+"), labels=c("< 30", "< 30", "≥ 30")),
-  crop = factor(crop)
+  years = factor(member_years >= 5, levels=c(F, T), labels=c("< 5", "≥ 5"))
 )]
-
 
 ```
 
@@ -72,13 +72,24 @@ hh[, `:=`(
 
 Farmers report both expected yields `yield_ha_kg` and sales in the last season `sales_ha_kg`, so we can construct both **expected** and **realized** costs in monetary terms `costs_exp_ha_lcu` and `costs_real_ha_lcu`. We use **realized** yields to calculate profitability metrics.
 
+Note that 1 farmer did not report a sales price, so we use the reported median.
+
+```{r}
+
+kbl(caption="Missing sales entry",
+  hh[is.na(sales_kg_lcu), 
+    .(hhid, code, group, crop, yield_ha_kg, sales_ha_kg, sales_kg_lcu)])
+
+```
+
 ```{r}
 
 hh[, 
   tran_ha_lcu := as.numeric(tran_ha_lcu)
-][, 
-  tran_ha_lcu := fifelse(is.na(tran_ha_lcu), 0, tran_ha_lcu)
 ][, `:=`(
+  tran_ha_lcu = fifelse(is.na(tran_ha_lcu), 0, tran_ha_lcu),
+  sales_kg_lcu = fifelse(is.na(sales_kg_lcu), median(sales_kg_lcu, na.rm=T), sales_kg_lcu)
+), by=.(group, crop)][, `:=`(
   # Expected costs
   costs_exp_ha_lcu = 
     # Per ha costs
@@ -90,11 +101,12 @@ hh[,
   costs_real_ha_lcu = 
     # Per ha costs
     seed_ha_lcu + fert_ha_lcu + pest_ha_lcu + tran_ha_lcu + labor_ha_lcu + 
-      cert_lcu + mark_kg_lcu +
+    cert_lcu + mark_kg_lcu +
     # Per kg costs
     sales_ha_kg * (labl_kg_lcu + pckg_kg_lcu)
 )]
 
+hh[, summary(costs_exp_ha_lcu)]
 hh[, summary(costs_real_ha_lcu)]
 
 ```
@@ -164,8 +176,8 @@ hh_prod_cost <- hh[, .(hhid,
   Seeds = seed_ha_lcu, 
   Fertilizer = fert_ha_lcu, 
   Pesticides = pest_ha_lcu, 
-  Transport = tran_ha_lcu, 
   Labor = labor_ha_lcu, 
+  Transport = tran_ha_lcu, 
   Certification = cert_lcu,
   Labeling = sales_ha_kg * labl_kg_lcu,
   Packaging = sales_ha_kg * pckg_kg_lcu,
@@ -180,21 +192,11 @@ And we lump all marketing costs into a single category.
 
 ```{r}
 
-hh_prod_cost[, type_alt := factor(as.character(type), labels=c(
-  Seeds = "Seeds",
-  Fertilizer = "Fertilizer",
-  Pesticides = "Pesticides",
-  Labor = "Labor",
-  Certification = "Marketing",
-  Transport = "Marketing",
-  Labeling = "Marketing",
-  Packaging = "Marketing",
-  Marketing = "Marketing"
-))]
+levels(hh_prod_cost$type) <- levels(hh_prod_cost$type)[c(1,2,3,4,9,9,9,9,9)]
 
 hh_prod_cost <- hh_prod_cost[, .(
   lcu = sum(lcu, na.rm=T)
-), by=.(hhid, type=type_alt)
+), by=.(hhid, type)
 ][, `:=`(
   # Add cost shares and PPP terms
   share = lcu/sum(lcu, na.rm=T),
@@ -202,10 +204,11 @@ hh_prod_cost <- hh_prod_cost[, .(
 ), by=.(hhid)
 ][hh, on=.(hhid), `:=`(
   # Add classes
-  group = i.group,
-  gender = i.gender,
-  age = i.age,
-  crop = i.crop
+  group = group,
+  gender = gender,
+  age = age,
+  years = years,
+  crop = crop
 )]
 
 ```
@@ -215,67 +218,85 @@ hh_prod_cost <- hh_prod_cost[, .(
 
 ### Respondent Characteristics
 
-First a breakdown by group.
+Breakdown by categorical variables. Note that farmers in HIMMA grow both crops.
 
-```{r, fig.height=3.5}
+```{r, fig.height=4}
 
 ggplot(
-  hh[, .N, by=.(adm1_nm, group, age, gender, crop)],
-  aes(axis1=gender, axis2=age, axis3=crop, y=N)) +
+  hh[, .N, by=.(group, age, gender, crop, years)],
+  aes(axis1=crop, axis2=gender, axis3=age, axis4=years, y=N)) +
   geom_alluvium(aes(fill=group), width=1/4, alpha=.7, color="white") +
   geom_stratum(width=1/4) +
   geom_text(stat="stratum", aes(label=after_stat(stratum)), angle=90, size=2.2) +
-  scale_x_discrete(limits=c("Gender", "Age", "Crop")) +
+  scale_x_discrete(limits=c("Crop", "Gender", "Age", "Years in Seed Club")) +
   labs(y=NULL, fill="Seed Club",
-    title = "Survey Respondents (Zambia)",
-    subtitle = "Stratified by club and demographics") +
+    title = "Categories of Survey Respondents - Zambia",
+    subtitle = "Stratified by seed club") +
   theme_def(axis.text=element_text(face="bold"))
 
 ```
 
-Showing contingency table between each pair of categorical variables (seed club `group`, `gender`, and age `age`).
+Showing contingency table between each pair of categorical variables (seed club `group`, `gender`, age `age`, and years in seed club `years`).
 
 ```{r, results="asis"}
 
 print(ctable(hh$group, hh$gender, chisq=T, round.digits=0, 
   dnn=c("Group", "Gender")), 
   table.classes="table-condensed", method="render")
+
 print(ctable(hh$group, hh$age, chisq=T, round.digits=0, 
   dnn=c("Group", "Age")),
   table.classes="table-condensed", method="render")
 
+print(ctable(hh$group, hh$years, chisq=T, round.digits=0, 
+  dnn=c("Group", "Years in Seed Club")),
+  table.classes="table-condensed", method="render")
+
 ```
+
 
 ### Seed Production Costs
 
-We then look at the general breakdown and distribution of input costs across seed clubs, crop, gender, and input type.
+General breakdown and distribution of input costs across seed clubs, gender, years in seed club, and input type.
 
 ```{r}
 
-ttt(costs_ha_ppp ~ group | gender, data=hh, render=fmt,
+ttt(costs_ha_ppp ~ group | gender+years, data=hh, render=fmt,
   caption="Total Input Costs in Absolute Terms (PPP$ / ha) - Zambia")
 
 ```
 
+Boxplots with mean comparison p-value and significance levels. When more than two levels, each level is **compared to the group mean**.
+
+(ns : p > 0.05, * : p ≤ 0.05, ** : p ≤ 0.01, *** = p ≤ 0.001, **** = p ≤ 0.0001)
+
+Note that `r hh[costs_ha_ppp > 1000, .N]` farmers have total input costs above PPP$ 800/ha.
+
 ```{r}
 
-ggplot(hh, aes(gender, costs_ha_ppp, fill=gender)) +
-  geom_boxplot(alpha=.7) +
-  scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +
-  labs(x="", y="", fill="",
-    title="Total Input Costs (PPP$ / ha) - Zambia",
-    subtitle="Stratified by gender and crop type") +
-  theme_def(legend.position="none")
+outlier <- hh[costs_ha_ppp > 1000, hhid]
 
-ggplot(hh, aes(group, costs_ha_ppp, fill=group)) +
-  geom_boxplot(alpha=.7) +
+kbl(caption="Outliers",
+  hh[hhid %in% outlier, .(hhid, code, group, crop, costs_ha_ppp)],
+  format.args=list(big.mark=",", digits=0))
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, costs_ha_ppp, color=gender, fill=gender), 
+  grp.c=aes(group=crop), grp.s=aes(group=gender)) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +  
-  labs(x="", y="", fill="",
+  labs(x="", y="", fill="", color="",
     title="Total Input Costs (PPP$ / ha) - Zambia",
-    subtitle="Stratified by seed club and crop type") +
-  theme_def(legend.position="none")
+    subtitle="Stratified by crop and gender") +
+  theme_def(legend.position="top")
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, costs_ha_ppp, color=group, fill=group),
+  grp.c=aes(group=crop), grp.s=aes(group=group)) +
+  scale_y_continuous(labels=comma) + 
+  labs(x="", y="", fill="", color="",
+    title="Total Input Costs (PPP$ / ha) - Zambia",
+    subtitle="Stratified by crop") +
+  theme_def(legend.position="top")
 
 ```
 
@@ -286,7 +307,52 @@ Breakdown across categories of farm input.
 ttt(ppp ~ type | gender+crop, data=hh_prod_cost, render=fmt,
   caption="Input Costs in Absolute Terms by Gender (PPP$ / ha) - Zambia")
 
-ttt(ppp ~ type | group, data=hh_prod_cost, render=fmt,
+```
+
+```{r}
+
+tbl <- hh_prod_cost[, .(
+  ppp = mean(ppp, na.rm=T)
+), keyby=.(gender, crop, type)]
+
+ggplot(tbl, aes(gender, ppp, fill=type)) +
+  geom_bar(stat="identity", position="fill", alpha=.7, width=.6, color="white") +
+  scale_y_continuous(labels=percent) +
+  facet_wrap(~crop, nrow=1) +
+  labs(y="", x="", fill="",
+    title="Breakdown of Input Costs by Category - Zambia",
+    subtitle="Stratified by crop and gender") +
+  theme_def(legend.position="right")
+
+```
+
+```{r}
+
+ttt(ppp ~ type | years+crop, data=hh_prod_cost, render=fmt,
+  caption="Input Costs in Absolute Terms by Years in Seed Group (PPP$ / ha) - Zambia")
+
+```
+
+```{r}
+
+tbl <- hh_prod_cost[, .(
+  ppp = mean(ppp, na.rm=T)
+), keyby=.(years, crop, type)]
+
+ggplot(tbl, aes(years, ppp, fill=type)) +
+  geom_bar(stat="identity", position="fill", alpha=.7, width=.6, color="white") +
+  scale_y_continuous(labels=percent) +
+  facet_wrap(~crop, nrow=1) +
+  labs(y="", x="",
+    title="Breakdown of Input Costs by Category - Zambia",
+    subtitle="Stratified by crop and years in seed club") +
+  theme_def(legend.position="right")
+
+```
+
+```{r}
+
+ttt(ppp ~ type | group+crop, data=hh_prod_cost, render=fmt,
   caption="Input Costs in Absolute Terms by Seed Group (PPP$ / ha) - Zambia")
 
 ```
@@ -294,63 +360,79 @@ ttt(ppp ~ type | group, data=hh_prod_cost, render=fmt,
 ```{r}
 
 tbl <- hh_prod_cost[, .(
-  share = mean(share, na.rm=T)
-), keyby=.(crop, gender, type)]
+  ppp = mean(ppp, na.rm=T)
+), keyby=.(group, crop, type)]
 
-ggplot(tbl, aes(gender, share, fill=type)) +
-  geom_bar(stat="identity", alpha=.8, width=.6) +
+ggplot(tbl, aes(group, ppp, fill=type)) +
+  geom_bar(stat="identity", position="fill", alpha=.7, width=.6, color="white") +
   scale_y_continuous(labels=percent) +
-  scale_fill_manual("", values=colorRampPalette(pal)(9)) +
-  facet_wrap(~crop) +
+  facet_wrap(~crop, scales="free_x", nrow=1) +
   labs(y="", x="",
     title="Breakdown of Input Costs by Category - Zambia",
-    subtitle="Stratified by gender and crop types") +
-  theme_def()
+    subtitle="Stratified by crop and seed club") +
+  theme_def(legend.position="top")
 
 ```
+
+Are there significant differences across groups? We first compare input cost shares across gender, then across seed clubs.
+
+```{r, fig.height=4}
+
+ggBoxTest(hh_prod_cost[!type %in% c("Seeds")], 
+  aes(type, share, color=gender, fill=gender),
+  grp.c=aes(group=type), grp.s=aes(group=gender), jitter=F) +
+  scale_y_continuous(labels=percent) +
+  #facet_wrap(~crop) +  
+  labs(x="", y="", fill="", color="",
+    title="Input Costs by Category (Percent of Total Costs by Ha) - Zambia",
+    subtitle="Stratified by gender") +
+  theme_def(legend.position="right")
+
+```
+
+Differences across years in seed club.
+
+```{r, fig.height=4}
+
+ggBoxTest(hh_prod_cost[!type %in% c("Seeds")], 
+  aes(type, share, color=years, fill=years),
+  grp.c=aes(group=type), grp.s=aes(group=years), jitter=F) +
+  scale_y_continuous(labels=percent) +
+  #facet_wrap(~crop) +  
+  labs(x="", y="", fill="", color="",
+    title="Input Costs by Category (Percent of Total Costs by Ha) - Zambia",
+    subtitle="Stratified by years in seed club") +
+  theme_def(legend.position="right")
+
+```
+
+Differences across seed clubs.
 
 ```{r}
 
-tbl <- hh_prod_cost[, .(
-  share = mean(share, na.rm=T)
-), keyby=.(group, crop, type)]
-
-ggplot(tbl, aes(group, share, fill=type)) +
-  geom_bar(stat="identity", alpha=.8, width=.6) +
+ggBoxTest(hh_prod_cost[!type %in% c("Seeds")], 
+  aes(type, share, color=group, fill=group),
+  grp.c=aes(group=type), grp.s=aes(group=group), jitter=F) +
   scale_y_continuous(labels=percent) +
-  scale_fill_manual("", values=colorRampPalette(pal)(9)) +
-  facet_wrap(~crop, scales="free_x") +
-  labs(y="", x="",
-    title="Breakdown of Input Costs by Category - Zambia",
-    subtitle="Stratified by seed club and crop type") +
-  theme_def()
+  #facet_wrap(~crop) +  
+  labs(x="", y="", fill="", color="",
+    title="Input Costs by Category (PPP$ by Hectare) - Zambia",
+    subtitle="Stratified by seed club") +
+  theme_def(legend.position="right")
 
 ```
 
-Are there significant differences across groups?
+Differences across crops.
 
-```{r, fig.height=5}
+```{r}
 
-ggplot(hh_prod_cost, 
-  aes(type, ppp, fill=gender)) +
-  geom_boxplot(alpha=.7) +
-  scale_y_continuous(labels=comma) +
-  coord_flip() +
-  facet_wrap(~crop, scales="free_x") +
-  labs(x="", y="", fill="",
+ggBoxTest(hh_prod_cost[!type %in% c("Seeds")], 
+  aes(type, share, color=crop, fill=crop),
+  grp.c=aes(group=type), grp.s=aes(group=crop), jitter=F) +
+  scale_y_continuous(labels=percent) +
+  labs(x="", y="", fill="", color="",
     title="Input Costs by Category (PPP$ by Hectare) - Zambia",
-    subtitle="Stratified by gender and crop type") +
-  theme_def(legend.position="top")
-
-ggplot(hh_prod_cost, 
-  aes(type, ppp, fill=group)) +
-  geom_boxplot(alpha=.7) +
-  scale_y_continuous(labels=comma) +
-  coord_flip() +
-  facet_wrap(~crop, scales="free_x") +
-  labs(x="", y="", fill="",
-    title="Input Costs by Category (PPP$ by Hectare) - Zambia",
-    subtitle="Stratified by seed club and crop type") +
+    subtitle="Stratified by crop") +
   theme_def(legend.position="top")
 
 ```
@@ -358,213 +440,280 @@ ggplot(hh_prod_cost,
 
 ### Efficiency
 
-Differences in productivity measures (expected yields and sales) across seed groups?
+Differences in productivity measures (expected seed yields and actual sales) across groups.
 
 ```{r}
 
-ttt(yield_ha_kg ~ group | gender, data=hh, render=fmt,
+ttt(yield_ha_kg ~ group | gender+crop, data=hh, render=fmt,
   caption="Expected Seed Yield (kg / ha) - Zambia")
+ttt(sales_ha_kg ~ group | gender+crop, data=hh, render=fmt,
+  caption="Realized Seed Sales (kg / ha) - Zambia")
 
-ttt(sales_ha_kg ~ group | gender, data=hh, render=fmt,
+ttt(yield_ha_kg ~ group | years+crop, data=hh, render=fmt,
+  caption="Realized Seed Sales (kg / ha) - Zambia")
+ttt(sales_ha_kg ~ group | years+crop, data=hh, render=fmt,
   caption="Realized Seed Sales (kg / ha) - Zambia")
 
 ```
 
-Across age groups?
+Differences in efficiency measures across gender with mean comparison (Wilcoxon) p-value. Note the we take out outlying values.
 
 ```{r}
 
-ttt(yield_ha_kg ~ group | age, data=hh, render=fmt,
-  caption="Seed Yield (kg / ha) - Zambia")
+outlier <- c(
+  hh[yield_ha_kg > median(yield_ha_kg) + 3*sd(yield_ha_kg), hhid],
+  hh[sales_ha_ppp > median(sales_ha_ppp) + 3*sd(yield_ha_kg), hhid]
+)
 
-ttt(sales_ha_kg ~ group | age, data=hh, render=fmt,
-  caption="Realized Seed Sales (kg / ha) - Zambia")
+kbl(caption="Respondents with yields or sales > median + 3*sd",
+  hh[hhid %in% outlier, .(hhid, code, group, crop, yield_ha_kg, sales_ha_ppp)],
+  format.args=list(big.mark=","))
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, yield_ha_kg, color=gender, fill=gender),
+  grp.c=aes(group=crop), grp.s=aes(group=gender)) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="", color="",
+    title="Expected Seed Yield (kg / ha) - Zambia",
+    subtitle="Stratified by crop and gender") +
+  theme_def(legend.position="top")
+
+ggBoxTest(hh[!hhid %in% outlier],
+  aes(crop, sales_ha_ppp, color=gender, fill=gender),
+  grp.c=aes(group=crop), grp.s=aes(group=gender)) +  
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="", color="",
+    title="Total Seed Sales (PPP$ / ha) - Zambia",
+    subtitle="Stratified by gender") +
+  theme_def(legend.position="top")
 
 ```
 
-```{r}
+Differences in efficiency measures by years in seed club with mean comparison (Wilcoxon) p-value.
 
-ggplot(hh, aes(gender, yield_ha_kg, fill=gender)) +
-  geom_boxplot(alpha=.7) +
-  scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free_y") +  
-  labs(x="", y="", fill="",
-    title="Seed Yield (kg / ha) - Zambia",
-    subtitle="Stratified by gender") +
-  theme_def(legend.position="none")
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
-ggplot(hh, aes(gender, sales_ha_ppp, fill=gender)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, yield_ha_kg, color=years, fill=years),
+  grp.c=aes(group=crop), grp.s=aes(group=years)) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free_y") +  
-  labs(x="", y="", fill="",
+  labs(x="", y="", fill="", color="",
+    title="Expected Seed Yield (kg / ha) - Zambia",
+    subtitle="Stratified crop and by years in seed club") +
+  theme_def(legend.position="top")
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, sales_ha_ppp, color=years, fill=years),
+  grp.c=aes(group=crop), grp.s=aes(group=years)) + 
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="", color="",
     title="Total Seed Sales (PPP$ / ha) - Zambia",
-    subtitle="Stratified by gender") +
-  theme_def(legend.position="none")
+    subtitle="Stratified crop and by years in seed club") +
+  theme_def(legend.position="top")
 
 ```
 
+Differences in efficiency measures across seed clubs with global ANOVA p-value.
 
-```{r}
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
-ggplot(hh, aes(group, yield_ha_kg, fill=group)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, yield_ha_kg, color=group, fill=group),
+  grp.c=aes(group=crop), grp.s=aes(group=group)) + 
   scale_x_discrete(labels=label_wrap(5)) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +
-  labs(x="", y="", fill="",
-    title="Seed Yield (Kg / ha) - Zambia",
-    subtitle="Stratified by seed club") +
-  theme_def(legend.position="none")
+  labs(x="", y="", fill="", color="",
+    title="Expected Seed Yield (Kg / ha) - Zambia",
+    subtitle="Stratified by crop and seed club") +
+  theme_def(legend.position="top")
 
-ggplot(hh, aes(group, sales_ha_ppp, fill=group)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh[!hhid %in% outlier],
+  aes(crop, sales_ha_ppp, color=group, fill=group),
+  grp.c=aes(group=crop), grp.s=aes(group=group)) + 
   scale_x_discrete(labels=label_wrap(5)) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +
-  labs(x="", y="", fill="",
+  labs(x="", y="", fill="", color="",
     title="Total Seed Sales (PPP$ / ha) - Zambia",
-    subtitle="Stratified by seed club") +
-  theme_def(legend.position="none")
+    subtitle="Stratified crop by seed club") +
+  theme_def(legend.position="top")
 
 ```
 
 Looking at **production frontiers** (units of output vs. units of input). We expect S-shape curves with farmers at different levels of technical efficiency along the curve. 
 
-```{r}
+Note that in the approximated curves below we remove outliers with total input costs over PPP$ 1,700 per ha.
 
-outlier <- ""
+```{r, fig.width=6}
+
+outlier <- hh[costs_ha_ppp > median(costs_ha_ppp) + 3*sd(costs_ha_ppp), hhid]
+
+kbl(
+  caption="Farmers with total input costs > median + 3*sd",
+  hh[hhid %in% outlier, .(hhid, group, crop, yield_ha_kg, costs_ha_ppp)],
+  format.args=list(big.mark=",", digits=0))
 
 ggplot(hh[!hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg)) +
   geom_smooth(size=.8) +
   geom_point(alpha=.7, shape=20, color=1) +
-  geom_point(data=hh[hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg), 
-    alpha=.7, color=2, shape=18) +
   scale_x_continuous(labels=comma) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +
-  #coord_cartesian(ylim=c(4000, 14000)) +
-  labs(x="", y="",
-    title="Production Frontier (Output vs. Input) - Zambia",
-    subtitle="Each point is a respondent (kg vs. PPP$ / ha)") +
-  theme_def(legend.position="none")
-
-```
-
-```{r}
-
-ggplot(hh[!hhid %in% outlier], aes(costs_ha_ppp, yield_ha_kg)) +
-  geom_smooth(aes(color=gender, fill=gender), size=.8, level=.9) +
-  geom_point(alpha=.7, shape=20) +
-  scale_x_continuous(labels=comma) +
-  scale_y_continuous(labels=comma) +
-  facet_wrap(~crop, scales="free") +
-  #coord_cartesian(ylim=c(4000, 14000)) +
+  facet_wrap(~crop, scales="free", nrow=1) +
   labs(x="", y="",
     title="Production Frontier (Output vs. Input) - Zambia",
     subtitle="Each point is a respondent. Shade shows 90% CI (kg vs. PPP$ / ha)") +
-  theme_def(legend.position="right")
+  theme_def(legend.position="none")
 
 ```
 
 
 ### Profitability
 
-By gender:
+Farmers' gross profit margins by crop, gender, and years in seed club.
 
 ```{r}
 
-ttt(margin_ha_ppp ~ group | gender, data=hh, render=fmt,
+ttt(margin_ha_ppp ~ group+crop | gender+years, data=hh, render=fmt,
   caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Zambia")
 
-ttt(margin_ha_sh ~ group | gender, data=hh, render=fmt_pct,
+ttt(margin_ha_sh ~ group+crop | gender+years, data=hh, render=fmt_pct,
   caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Zambia")
 
 ```
 
-By age group:
+Note that `r hh[margin_ha_ppp < 0, .N]` respondents show negative margins.
 
 ```{r}
 
-ttt(margin_ha_ppp ~ group | age, data=hh, render=fmt,
-  caption="Mean Gross Profit Margin in Absolute Terms (PPP$ / ha) - Zambia")
+kbl(caption="Respondents with negative gross margins.",
+  hh[margin_ha_ppp < 0, 
+    .(hhid, code, group, crop, costs_ha_ppp, yield_ha_kg, sales_ha_kg, margin_ha_ppp)],
+  format.args=list(big.mark=",", digits=1))
 
-ttt(margin_ha_sh ~ group | age, data=hh, render=fmt_pct,
-  caption="Mean Gross Profit Margin in Relative Terms (% of variable input costs) - Zambia")
+outlier <- c(
+  hh[margin_ha_ppp > median(margin_ha_ppp) + 3*sd(margin_ha_ppp), hhid],
+  hh[margin_ha_sh > median(margin_ha_sh) + 3*sd(margin_ha_sh), hhid]
+)
+
+kbl(caption="Respondents with gross margins > median + 3*sd",
+  hh[hhid %in% outlier, 
+    .(hhid, code, group, crop, costs_ha_ppp, yield_ha_kg, sales_ha_kg, 
+      margin_ha_ppp, margin_ha_sh)],
+  format.args=list(big.mark=",", digits=1))
 
 ```
 
 ```{r}
 
-ggplot(hh, aes(x=1:nrow(hh), color=group)) +
-  geom_linerange(aes(ymin=costs_ha_ppp, ymax=sales_ha_ppp), size=.6) +
-  geom_point(aes(y=costs_ha_ppp), shape=20, size=1.4) +
-  geom_point(aes(y=sales_ha_ppp, shape=margin_ha_ppp>0, fill=group), size=1.4) +
+ggplot(hh, aes(x=hhid, color=group)) +
+  geom_hline(aes(yintercept=0), color=1) +
+  geom_linerange(aes(ymin=0, ymax=margin_ha_ppp), size=.6) +
+  geom_point(aes(y=0), shape=20, size=1.4) +
+  geom_point(aes(y=margin_ha_ppp, shape=margin_ha_ppp < 0, fill=group), size=1.4) +
   scale_y_continuous(labels=comma) +
-  scale_shape_manual(values=c(25, 24)) +
-  guides(shape=F, fill=F) +
-  labs(x=NULL, y=NULL, color="", linetype="",
-    title="Profit Margin (PPP$ / ha) - Niger",
+  scale_shape_manual(values=24:25) +
+  guides(x="none", shape="none") +
+  labs(x=NULL, y=NULL, color="", fill="",
+    title="Profit Margin (PPP$ / ha) - Zambia",
     subtitle="Each bar is a respondent's gross profit margin") +
-  theme_def(legend.position="right")
+  theme_def(
+    legend.position="right",
+    panel.grid.major.x=element_blank()
+  )
 
 ```
 
-Farmers' gross profit margins by gender and across groups in both absolute terms and in relative terms as percentage of total costs per hectare.
+Farmers' gross profit margins by gender and across groups in both absolute and relative terms (as percentage of total costs per hectare).
 
 ```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
-ggplot(hh, aes(gender, margin_ha_ppp, fill=gender)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_ppp, color=gender, fill=gender),
+  grp.c=aes(group=crop), grp.s=aes(group=gender)) +
   scale_y_continuous(labels=comma) +
-  facet_wrap(~crop) +
-  labs(x="", y="", fill="",
+  labs(x="", y="", fill="", color="",
     title="Gross Profit Margin in Absolute Terms - Zambia",
-    subtitle="Stratified by gender (PPP$ / ha)") +
-  theme_def(legend.position="none")
+    subtitle="Stratified by crop and gender (PPP$ / ha)") +
+  theme_def(legend.position="top")
 
-ggplot(hh, aes(gender, margin_ha_sh, fill=gender)) +
-  geom_boxplot(alpha=.7) +
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_sh, color=gender, fill=gender),
+  grp.c=aes(group=crop), grp.s=aes(group=gender)) +
   scale_y_continuous(labels=percent) +
-  facet_wrap(~crop) +
-  labs(x="", y="", fill="",
+  labs(x="", y="", fill="", color="",
     title="Gross Profit Margin in Relative Terms - Zambia",
-    subtitle="Stratified by gender (% of total costs)") +
-  theme_def(legend.position="none")
+    subtitle="Stratified by crop and gender (% of total costs)") +
+  theme_def(legend.position="top")
 
 ```
 
 ```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
 
-ggplot(hh, aes(group, margin_ha_ppp, fill=group)) +
-  geom_boxplot(alpha=.7) +
-  scale_x_discrete(labels=label_wrap(5)) +
-  scale_y_continuous(labels=comma) +  
-  labs(x="", y="", fill="",
-    title="Gross Profit Margin in Absolute Terms",
-    subtitle="Stratified by seed club (PPP$ / ha)") +
-  theme_def(legend.position="none")
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_ppp, color=years, fill=years),
+  grp.c=aes(group=crop), grp.s=aes(group=years)) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", fill="", color="",
+    title="Gross Profit Margin in Absolute Terms - Zambia",
+    subtitle="Stratified by crop and years in seed club (PPP$ / ha)") +
+  theme_def(legend.position="top")
 
-ggplot(hh, aes(group, margin_ha_sh, fill=group)) +
-  geom_boxplot(alpha=.7) +
-  scale_x_discrete(labels=label_wrap(5)) +  
-  scale_y_continuous(labels=percent) +  
-  labs(x="", y="", fill="",
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_sh, color=years, fill=years),
+  grp.c=aes(group=crop), grp.s=aes(group=years)) +
+  scale_y_continuous(labels=percent) +
+  labs(x="", y="", fill="", color="",
     title="Gross Profit Margin in Relative Terms - Zambia",
-    subtitle="Stratified by seed club (% of total costs)") +
-  theme_def(legend.position="none")
+    subtitle="Stratified by crop and years in seed club (% of total costs)") +
+  theme_def(legend.position="top")
 
 ```
+
+```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_ppp, color=group, fill=group),
+  grp.c=aes(group=crop), grp.s=aes(group=group)) +
+  scale_x_discrete(labels=label_wrap(5)) +
+  scale_y_continuous(labels=comma) + 
+  labs(x="", y="", color="", fill="",
+    title="Gross Profit Margin in Absolute Terms - Zambia",
+    subtitle="Stratified by crop and seed club (PPP$ / ha)") +
+  theme_def(legend.position="top")
+
+ggBoxTest(hh[!hhid %in% outlier], 
+  aes(crop, margin_ha_sh, color=group, fill=group),
+  grp.c=aes(group=crop), grp.s=aes(group=group)) +
+  scale_x_discrete(labels=label_wrap(5)) +  
+  scale_y_continuous(labels=percent) +
+  labs(x="", y="", color="", fill="",
+    title="Gross Profit Margin in Relative Terms - Zambia",
+    subtitle="Stratified by crop and seed club (% of total costs)") +
+  theme_def(legend.position="top")
+
+```
+
+```{r}
+
+ggplot(hh[!hhid %in% outlier], aes(member_years, margin_ha_ppp)) +
+  geom_smooth(size=.8) +
+  geom_point(alpha=.7, shape=20) +
+  scale_y_continuous(labels=comma) +
+  labs(x="", y="", color="",
+    title="Gross Profit Margin in Absolute Terms vs. Years in Seed Club - Zambia",
+    subtitle="Each point is a respondent (years vs. PPP$)") +
+  theme_def(legend.position="top")
+
+```
+
 
 ## Correlation
 
-Significant associations. 
+Significant pairwise associations. 
 
 ```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(`seed club`=sub(" ", "\n", group), 
-    `age`=age_num, `years in group`=member_years,
+  hh[, .(`seed club`=group, `years in club`=member_years,
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
@@ -580,6 +729,7 @@ ggpairs(
 ) + 
   theme_def(
     strip.text=element_text(hjust=.5),
+    axis.text.x=element_text(angle=-45),
     panel.grid.major=element_blank()
   )
 
@@ -588,7 +738,7 @@ ggpairs(
 ```{r, fig.height=5}
 
 ggpairs(
-  hh[, .(gender, `age`=age_num, `years in group`=member_years, 
+  hh[, .(gender, `years in club`=member_years,
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
@@ -601,6 +751,30 @@ ggpairs(
     continuous=wrap("densityDiag", fill=NA),
     discrete=wrap("barDiag", fill=pal[1:2], alpha=.8)),
   title="Correlogram stratified by gender - Zambia"
+) +   
+  theme_def(
+    strip.text=element_text(hjust=.5),
+    panel.grid.major=element_blank()
+  )
+
+```
+
+```{r, fig.height=5}
+
+ggpairs(
+  hh[, .(`years in club`=years,
+    `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
+    `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
+  upper = list(
+    continuous="cor", 
+    combo=wrap("summarise_by", color=pal[1:2], size=2)),
+  lower = list(
+    continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
+    combo=wrap("box_no_facet", fill=pal[1:2], alpha=.8)),
+  diag = list(
+    continuous=wrap("densityDiag", fill=NA),
+    discrete=wrap("barDiag", fill=pal[1:2], alpha=.8)),
+  title="Correlogram stratified by years in seed club - Zambia"
 ) +   
   theme_def(
     strip.text=element_text(hjust=.5),
@@ -622,15 +796,14 @@ gtm <- readRDS("../tmp/data_gtm.rds")
 nre <- readRDS("../tmp/data_nre.rds")
 vnm <- readRDS("../tmp/data_vnm.rds")
 zmb <- readRDS("../tmp/data_zmb.rds")
-vars <- names(nre)
+vars <- lbl$code
 hh <- rbindlist(list(
   gtm[, .SD, .SDcols=names(gtm) %in% vars], 
   nre[, .SD, .SDcols=names(nre) %in% vars], 
   vnm[, .SD, .SDcols=names(vnm) %in% vars], 
   zmb[, .SD, .SDcols=names(zmb) %in% vars]
 ), fill=T)
-setcolorder(hh, lbl$code[lbl$code %in% vars])
+setcolorder(hh, lbl[code %in% names(hh), unique(code)])
 fwrite(hh, "../data/hh.csv")
 
 ```
-

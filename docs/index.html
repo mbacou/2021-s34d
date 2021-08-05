@@ -85,25 +85,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { font-weight: bold; } /* Alert */
-code span.an { font-style: italic; } /* Annotation */
-code span.cf { font-weight: bold; } /* ControlFlow */
-code span.co { font-style: italic; } /* Comment */
-code span.cv { font-style: italic; } /* CommentVar */
-code span.do { font-style: italic; } /* Documentation */
-code span.dt { text-decoration: underline; } /* DataType */
-code span.er { font-weight: bold; } /* Error */
-code span.in { font-style: italic; } /* Information */
-code span.kw { font-weight: bold; } /* Keyword */
-code span.pp { font-weight: bold; } /* Preprocessor */
-code span.wa { font-style: italic; } /* Warning */
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -124,10 +142,10 @@ code span.wa { font-style: italic; } /* Warning */
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Objectives</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html#codebook"><i class="fa fa-check"></i>Codebook</a></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html"><i class="fa fa-check"></i>Vietnam</a>
 <ul>
-<li class="chapter" data-level="" data-path="01.html"><a href="01.html#survey-codebook"><i class="fa fa-check"></i>Survey Codebook</a></li>
-<li class="chapter" data-level="" data-path="01.html"><a href="01.html#data-enrichment"><i class="fa fa-check"></i>Data Enrichment</a>
+<li class="chapter" data-level="" data-path="01.html"><a href="01.html#survey-recodes"><i class="fa fa-check"></i>Survey Recodes</a>
 <ul>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#spatial-covariates"><i class="fa fa-check"></i>Spatial Covariates</a></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#constructed-variables"><i class="fa fa-check"></i>Constructed Variables</a></li>
@@ -140,11 +158,10 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#profitability"><i class="fa fa-check"></i>Profitability</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="01.html"><a href="01.html#correlation"><i class="fa fa-check"></i>Correlation</a></li>
-<li class="chapter" data-level="" data-path="01.html"><a href="01.html#clustering"><i class="fa fa-check"></i>Clustering</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html"><i class="fa fa-check"></i>Niger</a>
 <ul>
-<li class="chapter" data-level="" data-path="02.html"><a href="02.html#survey-codebook-1"><i class="fa fa-check"></i>Survey Codebook</a>
+<li class="chapter" data-level="" data-path="02.html"><a href="02.html#survey-recodes-1"><i class="fa fa-check"></i>Survey Recodes</a>
 <ul>
 <li class="chapter" data-level="" data-path="02.html"><a href="02.html#constructed-variables-1"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
@@ -159,7 +176,7 @@ code span.wa { font-style: italic; } /* Warning */
 </ul></li>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html"><i class="fa fa-check"></i>Guatemala</a>
 <ul>
-<li class="chapter" data-level="" data-path="03.html"><a href="03.html#survey-codebook-2"><i class="fa fa-check"></i>Survey Codebook</a>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#survey-recodes-2"><i class="fa fa-check"></i>Survey Recodes</a>
 <ul>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#constructed-variables-2"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
@@ -170,11 +187,12 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#efficiency-2"><i class="fa fa-check"></i>Efficiency</a></li>
 <li class="chapter" data-level="" data-path="03.html"><a href="03.html#profitability-2"><i class="fa fa-check"></i>Profitability</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="03.html"><a href="03.html#correlation-2"><i class="fa fa-check"></i>Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="04.html"><a href="04.html"><i class="fa fa-check"></i>Uganda</a></li>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html"><i class="fa fa-check"></i>Zambia</a>
 <ul>
-<li class="chapter" data-level="" data-path="05.html"><a href="05.html#survey-codebook-3"><i class="fa fa-check"></i>Survey Codebook</a>
+<li class="chapter" data-level="" data-path="05.html"><a href="05.html#survey-recodes-3"><i class="fa fa-check"></i>Survey Recodes</a>
 <ul>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#constructed-variables-3"><i class="fa fa-check"></i>Constructed Variables</a></li>
 </ul></li>
@@ -185,6 +203,7 @@ code span.wa { font-style: italic; } /* Warning */
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#efficiency-3"><i class="fa fa-check"></i>Efficiency</a></li>
 <li class="chapter" data-level="" data-path="05.html"><a href="05.html#profitability-3"><i class="fa fa-check"></i>Profitability</a></li>
 </ul></li>
+<li class="chapter" data-level="" data-path="05.html"><a href="05.html#correlation-3"><i class="fa fa-check"></i>Correlation</a></li>
 </ul></li>
 </ul>
 
@@ -206,94 +225,1065 @@ code span.wa { font-style: italic; } /* Warning */
 <div id="header">
 <h1 class="title">Supporting Seed Systems for Development</h1>
 <p class="author"><em>BACOU, Melanie</em></p>
-<p class="date" style="margin-top: 1.5em;"><em>Last updated on 2021-07-28 – CODES AND NOTES</em></p>
+<p class="date" style="margin-top: 1.5em;"><em>Last updated on 2021-08-05 – CODES AND NOTES</em></p>
 </div>
 <div id="objectives" class="section level1">
 <h1>Objectives</h1>
 <p>This notebook summarizes results from the 2020 S34D field surveys.</p>
 <p>The objective of this activity is to understand the operational efficiency and profitability of seed producer groups across different environments (multiple geographies, policy and regulatory systems). The farmers in the surveyed groups produce <strong>certified seeds</strong> as well as <strong>high-quality informal seeds</strong> that go through internal seed quality assurance mechanisms.</p>
 <p>We have chosen several countries that are at different stages of agricultural transformation and with varying degrees of seed systems maturity. Comparing and contrasting these seed producer clubs within and across their respective contexts can help guide development partners in designing interventions and inform policy making and seed system regulations.</p>
-<p>The analysis is split by country, with a cross-country evaluation once all survey results have been compiled. R code chunks are shown for reproducibility.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<p>The analysis is split by country. R code chunks are shown for reproducibility.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thematic)</span>
+<span id="cb1-2"><a href="index.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
 <span id="cb1-3"><a href="index.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
-<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ttt)</span>
-<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(thematic)</span>
-<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb1-4"><a href="index.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-5"><a href="index.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-6"><a href="index.html#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb1-7"><a href="index.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb1-8"><a href="index.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-9"><a href="index.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(summarytools)</span>
 <span id="cb1-10"><a href="index.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggalluvial)</span>
 <span id="cb1-11"><a href="index.html#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, </span>
-<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.path=</span><span class="st">&quot;fig/&quot;</span>, <span class="at">fig.showtext=</span><span class="cn">TRUE</span>, <span class="at">include=</span><span class="cn">TRUE</span>, </span>
-<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">error=</span><span class="cn">FALSE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span>
-<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Default FtF colors for plots</span></span>
-<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#94a545&quot;</span>, <span class="st">&quot;#d37d28&quot;</span>, <span class="st">&quot;#8B1E3F&quot;</span>, <span class="st">&quot;#403b33&quot;</span>)</span>
-<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">thematic_on</span>(<span class="st">&quot;transparent&quot;</span>, <span class="st">&quot;#2f2f29&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#e6e7e8&quot;</span>),</span>
-<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font_spec</span>(<span class="fu">c</span>(<span class="st">&quot;Roboto Condensed&quot;</span>, <span class="st">&quot;Roboto&quot;</span>)),</span>
-<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> <span class="fu">alpha</span>(pal, .<span class="dv">9</span>))</span>
-<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>theme_def <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">7</span>, </span>
-<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;Roboto Condensed&quot;</span>,</span>
-<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_fill =</span> <span class="st">&quot;transparent&quot;</span>, ...) <span class="fu">theme_minimal</span>(base_size, base_family) <span class="sc">+</span></span>
-<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
-<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">lineheight=</span>.<span class="dv">8</span>),</span>
-<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size<span class="sc">+</span><span class="dv">1</span>),</span>
-<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color=</span><span class="st">&quot;#4799b5&quot;</span>, <span class="at">size=</span>base_size),</span>
-<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>, <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">size=</span>base_size),</span>
-<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size),</span>
-<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="dv">0</span>),</span>
-<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>),</span>
-<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>)</span>
-<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme</span>(...)</span>
-<span id="cb1-41"><a href="index.html#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-42"><a href="index.html#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Default theme for tables</span></span>
-<span id="cb1-43"><a href="index.html#cb1-43" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(...) kableExtra<span class="sc">::</span><span class="fu">kbl</span>(...) <span class="sc">%&gt;%</span> </span>
-<span id="cb1-44"><a href="index.html#cb1-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
-<span id="cb1-45"><a href="index.html#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
-<span id="cb1-46"><a href="index.html#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size=</span><span class="dv">14</span>)</span>
-<span id="cb1-47"><a href="index.html#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="index.html#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Print contingency table with chisq tests</span></span>
-<span id="cb1-49"><a href="index.html#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">ttt.theme=</span><span class="st">&quot;booktabs&quot;</span>) </span>
-<span id="cb1-50"><a href="index.html#cb1-50" aria-hidden="true" tabindex="-1"></a>ttt_ftable <span class="ot">&lt;-</span> <span class="cf">function</span>(data, vars, ...) {</span>
-<span id="cb1-51"><a href="index.html#cb1-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(<span class="fu">length</span>(vars)<span class="sc">==</span><span class="dv">3</span>)</span>
-<span id="cb1-52"><a href="index.html#cb1-52" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">=</span> data[, .SD, .SDcols<span class="ot">=</span>vars]</span>
-<span id="cb1-53"><a href="index.html#cb1-53" aria-hidden="true" tabindex="-1"></a>  N <span class="ot">=</span> <span class="fu">nrow</span>(dt)</span>
-<span id="cb1-54"><a href="index.html#cb1-54" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">=</span> <span class="fu">table</span>(dt)</span>
-<span id="cb1-55"><a href="index.html#cb1-55" aria-hidden="true" tabindex="-1"></a>  test <span class="ot">=</span> <span class="fu">mantelhaen.test</span>(dt)</span>
-<span id="cb1-56"><a href="index.html#cb1-56" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">=</span> dt <span class="sc">%&gt;%</span></span>
-<span id="cb1-57"><a href="index.html#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prop.table</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb1-58"><a href="index.html#cb1-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">addmargins</span>(...) <span class="sc">%&gt;%</span></span>
-<span id="cb1-59"><a href="index.html#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ftable</span>()</span>
-<span id="cb1-60"><a href="index.html#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(<span class="fu">attr</span>(dt, <span class="st">&quot;row.vars&quot;</span>)) <span class="ot">=</span> vars[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
-<span id="cb1-61"><a href="index.html#cb1-61" aria-hidden="true" tabindex="-1"></a>  dt <span class="ot">=</span> <span class="fu">round</span>(<span class="dv">100</span><span class="sc">*</span>dt, <span class="at">digits=</span><span class="dv">1</span>)</span>
-<span id="cb1-62"><a href="index.html#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ttt</span>(dt,</span>
-<span id="cb1-63"><a href="index.html#cb1-63" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption=</span><span class="st">&quot;Contingency Table (% of respondents)&quot;</span>,</span>
-<span id="cb1-64"><a href="index.html#cb1-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">footnote=</span><span class="fu">paste</span>(</span>
-<span id="cb1-65"><a href="index.html#cb1-65" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;N =&quot;</span>, N,</span>
-<span id="cb1-66"><a href="index.html#cb1-66" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;| Mantel-Haenszel chi-squared =&quot;</span>, <span class="fu">comma</span>(test[[<span class="dv">1</span>]], <span class="at">acc=</span>.<span class="dv">01</span>),</span>
-<span id="cb1-67"><a href="index.html#cb1-67" aria-hidden="true" tabindex="-1"></a>      <span class="st">&quot;| p-value = &quot;</span>, <span class="fu">comma</span>(test[[<span class="dv">3</span>]], <span class="at">acc=</span>.<span class="dv">0001</span>))</span>
-<span id="cb1-68"><a href="index.html#cb1-68" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-69"><a href="index.html#cb1-69" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-70"><a href="index.html#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="index.html#cb1-71" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Formatters</span></span>
-<span id="cb1-72"><a href="index.html#cb1-72" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(</span>
-<span id="cb1-73"><a href="index.html#cb1-73" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean =</span> <span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), </span>
-<span id="cb1-74"><a href="index.html#cb1-74" aria-hidden="true" tabindex="-1"></a>  <span class="at">Med =</span> <span class="fu">comma</span>(<span class="fu">median</span>(x, <span class="at">na.rm=</span>T)),</span>
-<span id="cb1-75"><a href="index.html#cb1-75" aria-hidden="true" tabindex="-1"></a>  <span class="at">SD =</span> <span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
-<span id="cb1-76"><a href="index.html#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-77"><a href="index.html#cb1-77" aria-hidden="true" tabindex="-1"></a>fmt_pct <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(</span>
-<span id="cb1-78"><a href="index.html#cb1-78" aria-hidden="true" tabindex="-1"></a>  <span class="at">Mean =</span> <span class="fu">percent</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), </span>
-<span id="cb1-79"><a href="index.html#cb1-79" aria-hidden="true" tabindex="-1"></a>  <span class="at">Med =</span> <span class="fu">percent</span>(<span class="fu">median</span>(x, <span class="at">na.rm=</span>T)),</span>
-<span id="cb1-80"><a href="index.html#cb1-80" aria-hidden="true" tabindex="-1"></a>  <span class="at">SD =</span> <span class="fu">percent</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span></code></pre></div>
+<span id="cb1-12"><a href="index.html#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ttt)</span>
+<span id="cb1-13"><a href="index.html#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="index.html#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>())</span>
+<span id="cb1-15"><a href="index.html#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="index.html#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Global package options</span></span>
+<span id="cb1-17"><a href="index.html#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(</span>
+<span id="cb1-18"><a href="index.html#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">ttt.theme=</span><span class="st">&quot;booktabs&quot;</span>) </span>
+<span id="cb1-19"><a href="index.html#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">st_options</span>(</span>
+<span id="cb1-20"><a href="index.html#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">plain.ascii=</span><span class="cn">FALSE</span>, <span class="at">bootstrap.css=</span><span class="cn">FALSE</span>, <span class="at">headings=</span><span class="cn">FALSE</span>,</span>
+<span id="cb1-21"><a href="index.html#cb1-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">dfSummary.graph.magnif=</span>.<span class="dv">8</span>, <span class="at">dfSummary.varnumbers=</span><span class="cn">FALSE</span>) </span>
+<span id="cb1-22"><a href="index.html#cb1-22" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(</span>
+<span id="cb1-23"><a href="index.html#cb1-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">fig.height=</span><span class="dv">3</span>, <span class="at">fig.width=</span><span class="dv">5</span>, <span class="at">dpi=</span><span class="dv">220</span>, <span class="at">fig.path=</span><span class="st">&quot;fig/&quot;</span>, <span class="at">fig.showtext=</span><span class="cn">TRUE</span>, </span>
+<span id="cb1-24"><a href="index.html#cb1-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">include=</span><span class="cn">TRUE</span>, <span class="at">error=</span><span class="cn">FALSE</span>, <span class="at">warning=</span><span class="cn">FALSE</span>, <span class="at">message=</span><span class="cn">FALSE</span>)</span>
+<span id="cb1-25"><a href="index.html#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="index.html#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Default USAID FtF colors for plots</span></span>
+<span id="cb1-27"><a href="index.html#cb1-27" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#94a545&quot;</span>, <span class="st">&quot;#d37d28&quot;</span>, <span class="st">&quot;#8B1E3F&quot;</span>, <span class="st">&quot;#403b33&quot;</span>)</span>
+<span id="cb1-28"><a href="index.html#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="index.html#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">thematic_on</span>(<span class="st">&quot;transparent&quot;</span>, <span class="st">&quot;#2f2f29&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;#4799b5&quot;</span>, <span class="st">&quot;#e6e7e8&quot;</span>),</span>
+<span id="cb1-30"><a href="index.html#cb1-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">font_spec</span>(<span class="fu">c</span>(<span class="st">&quot;Roboto Condensed&quot;</span>, <span class="st">&quot;Roboto&quot;</span>)),</span>
+<span id="cb1-31"><a href="index.html#cb1-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">qualitative =</span> pal)</span>
+<span id="cb1-32"><a href="index.html#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="index.html#cb1-33" aria-hidden="true" tabindex="-1"></a>theme_def <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb1-34"><a href="index.html#cb1-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_size =</span> <span class="dv">7</span>, </span>
+<span id="cb1-35"><a href="index.html#cb1-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_family =</span> <span class="st">&quot;Roboto Condensed&quot;</span>,</span>
+<span id="cb1-36"><a href="index.html#cb1-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">base_fill =</span> <span class="st">&quot;transparent&quot;</span>,</span>
+<span id="cb1-37"><a href="index.html#cb1-37" aria-hidden="true" tabindex="-1"></a>  ...) <span class="fu">theme_minimal</span>(base_size, base_family) <span class="sc">+</span></span>
+<span id="cb1-38"><a href="index.html#cb1-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-39"><a href="index.html#cb1-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-40"><a href="index.html#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-41"><a href="index.html#cb1-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.background =</span> <span class="fu">element_rect</span>(<span class="at">fill=</span>base_fill, <span class="at">color=</span><span class="cn">NA</span>),</span>
+<span id="cb1-42"><a href="index.html#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">lineheight=</span>.<span class="dv">8</span>),</span>
+<span id="cb1-43"><a href="index.html#cb1-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size<span class="sc">+</span><span class="dv">1</span>),</span>
+<span id="cb1-44"><a href="index.html#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color=</span>pal[<span class="dv">1</span>], <span class="at">size=</span>base_size),</span>
+<span id="cb1-45"><a href="index.html#cb1-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">&quot;bold&quot;</span>, <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">size=</span>base_size),</span>
+<span id="cb1-46"><a href="index.html#cb1-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span>base_size),</span>
+<span id="cb1-47"><a href="index.html#cb1-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="dv">0</span>),</span>
+<span id="cb1-48"><a href="index.html#cb1-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.width =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>),</span>
+<span id="cb1-49"><a href="index.html#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.height =</span> <span class="fu">unit</span>(.<span class="dv">8</span>, <span class="st">&quot;line&quot;</span>)</span>
+<span id="cb1-50"><a href="index.html#cb1-50" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">theme</span>(...)</span>
+<span id="cb1-51"><a href="index.html#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-52"><a href="index.html#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - Default theme for tables</span></span>
+<span id="cb1-53"><a href="index.html#cb1-53" aria-hidden="true" tabindex="-1"></a>kbl <span class="ot">&lt;-</span> <span class="cf">function</span>(...) kableExtra<span class="sc">::</span><span class="fu">kbl</span>(...) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-54"><a href="index.html#cb1-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(</span>
+<span id="cb1-55"><a href="index.html#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">bootstrap_options=</span><span class="fu">c</span>(<span class="st">&quot;condensed&quot;</span>, <span class="st">&quot;responsive&quot;</span>, <span class="st">&quot;striped&quot;</span>, <span class="st">&quot;hover&quot;</span>), </span>
+<span id="cb1-56"><a href="index.html#cb1-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">font_size =</span> <span class="dv">14</span>)</span>
+<span id="cb1-57"><a href="index.html#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-58"><a href="index.html#cb1-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Helper - TTT Formatters</span></span>
+<span id="cb1-59"><a href="index.html#cb1-59" aria-hidden="true" tabindex="-1"></a>fmt <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(</span>
+<span id="cb1-60"><a href="index.html#cb1-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">comma</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), </span>
+<span id="cb1-61"><a href="index.html#cb1-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">median =</span> <span class="fu">comma</span>(<span class="fu">median</span>(x, <span class="at">na.rm=</span>T)),</span>
+<span id="cb1-62"><a href="index.html#cb1-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fu">comma</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
+<span id="cb1-63"><a href="index.html#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-64"><a href="index.html#cb1-64" aria-hidden="true" tabindex="-1"></a>fmt_pct <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">c</span>(</span>
+<span id="cb1-65"><a href="index.html#cb1-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">percent</span>(<span class="fu">mean</span>(x, <span class="at">na.rm=</span>T)), </span>
+<span id="cb1-66"><a href="index.html#cb1-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">median =</span> <span class="fu">percent</span>(<span class="fu">median</span>(x, <span class="at">na.rm=</span>T)),</span>
+<span id="cb1-67"><a href="index.html#cb1-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">sd =</span> <span class="fu">percent</span>(<span class="fu">sd</span>(x, <span class="at">na.rm=</span>T)))</span>
+<span id="cb1-68"><a href="index.html#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="index.html#cb1-69" aria-hidden="true" tabindex="-1"></a>count <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">data.frame</span>(<span class="at">y=</span><span class="cn">Inf</span>, <span class="at">label=</span><span class="fu">paste</span>(<span class="st">&quot;N =&quot;</span>, <span class="fu">length</span>(x)))</span>
+<span id="cb1-70"><a href="index.html#cb1-70" aria-hidden="true" tabindex="-1"></a>ggBoxTest <span class="ot">&lt;-</span> <span class="cf">function</span>(..., <span class="at">jitter=</span><span class="cn">TRUE</span>, <span class="at">grp.c=</span><span class="cn">NULL</span>, <span class="at">grp.s=</span><span class="cn">NULL</span>, <span class="at">cp=</span><span class="cn">NULL</span>, <span class="at">ref=</span><span class="cn">NULL</span>) {</span>
+<span id="cb1-71"><a href="index.html#cb1-71" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">=</span> <span class="fu">ggplot</span>(...)</span>
+<span id="cb1-72"><a href="index.html#cb1-72" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(jitter) p <span class="ot">=</span> p <span class="sc">+</span> <span class="fu">geom_jitter</span>(<span class="at">alpha=</span>.<span class="dv">5</span>)</span>
+<span id="cb1-73"><a href="index.html#cb1-73" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">=</span> p <span class="sc">+</span> </span>
+<span id="cb1-74"><a href="index.html#cb1-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_boxplot</span>(<span class="at">alpha=</span>.<span class="dv">7</span>, <span class="at">outlier.shape=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb1-75"><a href="index.html#cb1-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stat_summary</span>(grp.c, <span class="at">fun.data=</span>count, <span class="at">geom=</span><span class="st">&quot;text&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">color=</span><span class="dv">1</span>, <span class="at">vjust=</span>.<span class="dv">9</span>)</span>
+<span id="cb1-76"><a href="index.html#cb1-76" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">is.null</span>(cp) <span class="sc">&amp;&amp;</span> <span class="fu">is.null</span>(ref)) p <span class="ot">=</span> p <span class="sc">+</span></span>
+<span id="cb1-77"><a href="index.html#cb1-77" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_compare_means</span>(grp.s, <span class="at">label=</span><span class="st">&quot;p.signif&quot;</span>, <span class="at">size=</span><span class="fl">3.5</span>, <span class="at">vjust=</span><span class="dv">1</span>, <span class="at">fontface=</span><span class="st">&quot;bold&quot;</span>) <span class="sc">+</span></span>
+<span id="cb1-78"><a href="index.html#cb1-78" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_compare_means</span>(grp.s, <span class="at">label=</span><span class="st">&quot;p.format&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">vjust=</span><span class="dv">3</span>)</span>
+<span id="cb1-79"><a href="index.html#cb1-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span> p <span class="ot">=</span> p <span class="sc">+</span></span>
+<span id="cb1-80"><a href="index.html#cb1-80" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stat_compare_means</span>(<span class="at">comparisons=</span>cp, <span class="at">ref.group=</span>ref, <span class="at">label=</span><span class="st">&quot;p.signif&quot;</span>, <span class="at">size=</span><span class="dv">3</span>, <span class="at">vjust=</span><span class="dv">0</span>)</span>
+<span id="cb1-81"><a href="index.html#cb1-81" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="codebook" class="section level1">
+<h1>Codebook</h1>
+<p>All survey datasets have been consolidated into a unique data file. A unified codebook is shown below for reference.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load unified codebook</span></span>
+<span id="cb2-2"><a href="index.html#cb2-2" aria-hidden="true" tabindex="-1"></a>lbl <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">&quot;../data/codebook.csv&quot;</span>)</span>
+<span id="cb2-3"><a href="index.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(lbl, <span class="at">align=</span><span class="st">&quot;llccc&quot;</span>, <span class="at">caption=</span><span class="st">&quot;Consolidated Survey Codebook&quot;</span>)</span></code></pre></div>
+<table class="table table-condensed table-responsive table-striped table-hover" style="font-size: 14px; margin-left: auto; margin-right: auto;">
+<caption style="font-size: initial !important;">
+<span id="tab:unnamed-chunk-1">Tab. 1: </span>Consolidated Survey Codebook
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+code
+</th>
+<th style="text-align:left;">
+label
+</th>
+<th style="text-align:center;">
+type
+</th>
+<th style="text-align:center;">
+unit
+</th>
+<th style="text-align:center;">
+constructed
+</th>
+<th style="text-align:left;">
+notes
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+hhid
+</td>
+<td style="text-align:left;">
+Unique farmer/crop ID
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+uid
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+iso3
+</td>
+<td style="text-align:left;">
+ISO3 country code
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+adm1_nm
+</td>
+<td style="text-align:left;">
+Province
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+adm1_nm
+</td>
+<td style="text-align:left;">
+Region
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+adm2_nm
+</td>
+<td style="text-align:left;">
+District
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+adm3_nm
+</td>
+<td style="text-align:left;">
+Location
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+group
+</td>
+<td style="text-align:left;">
+Group
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+code
+</td>
+<td style="text-align:left;">
+Code
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:left;">
+Age
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+&lt; 30, ≥ 30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age_num
+</td>
+<td style="text-align:left;">
+Age (continunous)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+years
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:left;">
+Sex
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+Male, Female
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+crop
+</td>
+<td style="text-align:left;">
+Crop
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+member_years
+</td>
+<td style="text-align:left;">
+How long have you been a member of this group?
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+years
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seed_ha_lcu
+</td>
+<td style="text-align:left;">
+Cost seed per ha (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fert_ha_lcu
+</td>
+<td style="text-align:left;">
+Cost of fertilizer per ha (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pest_ha_lcu
+</td>
+<td style="text-align:left;">
+Cost of pesticide per ha (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tran_ha_lcu
+</td>
+<td style="text-align:left;">
+Cost of transport per ha (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+labor_ha_lcu
+</td>
+<td style="text-align:left;">
+Labor cost (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cert_lcu
+</td>
+<td style="text-align:left;">
+Inspection / certification Fees (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/farm/season
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+labl_kg_lcu
+</td>
+<td style="text-align:left;">
+Labelling costs per kg (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+pckg_kg_lcu
+</td>
+<td style="text-align:left;">
+Packaging costs per kg (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+mark_kg_lcu
+</td>
+<td style="text-align:left;">
+Other marketing costs? (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+yield_ha_kg
+</td>
+<td style="text-align:left;">
+Estimated Yield (kg/ha)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+kg/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_kg_lcu
+</td>
+<td style="text-align:left;">
+Selling price of seed per kg (LCU)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_grain_sowing_kg_lcu
+</td>
+<td style="text-align:left;">
+Selling price of grain per kg (LCU) at sowing
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_grain_harvest_kg_lcu
+</td>
+<td style="text-align:left;">
+Selling price of grain per kg (LCU) at harvest
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/kg
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_ha_kg
+</td>
+<td style="text-align:left;">
+How many kg were sold in the season?
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+kg/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+margin_exp_ha_sh
+</td>
+<td style="text-align:left;">
+What was your expected gross margin?
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+area_ha
+</td>
+<td style="text-align:left;">
+Area (ha)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+ha
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+costs_exp_ha_lcu
+</td>
+<td style="text-align:left;">
+Total production cost
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+costs_real_ha_lcu
+</td>
+<td style="text-align:left;">
+Total production costs per ha (realized yield)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_exp_ha_lcu
+</td>
+<td style="text-align:left;">
+Gross sales
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_real_ha_lcu
+</td>
+<td style="text-align:left;">
+Gross sales per ha (realized yield)
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+costs_ha_ppp
+</td>
+<td style="text-align:left;">
+Total production costs per ha in PPP equivalent
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+ppp/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_ha_sh
+</td>
+<td style="text-align:left;">
+Gross sales as share of tpc
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+share
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sales_ha_ppp
+</td>
+<td style="text-align:left;">
+Gross sales in PPP equivalent
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+ppp/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+margin_ha_lcu
+</td>
+<td style="text-align:left;">
+Gross margin per ha
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+lcu/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+margin_ha_sh
+</td>
+<td style="text-align:left;">
+Margin as share of tpc
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+share
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+margin_ha_ppp
+</td>
+<td style="text-align:left;">
+Margin in PPP equivalent
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+ppp/ha
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tfp
+</td>
+<td style="text-align:left;">
+Total factor productivity
+</td>
+<td style="text-align:center;">
+numeric
+</td>
+<td style="text-align:center;">
+kg/lcu
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ssd
+</td>
+<td style="text-align:left;">
+Farmer participates in formal seed system distribution
+</td>
+<td style="text-align:center;">
+logical
+</td>
+<td style="text-align:center;">
+true/false
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+Informal, Formal
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+group_year
+</td>
+<td style="text-align:left;">
+Year the group was established
+</td>
+<td style="text-align:center;">
+integer
+</td>
+<td style="text-align:center;">
+year
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+group_size
+</td>
+<td style="text-align:left;">
+Members in the group
+</td>
+<td style="text-align:center;">
+integer
+</td>
+<td style="text-align:center;">
+members
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+soil_type
+</td>
+<td style="text-align:left;">
+Primary soil type
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+seasons
+</td>
+<td style="text-align:left;">
+Number of seasons per year
+</td>
+<td style="text-align:center;">
+integer
+</td>
+<td style="text-align:center;">
+seasons/year
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+irrigated
+</td>
+<td style="text-align:left;">
+Level of irrigation
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+market_access
+</td>
+<td style="text-align:left;">
+Market access
+</td>
+<td style="text-align:center;">
+character
+</td>
+<td style="text-align:center;">
+class
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ttrade
+</td>
+<td style="text-align:left;">
+Presence of transboundary trade
+</td>
+<td style="text-align:center;">
+logical
+</td>
+<td style="text-align:center;">
+true/false
+</td>
+<td style="text-align:center;">
+TRUE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date
+</td>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:center;">
+date
+</td>
+<td style="text-align:center;">
+date
+</td>
+<td style="text-align:center;">
+FALSE
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+</tbody>
+</table>
 
 </div>
             </section>

@@ -37,12 +37,14 @@ library(ttt)
 rm(list=ls())
 
 # Global package options
-options(ttt.theme="booktabs") 
-st_options(plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE,
+options(
+  ttt.theme="booktabs") 
+st_options(
+  plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE,
   dfSummary.graph.magnif=.8, dfSummary.varnumbers=FALSE) 
-knitr::opts_chunk$set(fig.height=3, fig.width=5, dpi=220, 
-  fig.path="fig/", fig.showtext=TRUE, include=TRUE, 
-  error=FALSE, warning=FALSE, message=FALSE)
+knitr::opts_chunk$set(
+  fig.height=3, fig.width=5, dpi=220, fig.path="fig/", fig.showtext=TRUE, 
+  include=TRUE, error=FALSE, warning=FALSE, message=FALSE)
 
 # Helper - Default USAID FtF colors for plots
 pal <- c("#4799b5", "#94a545", "#d37d28", "#8B1E3F", "#403b33")
@@ -88,13 +90,18 @@ fmt_pct <- function(x) c(
   sd = percent(sd(x, na.rm=T)))
 
 count <- function(x) data.frame(y=Inf, label=paste("N =", length(x)))
-ggBoxTest <- function(...) ggplot(...) +
-  geom_jitter(alpha=.5) +
-  geom_boxplot(alpha=.7, outlier.size=0) +
-  stat_compare_means(size=3, label.y.npc=.94) +
-  stat_compare_means(label="p.signif", ref.group=".all.", 
-    label.y.npc=.99, size=3, fontface="bold") +
-  stat_summary(fun.data=count, geom="text", size=2.5, color=1, vjust=1)  
+ggBoxTest <- function(..., jitter=TRUE, grp.c=NULL, grp.s=NULL, cp=NULL, ref=NULL) {
+  p = ggplot(...)
+  if(jitter) p = p + geom_jitter(alpha=.5)
+  p = p + 
+    geom_boxplot(alpha=.7, outlier.shape=NA) +
+    stat_summary(grp.c, fun.data=count, geom="text", size=3, color=1, vjust=.9)
+  if(is.null(cp) && is.null(ref)) p = p +
+      stat_compare_means(grp.s, label="p.signif", size=3.5, vjust=1, fontface="bold") +
+      stat_compare_means(grp.s, label="p.format", size=3, vjust=3)
+  else p = p +
+      stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", size=3, vjust=0)
+}
 
 ```
 
