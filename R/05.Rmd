@@ -217,7 +217,7 @@ hh_prod_cost <- hh_prod_cost[, .(
 
 ### Respondent Characteristics
 
-Breakdown by categorical variables. Note that farmers in HIMMA grow both crops.
+Breakdown by categorical variables.
 
 ```{r, fig.height=4}
 
@@ -359,7 +359,7 @@ ggplot(tbl, aes(group, ppp, fill=type)) +
   labs(y="", x="",
     title="Breakdown of Input Costs by Category - Zambia",
     subtitle="Stratified by crop and seed club") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ```
 
@@ -422,7 +422,7 @@ ggBoxTest(hh_prod_cost[!type %in% c("Seeds")],
   labs(x="", y="", fill="", color="",
     title="Input Costs by Category (PPP$ by Hectare) - Zambia",
     subtitle="Stratified by crop") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ```
 
@@ -514,7 +514,7 @@ ggBoxTest(hh[!hhid %in% outlier],
   labs(x="", y="", fill="", color="",
     title="Expected Seed Yield (Kg / ha) - Zambia",
     subtitle="Stratified by crop and seed club") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ggBoxTest(hh[!hhid %in% outlier],
   aes(crop, sales_ha_ppp, color=group, fill=group),
@@ -524,7 +524,7 @@ ggBoxTest(hh[!hhid %in% outlier],
   labs(x="", y="", fill="", color="",
     title="Total Seed Sales (PPP$ / ha) - Zambia",
     subtitle="Stratified crop by seed club") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ```
 
@@ -532,7 +532,7 @@ Looking at **production frontiers** (units of output vs. units of input). We exp
 
 Note that in the approximated curves below we remove outliers with total input costs over PPP$ 1,700 per ha.
 
-```{r, fig.width=6}
+```{r}
 
 outlier <- hh[costs_ha_ppp > median(costs_ha_ppp) + 3*sd(costs_ha_ppp), hhid]
 
@@ -613,7 +613,7 @@ ggplot(hh, aes(x=hhid, color=group)) +
 
 Farmers' gross profit margins by gender and across groups in both absolute and relative terms (as percentage of total costs per hectare).
 
-```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+```{r}
 
 ggBoxTest(hh[!hhid %in% outlier], 
   aes(crop, margin_ha_ppp, color=gender, fill=gender),
@@ -635,7 +635,7 @@ ggBoxTest(hh[!hhid %in% outlier],
 
 ```
 
-```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+```{r}
 
 ggBoxTest(hh[!hhid %in% outlier], 
   aes(crop, margin_ha_ppp, color=years, fill=years),
@@ -657,7 +657,7 @@ ggBoxTest(hh[!hhid %in% outlier],
 
 ```
 
-```{r, out.width="50%", fig.width=2.5, fig.show="hold", fig.asp=1}
+```{r}
 
 ggBoxTest(hh[!hhid %in% outlier], 
   aes(crop, margin_ha_ppp, color=group, fill=group),
@@ -667,7 +667,7 @@ ggBoxTest(hh[!hhid %in% outlier],
   labs(x="", y="", color="", fill="",
     title="Gross Profit Margin in Absolute Terms - Zambia",
     subtitle="Stratified by crop and seed club (PPP$ / ha)") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ggBoxTest(hh[!hhid %in% outlier], 
   aes(crop, margin_ha_sh, color=group, fill=group),
@@ -677,7 +677,7 @@ ggBoxTest(hh[!hhid %in% outlier],
   labs(x="", y="", color="", fill="",
     title="Gross Profit Margin in Relative Terms - Zambia",
     subtitle="Stratified by crop and seed club (% of total costs)") +
-  theme_def(legend.position="top")
+  theme_def(legend.position="right")
 
 ```
 
@@ -706,7 +706,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:4], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
@@ -731,7 +731,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
@@ -755,7 +755,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 

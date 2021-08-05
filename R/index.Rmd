@@ -41,9 +41,9 @@ options(
   ttt.theme="booktabs") 
 st_options(
   plain.ascii=FALSE, bootstrap.css=FALSE, headings=FALSE, footnote=NA,
-  dfSummary.graph.magnif=.8, dfSummary.varnumbers=FALSE) 
+  dfSummary.graph.magnif=.8, dfSummary.varnumbers=FALSE, dfSummary.graph.col = FALSE) 
 knitr::opts_chunk$set(
-  fig.height=3, fig.width=5, dpi=220, fig.path="fig/", fig.showtext=TRUE, 
+  fig.height=4, fig.width=6, dpi=220, fig.path="fig/", fig.showtext=TRUE, 
   include=TRUE, error=FALSE, warning=FALSE, message=FALSE)
 
 # Helper - Default USAID FtF colors for plots
@@ -95,12 +95,12 @@ ggBoxTest <- function(..., jitter=TRUE, grp.c=NULL, grp.s=NULL, cp=NULL, ref=NUL
   if(jitter) p = p + geom_jitter(alpha=.5, size=.2)
   p = p + 
     geom_boxplot(alpha=.7, outlier.shape=NA) +
-    stat_summary(grp.c, fun.data=count, geom="text", size=2.5, color=1, vjust=.9)
+    stat_summary(grp.c, fun.data=count, geom="text", size=2, color=1, vjust=1)
   if(is.null(cp) && is.null(ref)) p = p +
-    stat_compare_means(grp.s, label="p.signif", size=3, vjust=2, fontface="bold") +
-    stat_compare_means(grp.s, label="p.format", size=2.5, vjust=4)
+    stat_compare_means(grp.s, label="p.signif", size=2.5, vjust=1, fontface="bold") +
+    stat_compare_means(grp.s, label="p.format", size=2.5, vjust=3)
   else p = p +
-    stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", vjust=0, size=2)
+    stat_compare_means(comparisons=cp, ref.group=ref, label="p.signif", size=2.5)
 }
 
 # Helper - Contingency table

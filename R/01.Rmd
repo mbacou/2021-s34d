@@ -26,7 +26,7 @@ group <- fread("../data/vnm/group.csv")
 
 There are `r ncol(hh)` variables and `r nrow(hh)` observations in this set. A summary is shown below.
 
-```{r, results="asis"}
+```{r, results="asis", error=FALSE}
 
 print(dfSummary(hh), max.tbl.height=500)
 
@@ -457,10 +457,10 @@ Note that Farmer `VNM013` in Winh Qui has total costs over PPP$ 4,000/ha. He was
 
 ```{r}
 
-outlier <- hh[costs_ha_ppp > mean(costs_ha_ppp) + 3*sd(costs_ha_ppp), hhid]
+outlier <- hh[costs_ha_ppp > median(costs_ha_ppp) + 3*sd(costs_ha_ppp), hhid]
 
 kbl(
-  caption="Farmers with total input costs > mean + 3*sd",
+  caption="Farmers with total input costs > median + 3*sd",
   hh[hhid %in% outlier, .(hhid, group, crop, yield_ha_kg, costs_ha_ppp)],
   format.args=list(big.mark=",", digits=0))
 
@@ -627,7 +627,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:5], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
@@ -652,7 +652,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
@@ -676,7 +676,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 

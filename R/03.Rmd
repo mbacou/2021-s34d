@@ -717,7 +717,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg,
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:4], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA), 
@@ -742,7 +742,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 
@@ -766,7 +766,7 @@ ggpairs(
     `costs PPP$`=costs_ha_ppp, `seed yield kg/ha`=yield_ha_kg, 
     `margin PPP$`=margin_ha_ppp, `margin %`=margin_ha_sh)],
   upper = list(
-    continuous="cor", 
+    continuous=wrap("cor", size=4), 
     combo=wrap("summarise_by", color=pal[1:2], size=2)),
   lower = list(
     continuous=wrap("smooth", shape=NA, color=hh[, pal[gender]]), 

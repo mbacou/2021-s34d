@@ -88,11 +88,12 @@ table > caption {
   background-color: unset;
 }
 
-.Rttt table, .Rttt tfoot tr td p, .Rttt caption {
+table, td, th, .Rttt table, .Rttt tfoot tr td p, .Rttt caption {
   font-family: unset;
   font-size: 14px;
 }
 
-.Rttt th, .Rttt td {
+.book .book-body .page-wrapper .page-inner section.normal table td,
+.book .book-body .page-wrapper .page-inner section.normal table th {
   padding: .1rem .9rem;
 }
